@@ -3,19 +3,19 @@
 CATALINA_HOME="/opt/tomcat"
 export CATALINA_HOME
 
-CATALINA_BASE="/opt/tomcat"
+CATALINA_BASE=$CATALINA_HOME
 export CATALINA_BASE
 
-JAVA_HOME="/usr"
+JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 export JAVA_HOME
 
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jni
+export LD_LIBRARY_PATH
+
 CONTENT_ROOT="-Dtds.content.root.path=$CATALINA_HOME/content"
-NORMAL="-d64 -Xmx4090m -Xmx4090m -server -ea"
-MAX_PERM_GEN="-XX:MaxPermSize=256m"
-HEAP_DUMP="-XX:+HeapDumpOnOutOfMemoryError"
-HEADLESS="-Djava.awt.headless=true"
-JAVA_PREFS_SYSTEM_ROOT="-Djava.util.prefs.systemRoot=$CATALINA_HOME/content/thredds/javaUtilPrefs -Djava.util.prefs.userRoot=$CATALINA_HOME/content/thredds/javaUtilPrefs"
+JAVA_PREFS_SYSTEM_ROOT="-Djava.util.prefs.systemRoot=$CONTENT_ROOT/thredds/javaUtilPrefs -Djava.util.prefs.userRoot=$CONTENT_ROOT/thredds/javaUtilPrefs"
 
-JAVA_OPTS="$CONTENT_ROOT $NORMAL $MAX_PERM_GEN $HEAP_DUMP $HEADLESS $JAVA_PREFS_SYSTEM_ROOT"
-
+JAVA_OPTS="$CONTENT_ROOT $JAVA_PREFS_SYSTEM_ROOT"
 export JAVA_OPTS
+
+. $CATALINA_HOME/bin/javaopts.sh

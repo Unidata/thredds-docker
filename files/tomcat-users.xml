@@ -4,18 +4,21 @@
               xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
               version="1.0">
 
-  <role rolename="restrictedDatasetUser"/>
   <role rolename="tdsConfig" description="can change THREDDS configuration files"/>
   <role rolename="tdsMonitor" description="can monitor log files with tdsMonitor program"/>
   <role rolename="tdsTrigger" description="can trigger feature collections, eg from tdm"/>
+  <role rolename="admin-gui"/>
+  <role rolename="admin-script"/>
   <role rolename="manager-gui"/>
+  <role rolename="manager-script"/>
+  <role rolename="manager-jmx"/>
+  <role rolename="manager-status"/>
 
   <user username="tdm"
-        password="db946640f60093630a27df8dcc806317f287018d"
+        password="1a8755ca18bea68fa43e2fa2d5d89fde446d3151"
         roles="tdsTrigger"/>
   <user username="admin"
-        password="4015bc9ee91e437d90df83fb64fbbe312d9c9f05"
-        roles="tdsConfig,tdsMonitor,manager-gui"/>
+        password="d033e22ae348aeb5660fc2140aec35850c4da997"
+        roles="tdsConfig,tdsMonitor,manager-gui,manager-script,manager-jmx,manager-status,admin-script,admin-gui"/>
 
 </tomcat-users>
-
