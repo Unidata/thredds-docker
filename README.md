@@ -2,8 +2,38 @@
 
 A feature full Tomcat (SSL over APR, etc.) running [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/)
 
+#### tl;dr
+```bash
+$ docker run \
+    -d \
+    -p 80:8080 \
+    -p 443:8443 \
+    -v /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt \
+    -v /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key \
+    -v /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml \
+    -v /path/to/your/thredds/directory:/opt/tomcat/content/thredds \
+    --name thredds \
+    axiom/docker-thredds
+```
 
 ## Configuration
+
+### Ports
+
+Tomcat runs with two ports open
+
+* 8080 - HTTP
+* 8443 - HTTPS
+
+Map the ports to local ports to access outside of the Docker ecosystem:
+```bash
+$ docker run \
+    -p 80:8080 \
+    -p 443:8443 \
+    ... \
+    axiom/docker-thredds
+```
+
 
 ### JVM
 
