@@ -15,7 +15,7 @@ export LD_LIBRARY_PATH
 CONTENT_ROOT="-Dtds.content.root.path=$CATALINA_HOME/content"
 JAVA_PREFS_SYSTEM_ROOT="-Djava.util.prefs.systemRoot=$CONTENT_ROOT/thredds/javaUtilPrefs -Djava.util.prefs.userRoot=$CONTENT_ROOT/thredds/javaUtilPrefs"
 
-JAVA_OPTS="$CONTENT_ROOT $JAVA_PREFS_SYSTEM_ROOT"
+JAVA_OPTS="$CONTENT_ROOT/ $JAVA_PREFS_SYSTEM_ROOT"
 export JAVA_OPTS
 
 . $CATALINA_HOME/bin/javaopts.sh
