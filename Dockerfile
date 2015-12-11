@@ -101,7 +101,6 @@ COPY files/tomcat-users.xml $CATALINA_HOME/conf/tomcat-users.xml
 
 RUN chown -R tomcat:tomcat "$CATALINA_HOME"
 VOLUME $CATALINA_HOME/content/thredds
-VOLUME /data
 USER tomcat
 EXPOSE 8080 8443
 CMD ["catalina.sh", "run"]
