@@ -67,7 +67,8 @@ RUN \
 ENV THREDDS_VERSION 4.6.2
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/$THREDDS_VERSION/tds-$THREDDS_VERSION.war
 
-RUN curl -fSL "$THREDDS_WAR_URL" -o $CATALINA_HOME/webapps/thredds.war
+RUN curl -fSL "$THREDDS_WAR_URL" -o $CATALINA_HOME/webapps/tds-$THREDDS_VERSION.war
+RUN mv $CATALINA_HOME/webapps/tds-$THREDDS_VERSION.war $CATALINA_HOME/webapps/thredds.war
 
 # Run Tomcat as the 'tomcat' user
 RUN groupadd -r tomcat -g 1000
