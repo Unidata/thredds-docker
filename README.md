@@ -2,6 +2,12 @@
 
 A feature full Tomcat (SSL over APR, etc.) running [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/)
 
+Available versions:
+
+* `axiom/docker-thredds` (latest stable release)
+* `axiom/docker-thredds:4.6` (currently `4.6.3`)
+* `axiom/docker-thredds:5.0` (currently `5.0.0`)
+
 #### tl;dr
 ```bash
 $ docker run \
