@@ -81,19 +81,22 @@ $ docker run \
     axiom/docker-thredds
 ```
 
-If you just want to change a few files, you can mount them individually:
+If you just want to change a few files, you can mount them individually. PLease
+note that the **THREDDS cache is stored in the content directory**. If you choose
+to mount individual files, you should also mount a cache directory.
 
 ```bash
 $ docker run \
     -v /path/to/your/threddsConfig.xml:/opt/tomcat/content/thredds/threddsConfig.xml \
     -v /path/to/your/wmsConfig.xml:/opt/tomcat/content/thredds/wmsConfig.xml \
     -v /path/to/your/catalog.xml:/opt/tomcat/content/thredds/catalog.xml \
+    -v /path/to/your/cache:/opt/tomcat/content/thredds/cache \
     ... \
     axiom/docker-thredds
 ```
 
 * `threddsConfig.xml` - the THREDDS configuration file (comments are in-line in the file)
-* `wmsConfig.xml` - the ncWMS
+* `wmsConfig.xml` - the ncWMS configuration file
 * `catalog.xml` - the root catalog THREDDS loads
 
 
