@@ -1,8 +1,6 @@
 FROM axiom/docker-tomcat:8.0
 MAINTAINER Kyle Wilcox <kyle@axiomdatascience.com>
 
-USER root
-
 # THREDDS
 ENV THREDDS_VERSION 4.6.3
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/$THREDDS_VERSION/tds-$THREDDS_VERSION.war
@@ -17,6 +15,8 @@ COPY files/javaopts.sh $CATALINA_HOME/bin/javaopts.sh
 
 RUN chown -R tomcat:tomcat "$CATALINA_HOME"
 
-USER tomcat
+COPY entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]
+
 EXPOSE 8080 8443
 CMD ["catalina.sh", "run"]
