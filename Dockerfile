@@ -1,12 +1,19 @@
 FROM axiom/docker-tomcat:8.0
 MAINTAINER Kyle Wilcox <kyle@axiomdatascience.com>
 
+RUN \
+    apt-get update && \
+    apt-get install -y unzip
+
 # THREDDS
 ENV THREDDS_VERSION 4.6.3
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/$THREDDS_VERSION/tds-$THREDDS_VERSION.war
 
-RUN curl -fSL "$THREDDS_WAR_URL" -o $CATALINA_HOME/webapps/tds-$THREDDS_VERSION.war
-RUN mv $CATALINA_HOME/webapps/tds-$THREDDS_VERSION.war $CATALINA_HOME/webapps/thredds.war
+RUN curl -fSL "$THREDDS_WAR_URL" -o thredds.war
+RUN unzip thredds.war -d $CATALINA_HOME/webapps/thredds/
+
+# Install ncSOS
+COPY files/ncsos.jar $CATALINA_HOME/webapps/thredds/WEB-INF/lib/ncsos.jar
 
 # Tomcat users
 COPY files/tomcat-users.xml $CATALINA_HOME/conf/tomcat-users.xml
