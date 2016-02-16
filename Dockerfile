@@ -14,6 +14,8 @@ RUN unzip thredds.war -d $CATALINA_HOME/webapps/thredds/
 
 # Install ncSOS
 COPY files/ncsos.jar $CATALINA_HOME/webapps/thredds/WEB-INF/lib/ncsos.jar
+# Default thredds config
+COPY files/threddsConfig.xml $CATALINA_HOME/content/thredds/threddsConfig.xml
 
 # Tomcat users
 COPY files/tomcat-users.xml $CATALINA_HOME/conf/tomcat-users.xml
