@@ -79,4 +79,4 @@ $ docker run \
 By default, Tomcat will start with [two user accounts](https://github.com/axiom-data-science/docker-thredds/blob/master/files/tomcat-users.xml). The passwords are equal to the user name.
 
 * `tdm` - used by the THREDDS Data Manager for connecting to THREDDS
-* `admin` - can be used by everything else (has full privileges
+* `admin` - can be used by everything else (has full privileges)
