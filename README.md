@@ -4,8 +4,8 @@ A feature full Tomcat (SSL over APR, etc.) running [THREDDS Data Server](http://
 
 Available versions:
 
-* `axiom/docker-thredds` (currently `4.6.4`)
-* `axiom/docker-thredds:4.6` (currently `4.6.4`)
+* `axiom/docker-thredds` (currently `4.6.5`)
+* `axiom/docker-thredds:4.6` (currently `4.6.5`)
 * `axiom/docker-thredds:5.0` (currently `5.0.0`)
 
 ### tl;dr
