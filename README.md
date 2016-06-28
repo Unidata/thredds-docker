@@ -31,7 +31,10 @@ $ docker run \
     -v /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt \
     -v /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key \
     -v /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml \
+    -v /path/to/your/cache:/opt/tomcat/content/thredds/cache \
     -v /path/to/your/thredds/directory:/opt/tomcat/content/thredds \
+    -v /path/to/your/data/directory1:/path/to/your/data/directory1 \
+    -v /path/to/your/data/directory2:/path/to/your/data/directory2 \
     --name thredds \
     axiom/docker-thredds
 ```
@@ -65,6 +68,8 @@ $ docker run \
     -v /path/to/your/wmsConfig.xml:/opt/tomcat/content/thredds/wmsConfig.xml \
     -v /path/to/your/catalog.xml:/opt/tomcat/content/thredds/catalog.xml \
     -v /path/to/your/cache:/opt/tomcat/content/thredds/cache \
+    -v /path/to/your/data/directory1:/path/to/your/data/directory1 \
+    -v /path/to/your/data/directory2:/path/to/your/data/directory2 \
     ... \
     axiom/docker-thredds
 ```
@@ -80,3 +85,31 @@ By default, Tomcat will start with [two user accounts](https://github.com/axiom-
 
 * `tdm` - used by the THREDDS Data Manager for connecting to THREDDS
 * `admin` - can be used by everything else (has full privileges)
+
+### Use Case
+
+ Let's say you want to upgrade to the Docker THREDDS Container, and you already have a TDS configured with
+ * Directory containing TDS configuration files (e.g. threddsConfig.xml, wmsConfig.xml and THREDDS catalog .xml files) in `/usr/local/tomcat/content/thredds`
+ * Folders containing NetCDF and other data files read by the TDS in `/data1` and `/data2`
+ * Tomcat users configured in `/usr/local/tomcat/conf/tomcat-users.xml`
+ * SSL certificate at `/usr/local/tomcat/ssl.crt` and SSK key at `/usr/local/tomcat/ssl.key`
+ * Top level directory for TDS cache at `/usr/local/tomcat/content/thredds/cache`
+ * Running on ports 8090 and 8453 (ssl)
+ 
+Then you could issue this command to fire up the new Docker TDS container (remember to stop the old TDS first):
+```bash
+$ docker run \
+    -d \
+    -p 8090:8080 \
+    -p 8453:8443 \
+    -v /usr/local/tomcat/ssl.crt:/opt/tomcat/conf/ssl.crt \
+    -v /usr/local/tomcat/ssl.key:/opt/tomcat/conf/ssl.key \
+    -v /usr/local/tomcat/conf/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml \
+    -v /usr/local/tomcat/content/thredds:/opt/tomcat/content/thredds \
+    -v //usr/local/tomcat/content/thredds/cache:/opt/tomcat/content/thredds/cache \
+    -v /data1:/data1 \
+    -v /data2:/data2 \
+    ... \
+    axiom/docker-thredds
+```
+
