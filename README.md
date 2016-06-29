@@ -92,8 +92,7 @@ By default, Tomcat will start with [two user accounts](https://github.com/axiom-
  * Directory containing TDS configuration files (e.g. threddsConfig.xml, wmsConfig.xml and THREDDS catalog .xml files) in `/usr/local/tomcat/content/thredds`
  * Folders containing NetCDF and other data files read by the TDS in `/data1` and `/data2`
  * Tomcat users configured in `/usr/local/tomcat/conf/tomcat-users.xml`
- * SSL certificate at `/usr/local/tomcat/ssl.crt` and SSK key at `/usr/local/tomcat/ssl.key`
- * Top level directory for TDS cache at `/usr/local/tomcat/content/thredds/cache`
+ * SSL certificate at `/usr/local/tomcat/ssl.crt` and SSL key at `/usr/local/tomcat/ssl.key`
  * Running on ports 8090 and 8453 (ssl)
  
 Then you could issue this command to fire up the new Docker TDS container (remember to stop the old TDS first):
@@ -106,7 +105,6 @@ $ docker run \
     -v /usr/local/tomcat/ssl.key:/opt/tomcat/conf/ssl.key \
     -v /usr/local/tomcat/conf/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml \
     -v /usr/local/tomcat/content/thredds:/opt/tomcat/content/thredds \
-    -v //usr/local/tomcat/content/thredds/cache:/opt/tomcat/content/thredds/cache \
     -v /data1:/data1 \
     -v /data2:/data2 \
     ... \
