@@ -1,9 +1,12 @@
-FROM axiom/docker-tomcat:8.0
+FROM axiom/docker-tomcat:8.0.36
 MAINTAINER Kyle Wilcox <kyle@axiomdatascience.com>
 
 RUN \
     apt-get update && \
-    apt-get install -y unzip
+    apt-get install -y \
+        unzip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # THREDDS
 ENV THREDDS_VERSION 4.6.5
@@ -23,9 +26,3 @@ COPY files/tomcat-users.xml $CATALINA_HOME/conf/tomcat-users.xml
 COPY files/javaopts.sh $CATALINA_HOME/bin/javaopts.sh
 
 RUN chown -R tomcat:tomcat "$CATALINA_HOME"
-
-COPY entrypoint.sh /
-ENTRYPOINT ["/entrypoint.sh"]
-
-EXPOSE 8080 8443
-CMD ["catalina.sh", "run"]
