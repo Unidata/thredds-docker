@@ -31,7 +31,6 @@ $ docker run \
     -v /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt \
     -v /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key \
     -v /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml \
-    -v /path/to/your/cache:/opt/tomcat/content/thredds/cache \
     -v /path/to/your/thredds/directory:/opt/tomcat/content/thredds \
     -v /path/to/your/data/directory1:/path/to/your/data/directory1 \
     -v /path/to/your/data/directory2:/path/to/your/data/directory2 \
