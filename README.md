@@ -4,15 +4,15 @@ A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thred
 
 Available major versions:
 
-* `axiom/docker-thredds` (currently `4.6.6`)
-* `axiom/docker-thredds:4.6` (currently `4.6.6`)
-* `axiom/docker-thredds:5.0` (currently `5.0.0`)
+* `unidata/thredds-docker` (currently `4.6.6`)
+* `unidata/thredds-docker:4.6` (currently `4.6.6`)
+* `unidata/thredds-docker:5.0` (currently `5.0.0`)
 
 Specific releases:
 
-* `axiom/docker-thredds:5.0.0`
-* `axiom/docker-thredds:4.6.6`
-* `axiom/docker-thredds:4.6.5`
+* `unidata/thredds-docker:5.0.0`
+* `unidata/thredds-docker:4.6.6`
+* `unidata/thredds-docker:4.6.5`
 
 
 ### tl;dr
@@ -24,7 +24,7 @@ $ docker run \
     -d \
     -p 80:8080 \
     -p 443:8443 \
-    axiom/docker-thredds
+    unidata/thredds-docker
 ```
 
 **Production**
@@ -42,7 +42,7 @@ $ docker run \
     -v /path/to/your/data/directory1:/path/to/your/data/directory1 \
     -v /path/to/your/data/directory2:/path/to/your/data/directory2 \
     --name thredds \
-    axiom/docker-thredds
+    unidata/thredds-docker
 ```
 
 ## Configuration
@@ -61,7 +61,7 @@ Mount your own `content/thredds` directory:
 $ docker run \
     -v /path/to/your/thredds/directory:/opt/tomcat/content/thredds \
     ... \
-    axiom/docker-thredds
+    unidata/thredds-docker
 ```
 
 If you just want to change a few files, you can mount them individually. Please
@@ -77,7 +77,7 @@ $ docker run \
     -v /path/to/your/data/directory1:/path/to/your/data/directory1 \
     -v /path/to/your/data/directory2:/path/to/your/data/directory2 \
     ... \
-    axiom/docker-thredds
+    unidata/thredds-docker
 ```
 
 * `threddsConfig.xml` - the THREDDS configuration file (comments are in-line in the file)
@@ -87,7 +87,7 @@ $ docker run \
 
 ### Users
 
-By default, Tomcat will start with [two user accounts](https://github.com/axiom-data-science/docker-thredds/blob/master/files/tomcat-users.xml). The passwords are equal to the user name.
+By default, Tomcat will start with [two user accounts](https://github.com/Unidata/thredds-docker/blob/master/files/tomcat-users.xml). The passwords are equal to the user name.
 
 * `tdm` - used by the THREDDS Data Manager for connecting to THREDDS
 * `admin` - can be used by everything else (has full privileges)
@@ -114,6 +114,6 @@ $ docker run \
     -v /data1:/data1 \
     -v /data2:/data2 \
     ... \
-    axiom/docker-thredds
+    unidata/thredds-docker
 ```
 

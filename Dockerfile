@@ -1,5 +1,5 @@
 FROM axiom/docker-tomcat:8.0.36
-MAINTAINER Kyle Wilcox <kyle@axiomdatascience.com>
+MAINTAINER Kyle Wilcox <kyle@axiomdatascience.com> and Unidata
 
 RUN \
     apt-get update && \
