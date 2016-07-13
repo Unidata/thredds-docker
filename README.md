@@ -1,6 +1,6 @@
 # THREDDS on Docker
 
-A feature full Tomcat (SSL over APR, etc.) running [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/)
+A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) containing a full-featured Tomcat (SSL over APR, etc.). This project was initially developed by [Axiom Data Science](http://www.axiomdatascience.com/) and now lives at Unidata.
 
 Available major versions:
 
