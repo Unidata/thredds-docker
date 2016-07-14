@@ -14,6 +14,13 @@ Specific releases:
 * `unidata/thredds-docker:4.6.6`
 * `unidata/thredds-docker:4.6.5`
 
+## Building the Container
+
+To build the THREDDS Docker container:
+
+    docker build  -t unidata/thredds-docker:<version> .
+
+It is best to be on a fast network when building containers as there can be many intermediate layers to download.
 
 ### tl;dr
 
