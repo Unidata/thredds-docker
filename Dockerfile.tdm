@@ -1,0 +1,76 @@
+FROM java:8
+
+MAINTAINER Unidata Cloud Team
+
+###
+# Usual maintenance
+###
+
+USER root
+
+RUN apt-get update
+
+RUN apt-get install -y curl
+
+###
+# Create the user and group tomcat and change ownership of the tomcat directory
+# to user and group tomcat. Note that we are not running a Java web application
+# or Tomcat. We are simply creating a non-root user, and tomcat is a convenient
+# choice.
+###
+
+RUN groupadd -r tomcat -g 1000 && \
+    useradd -u 1000 -r -g tomcat -d /usr/local/tomcat -s /bin/bash -c \
+    "User tomcat for Docker image" tomcat
+
+###
+# TOMCAT HOME
+###
+
+ENV HOME /usr/local/tomcat
+
+WORKDIR $HOME
+
+###
+# Create content/tdm directory
+###
+
+WORKDIR $HOME/content/tdm
+
+ENV TDS_MAJOR_VERSION 4.6
+ENV TDS_MINOR_VERSION 4.6.6
+ENV TDM_VERSION 4.6
+
+###
+# Grab the TDM
+###
+
+RUN curl -SL \
+    ftp://ftp.unidata.ucar.edu/pub/thredds/${TDS_MAJOR_VERSION}/${TDS_MINOR_VERSION}/tdm-${TDM_VERSION}.jar \
+    -o tdm-${TDM_VERSION}.jar
+
+###
+# Copy the TDM executable inside the container
+###
+
+COPY tdm.sh $HOME/content/tdm
+
+RUN chmod +x tdm.sh
+
+###
+# Change owner of tomcat directory to user and group tomcat
+###
+
+RUN chown -R tomcat:tomcat /usr/local/tomcat 
+
+###
+# Switch to user tomcat
+###
+
+USER tomcat
+
+###
+# TDS Command
+###
+
+CMD $HOME/content/tdm/tdm.sh
