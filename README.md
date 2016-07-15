@@ -27,29 +27,20 @@ It is best to be on a fast network when building containers as there can be many
 **Quickstart**
 
 ```bash
-$ docker run \
-    -d \
-    -p 80:8080 \
-    -p 443:8443 \
-    unidata/thredds-docker
+$ docker-compose up -d thredds-quickstart
 ```
+
+## `docker-compose`
+
+To run the THREDDS Docker container, beyond a basic Docker setup, we recommend installing [docker-compose](https://docs.docker.com/compose/).
+
 
 **Production**
 
+First, define directory and file paths for SSL, Tomcat, THREDDS, and data in [docker-compose.yml](docker-compose.yml) for the `thredds-production` image. Then:
 
 ```bash
-$ docker run \
-    -d \
-    -p 80:8080 \
-    -p 443:8443 \
-    -v /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt \
-    -v /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key \
-    -v /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml \
-    -v /path/to/your/thredds/directory:/opt/tomcat/content/thredds \
-    -v /path/to/your/data/directory1:/path/to/your/data/directory1 \
-    -v /path/to/your/data/directory2:/path/to/your/data/directory2 \
-    --name thredds \
-    unidata/thredds-docker
+$ docker-compose up -d thredds-production
 ```
 
 ## Configuration
@@ -62,29 +53,25 @@ See [these instructions](https://github.com/axiom-data-science/docker-tomcat) fo
 ### THREDDS
 
 
-Mount your own `content/thredds` directory:
+To mount your own `content/thredds` directory with `docker-compose.yml`:
 
-```bash
-$ docker run \
-    -v /path/to/your/thredds/directory:/opt/tomcat/content/thredds \
-    ... \
-    unidata/thredds-docker
+```
+  volumes:
+    /path/to/your/thredds/directory:/opt/tomcat/content/thredds
 ```
 
 If you just want to change a few files, you can mount them individually. Please
 note that the **THREDDS cache is stored in the content directory**. If you choose
 to mount individual files, you should also mount a cache directory.
 
-```bash
-$ docker run \
-    -v /path/to/your/threddsConfig.xml:/opt/tomcat/content/thredds/threddsConfig.xml \
-    -v /path/to/your/wmsConfig.xml:/opt/tomcat/content/thredds/wmsConfig.xml \
-    -v /path/to/your/catalog.xml:/opt/tomcat/content/thredds/catalog.xml \
-    -v /path/to/your/cache:/opt/tomcat/content/thredds/cache \
-    -v /path/to/your/data/directory1:/path/to/your/data/directory1 \
-    -v /path/to/your/data/directory2:/path/to/your/data/directory2 \
-    ... \
-    unidata/thredds-docker
+```
+  volumes:
+    /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt
+    /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key
+    /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml
+    /path/to/your/thredds/directory:/opt/tomcat/content/thredds
+    /path/to/your/data/directory1:/path/to/your/data/directory1 
+    /path/to/your/data/directory2:/path/to/your/data/directory2
 ```
 
 * `threddsConfig.xml` - the THREDDS configuration file (comments are in-line in the file)
@@ -109,18 +96,8 @@ By default, Tomcat will start with [two user accounts](https://github.com/Unidat
  * Running on ports 8090 and 8453 (ssl)
  
 Then you could issue this command to fire up the new Docker TDS container (remember to stop the old TDS first):
-```bash
-$ docker run \
-    -d \
-    -p 8090:8080 \
-    -p 8453:8443 \
-    -v /usr/local/tomcat/ssl.crt:/opt/tomcat/conf/ssl.crt \
-    -v /usr/local/tomcat/ssl.key:/opt/tomcat/conf/ssl.key \
-    -v /usr/local/tomcat/conf/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml \
-    -v /usr/local/tomcat/content/thredds:/opt/tomcat/content/thredds \
-    -v /data1:/data1 \
-    -v /data2:/data2 \
-    ... \
-    unidata/thredds-docker
-```
 
+```bash
+$ docker-compose stop thredds-production
+$ docker-compose up -d thredds-production
+```
