@@ -1,0 +1,26 @@
+###
+# THREDDS Quickstart
+###
+thredds-quickstart:
+  image: unidata/thredds-docker:latest
+  ports:
+    - "80:8080"
+    - "443:8443"
+
+###
+# THREDDS Production
+###
+
+thredds-production:
+  image: unidata/thredds-docker:latest
+  ports:
+    - "80:8080"
+    - "443:8443"
+  container_name: thredds
+  volumes:
+    - /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt
+    - /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key
+    - /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml
+    - /path/to/your/thredds/directory:/opt/tomcat/content/thredds
+    - /path/to/your/data/directory1:/path/to/your/data/directory1 
+    - /path/to/your/data/directory2:/path/to/your/data/directory2
