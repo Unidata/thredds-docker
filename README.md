@@ -4,16 +4,16 @@ A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thred
 
 Available major versions:
 
-* `unidata/thredds-docker` (currently `4.6.6`)
-* `unidata/thredds-docker:latest` (currently `4.6.6`)
-* `unidata/thredds-docker:4.6` (currently `4.6.6`)
-* `unidata/thredds-docker:5.0` (currently `5.0.0`)
+* `unidata/tds` (currently `4.6.6`)
+* `unidata/tds:latest` (currently `4.6.6`)
+* `unidata/tds:4.6` (currently `4.6.6`)
+* `unidata/tds:5.0` (currently `5.0.0`)
 
 Specific releases:
 
-* `unidata/thredds-docker:5.0.0`
-* `unidata/thredds-docker:4.6.6`
-* `unidata/thredds-docker:4.6.5`
+* `unidata/tds:5.0.0`
+* `unidata/tds:4.6.6`
+* `unidata/tds:4.6.5`
 
 ## tl;dr
 
@@ -26,7 +26,7 @@ $ docker-compose up -d thredds-quickstart
 
 To build the THREDDS Docker container:
 
-    docker build -t unidata/thredds-docker:<version> .
+    docker build -t unidata/tds:<version> .
 
 It is best to be on a fast network when building containers as there can be many intermediate layers to download.
 
