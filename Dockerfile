@@ -9,8 +9,8 @@ RUN \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # THREDDS
-ENV THREDDS_VERSION 4.6.5
-ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/$THREDDS_VERSION/tds-$THREDDS_VERSION.war
+ENV TDS_VERSION 4.6.6
+ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/$TDS_VERSION/tds-$TDS_VERSION.war
 
 RUN curl -fSL "$THREDDS_WAR_URL" -o thredds.war
 RUN unzip thredds.war -d $CATALINA_HOME/webapps/thredds/

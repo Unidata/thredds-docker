@@ -5,6 +5,7 @@ A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thred
 Available major versions:
 
 * `unidata/thredds-docker` (currently `4.6.6`)
+* `unidata/thredds-docker:latest` (currently `4.6.6`)
 * `unidata/thredds-docker:4.6` (currently `4.6.6`)
 * `unidata/thredds-docker:5.0` (currently `5.0.0`)
 
@@ -14,21 +15,20 @@ Specific releases:
 * `unidata/thredds-docker:4.6.6`
 * `unidata/thredds-docker:4.6.5`
 
-## Building the Container
-
-To build the THREDDS Docker container:
-
-    docker build  -t unidata/thredds-docker:<version> .
-
-It is best to be on a fast network when building containers as there can be many intermediate layers to download.
-
-### tl;dr
+## tl;dr
 
 **Quickstart**
 
 ```bash
 $ docker-compose up -d thredds-quickstart
 ```
+## Building the THREDDS Container
+
+To build the THREDDS Docker container:
+
+    docker build -t unidata/thredds-docker:<version> .
+
+It is best to be on a fast network when building containers as there can be many intermediate layers to download.
 
 ## `docker-compose`
 
@@ -101,3 +101,25 @@ Then you could issue this command to fire up the new Docker TDS container (remem
 $ docker-compose stop thredds-production
 $ docker-compose up -d thredds-production
 ```
+
+## TDM
+
+The TDM is an application that works in conjunction with the TDS. It creates indexes for GRIB data in a background process, and notifies the TDS via port 8443 when data have been updated or changed. See [here](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) to learn more about the TDM. 
+
+When the TDM informs TDS concerning data changes, it will communicate via the `tdm` tomcat user. Edit the `docker-compose.yml` file and change the `TDM_PW` to [TDM password](https://github.com/axiom-data-science/docker-tomcat#users). Also ensure `TDS_HOST` is pointing to the correct THREDDS host.
+
+Available versions:
+
+* `unidata/tdm` (currently `4.6`)
+* `unidata/tdm:latest` (currently `4.6`)
+* `unidata/tdm:4.6`
+
+```bash
+$ docker-compose up -d tdm
+```
+
+### Building the TDM Container
+
+To build the TDM Docker container:
+
+    docker build -f Dockerfile.tdm -t unidata/tdm:<version> .
