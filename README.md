@@ -39,7 +39,7 @@ To run the THREDDS Docker container, beyond a basic Docker setup, we recommend i
 
 **Production**
 
-First, define directory and file paths for SSL, Tomcat, THREDDS, and data in [docker-compose.yml](docker-compose.yml) for the `thredds-production` image. Then:
+First, define directory and file paths for log files, SSL, Tomcat, THREDDS, and data in [docker-compose.yml](docker-compose.yml) for the `thredds-production` image. Then:
 
 ```bash
 $ docker-compose up -d thredds-production
@@ -68,6 +68,7 @@ to mount individual files, you should also mount a cache directory.
 
 ```
   volumes:
+    /path/to/your/logs/:/opt/tomcat/logs/
     /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt
     /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key
     /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml
