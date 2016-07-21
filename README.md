@@ -1,5 +1,7 @@
 # THREDDS on Docker
 
+[![Travis Status](https://travis-ci.org/Unidata/thredds-docker.svg?branch=master)](https://travis-ci.org/Unidata/thredds-docker)
+
 A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) containing a full-featured Tomcat (SSL over APR, etc.). This project was initially developed by [Axiom Data Science](http://www.axiomdatascience.com/) and now lives at Unidata.
 
 Available major versions:
