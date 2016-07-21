@@ -60,4 +60,4 @@ COPY files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
 
 RUN chown -R tomcat:tomcat "${CATALINA_HOME}"
 
-USER tomcat
+# USER tomcat
