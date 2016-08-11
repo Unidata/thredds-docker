@@ -40,6 +40,11 @@ To run the THREDDS Docker container, beyond a basic Docker setup, we recommend i
 
 First, define directory and file paths for log files, SSL, Tomcat, THREDDS, and data in [docker-compose.yml](docker-compose.yml) for the `thredds-production` image. Then:
 
+### Memory
+
+Tomcat web applications and the TDS can require large amounts of memory to run. This container is setup to run Tomcat with a [4 gigabyte memory allocation](files/javaopts.sh). When running this container, ensure your VM or hardware can accommodate this memory requirement.
+
+
 ### Running the TDS
 
 Once you have completed your setup you can run the container with:
