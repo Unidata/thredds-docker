@@ -54,9 +54,23 @@ COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
 COPY files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
 
 ###
+# Entry point
+###
+
+COPY entrypoint.sh ${CATALINA_HOME}/
+
+###
 # chown
 ###
 
 RUN chown -R tomcat:tomcat "${CATALINA_HOME}"
 
-# USER tomcat
+###
+# Start container
+###
+
+ENTRYPOINT ["/opt/tomcat/entrypoint.sh"]
+
+EXPOSE 8080 8443
+
+CMD ["catalina.sh", "run"]
