@@ -12,8 +12,7 @@ MAINTAINER Kyle Wilcox <kyle@axiomdatascience.com> and Unidata Cloud Team
 
 RUN \
     apt-get update && \
-    apt-get install -y \
-        unzip && \
+    apt-get install -y unzip vim && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
