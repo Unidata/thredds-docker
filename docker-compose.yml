@@ -43,3 +43,21 @@ tdm:
     - TDM_PW=CHANGEME!
     # that trailing slash is important
     - TDS_HOST=http://thredds.yourhost.net/
+
+
+###
+# Vanilla Axiom Tomcat, useful for debugging or experimentation
+###
+
+axiom-tomcat:
+  image: axiom/docker-tomcat
+  ports:
+    - "80:8080"
+    - "443:8443"
+    - "8443:8443"
+  container_name: tomcat
+  volumes:
+    - /path/to/your/logs/:/opt/tomcat/logs/
+    - /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt
+    - /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key
+    - /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml
