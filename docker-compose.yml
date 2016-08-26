@@ -40,7 +40,7 @@ tdm:
     - /path/to/your/data/directory1:/path/to/your/data/directory1
     # TDM logging non-configurable until 5.0 so you'll need tdm.sh and
     # tdm-4.6.jar if you want to log outside the container :-(
-    - /path/to/your/:/opt/tomcat/content/tdm/
+    - /path/to/your/tdm/logs:/opt/tomcat/content/tdm/
   environment:
     # change the password
     - TDM_PW=CHANGEME!
