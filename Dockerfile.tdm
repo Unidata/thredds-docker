@@ -29,13 +29,15 @@ RUN groupadd -r tomcat -g 1000 && \
 
 ENV HOME /opt/tomcat
 
-WORKDIR $HOME
+ENV TDM_HOME /opt/tomcat/content/tdm
+
+RUN mkdir -p $TDM_HOME
 
 ###
 # Create content/tdm directory
 ###
 
-WORKDIR $HOME/content/tdm
+WORKDIR $TDM_HOME
 
 ENV TDS_MAJOR_VERSION 4.6
 ENV TDS_MINOR_VERSION 4.6.6
@@ -53,7 +55,7 @@ RUN curl -SL \
 # Copy the TDM executable inside the container
 ###
 
-COPY tdm.sh $HOME/content/tdm
+COPY tdm.sh $TDM_HOME
 
 RUN chmod +x tdm.sh
 
@@ -73,4 +75,4 @@ USER tomcat
 # TDS Command
 ###
 
-CMD $HOME/content/tdm/tdm.sh
+CMD $TDM_HOME/tdm.sh
