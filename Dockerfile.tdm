@@ -27,7 +27,7 @@ RUN groupadd -r tomcat -g 1000 && \
 # TOMCAT HOME
 ###
 
-ENV HOME /usr/local/tomcat
+ENV HOME /opt/tomcat
 
 WORKDIR $HOME
 
@@ -61,7 +61,7 @@ RUN chmod +x tdm.sh
 # Change owner of tomcat directory to user and group tomcat
 ###
 
-RUN chown -R tomcat:tomcat /usr/local/tomcat 
+RUN chown -R tomcat:tomcat $HOME
 
 ###
 # Switch to user tomcat
