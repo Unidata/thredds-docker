@@ -40,6 +40,11 @@ To run the THREDDS Docker container, beyond a basic Docker setup, we recommend i
 
 First, define directory and file paths for log files, SSL, Tomcat, THREDDS, and data in [docker-compose.yml](docker-compose.yml) for the `thredds-production` image. Then:
 
+### Memory
+
+Tomcat web applications and the TDS can require large amounts of memory to run. This container is setup to run Tomcat with a [4 gigabyte memory allocation](files/javaopts.sh). When running this container, ensure your VM or hardware can accommodate this memory requirement.
+
+
 ### Running the TDS
 
 Once you have completed your setup you can run the container with:
@@ -82,7 +87,8 @@ to mount individual files, you should also mount a cache directory.
 
 ```
   volumes:
-    - /path/to/your/logs/:/opt/tomcat/logs/
+    - /path/to/your/tomcat/logs/:/opt/tomcat/logs/
+    - /path/to/your/thredds/logs/:/opt/tomcat/content/thredds/logs/
     - /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt
     - /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key
     - /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml
@@ -105,10 +111,10 @@ By default, Tomcat will start with [two user accounts](https://github.com/Unidat
 ### Use Case
 
  Let's say you want to upgrade to the Docker THREDDS Container, and you already have a TDS configured with
- * Directory containing TDS configuration files (e.g. threddsConfig.xml, wmsConfig.xml and THREDDS catalog .xml files) in `/usr/local/tomcat/content/thredds`
+ * Directory containing TDS configuration files (e.g. `threddsConfig.xml`, `wmsConfig.xml` and THREDDS catalog `.xml` files) in `/opt/tomcat/content/thredds`
  * Folders containing NetCDF and other data files read by the TDS in `/data1` and `/data2`
- * Tomcat users configured in `/usr/local/tomcat/conf/tomcat-users.xml`
- * SSL certificate at `/usr/local/tomcat/ssl.crt` and SSL key at `/usr/local/tomcat/ssl.key`
+ * Tomcat users configured in `/opt/tomcat/conf/tomcat-users.xml`
+ * SSL certificate at `/opt/tomcat/ssl.crt` and SSL key at `/opt/tomcat/ssl.key`
  * Running on ports 8090 and 8453 (ssl)
  
 Then you could issue this command to fire up the new Docker TDS container (remember to stop the old TDS first):
@@ -202,3 +208,16 @@ To build the TDM Docker container:
 
     docker build -f Dockerfile.tdm -t unidata/tdm:<version> .
 
+### Capturing TDM Log Files Outside the Container
+
+Until `5.0`, the TDM lacks configurability with respect to the location of log files and the TDM simply logs locally to where the TDM is invoked. In the meantime, to capture TDM log files outside the container, do the usual volume mounting outside the container:
+
+    /path/to/your/tdm/logs:/opt/tomcat/content/tdm/
+
+*and* put the `tdm.jar` and `tdm.sh` run script in `/path/to/your/tdm/logs`.
+
+For example, you can get the `tdm.jar`:
+
+    curl -SL ftp://ftp.unidata.ucar.edu/pub/thredds/4.6/4.6.6/tdm-4.6.jar -o tdm-4.6.jar
+
+The `tdm.sh` script can be found within this repository. Make sure the `tdm.sh` script is executable by the container.
