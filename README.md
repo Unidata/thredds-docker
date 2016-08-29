@@ -9,11 +9,11 @@ Available major versions:
 * `unidata/tds` (currently `4.6.6`)
 * `unidata/tds:latest` (currently `4.6.6`)
 * `unidata/tds:4.6` (currently `4.6.6`)
-* `unidata/tds:5.0.0-SNAPSHOT` (currently `5.0.0-20160708.184540-12`)
+* `unidata/tds:5.0.0-SNAPSHOT` (currently `5.0.0-20160808.141712-14`)
 
 Specific releases:
 
-* `unidata/tds:5.0.0-20160708.184540-12`
+* `unidata/tds:5.0.0-20160808.141712-14`
 * `unidata/tds:4.6.6`
 * `unidata/tds:4.6.5`
 
