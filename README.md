@@ -110,10 +110,10 @@ By default, Tomcat will start with [two user accounts](https://github.com/Unidat
 ### Use Case
 
  Let's say you want to upgrade to the Docker THREDDS Container, and you already have a TDS configured with
- * Directory containing TDS configuration files (e.g. threddsConfig.xml, wmsConfig.xml and THREDDS catalog .xml files) in `/usr/local/tomcat/content/thredds`
+ * Directory containing TDS configuration files (e.g. `threddsConfig.xml`, `wmsConfig.xml` and THREDDS catalog `.xml` files) in `/opt/tomcat/content/thredds`
  * Folders containing NetCDF and other data files read by the TDS in `/data1` and `/data2`
- * Tomcat users configured in `/usr/local/tomcat/conf/tomcat-users.xml`
- * SSL certificate at `/usr/local/tomcat/ssl.crt` and SSL key at `/usr/local/tomcat/ssl.key`
+ * Tomcat users configured in `/opt/tomcat/conf/tomcat-users.xml`
+ * SSL certificate at `/opt/tomcat/ssl.crt` and SSL key at `/opt/tomcat/ssl.key`
  * Running on ports 8090 and 8453 (ssl)
  
 Then you could issue this command to fire up the new Docker TDS container (remember to stop the old TDS first):
