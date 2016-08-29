@@ -87,7 +87,8 @@ to mount individual files, you should also mount a cache directory.
 
 ```
   volumes:
-    - /path/to/your/logs/:/opt/tomcat/logs/
+    - /path/to/your/tomcat/logs/:/opt/tomcat/logs/
+    - /path/to/your/thredds/logs/:/opt/tomcat/content/thredds/logs/
     - /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt
     - /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key
     - /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml
