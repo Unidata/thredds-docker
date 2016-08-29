@@ -208,3 +208,16 @@ To build the TDM Docker container:
 
     docker build -f Dockerfile.tdm -t unidata/tdm:<version> .
 
+### Capturing TDM Log Files Outside the Container
+
+Until `5.0`, the TDM lacks configurability with respect to the location of log files and the TDM simply logs locally to where the TDM is invoked. In the meantime, to capture TDM log files outside the container, do the usual volume mounting outside the container:
+
+    /path/to/your/tdm/logs:/opt/tomcat/content/tdm/
+
+*and* put the `tdm.jar` and `tdm.sh` run script in `/path/to/your/tdm/logs`.
+
+For example, you can get the `tdm.jar`:
+
+    curl -SL ftp://ftp.unidata.ucar.edu/pub/thredds/4.6/4.6.6/tdm-4.6.jar -o tdm-4.6.jar
+
+The `tdm.sh` script can be found within this repository. Make sure the `tdm.sh` script is executable by the container.
