@@ -6,32 +6,15 @@
 
 A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) built on top a [security hardened Tomcat container maintained by Unidata](https://github.com/Unidata/tomcat-docker). This project was initially developed by [Axiom Data Science](http://www.axiomdatascience.com/) and now lives at Unidata.
 
-Available major versions:
+## Versions
 
-* `unidata/tds` (currently `4.6.6`)
-* `unidata/tds:latest` (currently `4.6.6`)
-* `unidata/tds:4.6` (currently `4.6.6`)
-* `unidata/tds:5.0.0-SNAPSHOT` (currently `5.0.0-20160808.141712-14`)
-
-Specific releases:
-
-* `unidata/tds:5.0.0-20160808.141712-14`
-* `unidata/tds:4.6.6`
-* `unidata/tds:4.6.5`
+* `unidata/thredds-docker:4.6.6`
 
 ## tl;dr
 
 **Quickstart**
 
-    docker run -d -p 80:8080 unidata/tds
-
-## Building the THREDDS Container
-
-To build the THREDDS Docker container:
-
-    docker build -t unidata/tds:<version> .
-
-It is best to be on a fast network when building containers as there can be many intermediate layers to download.
+    docker run -d -p 80:8080 unidata/thredds-docker
 
 ## `docker-compose`
 
