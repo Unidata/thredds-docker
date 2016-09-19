@@ -39,16 +39,14 @@ RUN mkdir -p $TDM_HOME
 
 WORKDIR $TDM_HOME
 
-ENV TDS_MAJOR_VERSION 4.6
-ENV TDS_MINOR_VERSION 4.6.6
-ENV TDM_VERSION 4.6
+ENV TDM_VERSION 4.6.6
 
 ###
 # Grab the TDM
 ###
 
 RUN curl -SL \
-    ftp://ftp.unidata.ucar.edu/pub/thredds/${TDS_MAJOR_VERSION}/${TDS_MINOR_VERSION}/tdm-${TDM_VERSION}.jar \
+    https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tdmFat/${TDM_VERSION}/tdmFat-${TDM_VERSION}.jar \
     -o tdm-${TDM_VERSION}.jar
 
 ###

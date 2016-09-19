@@ -220,6 +220,6 @@ Until `5.0`, the TDM lacks configurability with respect to the location of log f
 
 For example, you can get the `tdm.jar`:
 
-    curl -SL ftp://ftp.unidata.ucar.edu/pub/thredds/4.6/4.6.6/tdm-4.6.jar -o tdm-4.6.jar
+    curl -SL  https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tdmFat/4.6.6/tdmFat-4.6.6.jar -o tdm.jar
 
 The `tdm.sh` script can be found within this repository. Make sure the `tdm.sh` script is executable by the container.
