@@ -196,11 +196,9 @@ At this point we are done setting up the TDS with docker. To navigate to this in
 
 The TDM is an application that works in conjunction with the TDS. It creates indexes for GRIB data in a background process, and notifies the TDS via port 8443 when data have been updated or changed. See [here](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) to learn more about the TDM. 
 
-Available versions:
+### Versions
 
-* `unidata/tdm` (currently `4.6`)
-* `unidata/tdm:latest` (currently `4.6`)
-* `unidata/tdm:4.6`
+* `unidata/tdm-docker:4.6`
 
 ### Configuration
 
@@ -209,12 +207,6 @@ When the TDM informs TDS concerning data changes, it will communicate via the `t
 ### Running the TDM
 
     docker-compose up -d tdm
-
-### Building the TDM Container
-
-To build the TDM Docker container:
-
-    docker build -f Dockerfile.tdm -t unidata/tdm:<version> .
 
 ### Capturing TDM Log Files Outside the Container
 

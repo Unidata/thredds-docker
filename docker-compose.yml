@@ -32,7 +32,7 @@ thredds-production:
 ###
 
 tdm:
-  image: unidata/tdm:latest
+  image: unidata/tdm-docker:4.6
   container_name: tdm
   volumes:
     - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
