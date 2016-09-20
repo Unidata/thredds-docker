@@ -16,22 +16,19 @@ RUN apt-get install -y curl
 # Create the user and group tomcat and change ownership of the tomcat directory
 # to user and group tomcat. Note that we are not running a Java web application
 # or Tomcat. We are simply creating a non-root user, and tomcat is a convenient
-# choice.
+# choice especially when working with the TDS and its Tomcat web application
+# directory structure.
 ###
 
-RUN groupadd -r tomcat -g 1000 && \
-    useradd -u 1000 -r -g tomcat -d /usr/local/tomcat -s /bin/bash -c \
-    "User tomcat for Docker image" tomcat
-
-###
-# TOMCAT HOME
-###
-
-ENV HOME /opt/tomcat
+ENV CATALINA_HOME /opt/tomcat
 
 ENV TDM_HOME /opt/tomcat/content/tdm
 
 RUN mkdir -p $TDM_HOME
+
+RUN groupadd -r tomcat && \
+	useradd -g tomcat -d ${CATALINA_HOME} -s /sbin/nologin \
+  -c "Tomcat user" tomcat
 
 ###
 # Create content/tdm directory
@@ -61,7 +58,7 @@ RUN chmod +x tdm.sh
 # Change owner of tomcat directory to user and group tomcat
 ###
 
-RUN chown -R tomcat:tomcat $HOME
+RUN chown -R tomcat:tomcat $CATALINA_HOME
 
 ###
 # Switch to user tomcat
