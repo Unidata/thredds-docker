@@ -51,6 +51,13 @@ COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
 # Java options
 ###
 
+# http://www.unidata.ucar.edu/software/thredds/current/tds/faq.html#javaUtilPrefs
+# Also see JAVA_PREFS_SYSTEM_ROOT in ${CATALINA_HOME}/bin/javaopts.sh
+# Choosing a JAVA_PREFS_SYSTEM_ROOT directory location that will likely live
+# inside the container.
+
+RUN mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
+
 COPY files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
 
 ###
