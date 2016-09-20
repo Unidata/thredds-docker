@@ -23,7 +23,8 @@ Specific releases:
 
 **Quickstart**
 
-    docker-compose up -d thredds-quickstart
+    docker run -d -p 80:8080 unidata/tds
+
 ## Building the THREDDS Container
 
 To build the THREDDS Docker container:
@@ -34,7 +35,16 @@ It is best to be on a fast network when building containers as there can be many
 
 ## `docker-compose`
 
-To run the THREDDS Docker container, beyond a basic Docker setup, we recommend installing [docker-compose](https://docs.docker.com/compose/).
+To run the THREDDS Docker container, beyond a basic Docker setup, we recommend installing [docker-compose](https://docs.docker.com/compose/). `docker-compose` serves two purposes:
+
+1. Reduce headaches involving unwieldy `docker` command lines where you are running `docker` with multiple volume mountings and port forwards. In situations like these, `docker` commands become difficult to issue and read. Instead, the lengthy `docker` command is captured in a `docker-compose.yml` that is easy to read, maintain, and can be committed to version control.
+2. Coordinate the running of two or more containers to, for example, orchestrate the TDS and TDM. This can be useful for taking into account the same volume mountings, for example.
+
+However, `docker-compose` use is not mandatory. For example, this container can be started with
+
+    docker run -d -p 80:8080 unidata/tds
+
+There is an example [docker-compose.yml](docker-compose.yml) in this repository.
 
 ## Production
 
