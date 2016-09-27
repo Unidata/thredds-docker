@@ -6,32 +6,15 @@
 
 A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) built on top a [security hardened Tomcat container maintained by Unidata](https://github.com/Unidata/tomcat-docker). This project was initially developed by [Axiom Data Science](http://www.axiomdatascience.com/) and now lives at Unidata.
 
-Available major versions:
+## Versions
 
-* `unidata/tds` (currently `4.6.6`)
-* `unidata/tds:latest` (currently `4.6.6`)
-* `unidata/tds:4.6` (currently `4.6.6`)
-* `unidata/tds:5.0.0-SNAPSHOT` (currently `5.0.0-20160808.141712-14`)
-
-Specific releases:
-
-* `unidata/tds:5.0.0-20160808.141712-14`
-* `unidata/tds:4.6.6`
-* `unidata/tds:4.6.5`
+* `unidata/thredds-docker:4.6.6`
 
 ## tl;dr
 
 **Quickstart**
 
-    docker run -d -p 80:8080 unidata/tds
-
-## Building the THREDDS Container
-
-To build the THREDDS Docker container:
-
-    docker build -t unidata/tds:<version> .
-
-It is best to be on a fast network when building containers as there can be many intermediate layers to download.
+    docker run -d -p 80:8080 unidata/thredds-docker
 
 ## `docker-compose`
 
@@ -196,11 +179,9 @@ At this point we are done setting up the TDS with docker. To navigate to this in
 
 The TDM is an application that works in conjunction with the TDS. It creates indexes for GRIB data in a background process, and notifies the TDS via port 8443 when data have been updated or changed. See [here](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) to learn more about the TDM. 
 
-Available versions:
+### Versions
 
-* `unidata/tdm` (currently `4.6`)
-* `unidata/tdm:latest` (currently `4.6`)
-* `unidata/tdm:4.6`
+* `unidata/tdm-docker:4.6`
 
 ### Configuration
 
@@ -209,12 +190,6 @@ When the TDM informs TDS concerning data changes, it will communicate via the `t
 ### Running the TDM
 
     docker-compose up -d tdm
-
-### Building the TDM Container
-
-To build the TDM Docker container:
-
-    docker build -f Dockerfile.tdm -t unidata/tdm:<version> .
 
 ### Capturing TDM Log Files Outside the Container
 
