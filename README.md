@@ -25,7 +25,7 @@ To run the THREDDS Docker container, beyond a basic Docker setup, we recommend i
 
 However, `docker-compose` use is not mandatory. For example, this container can be started with
 
-    docker run -d -p 80:8080 unidata/tds
+    docker run -d -p 80:8080 unidata/thredds-docker
 
 There is an example [docker-compose.yml](docker-compose.yml) in this repository.
 
@@ -149,7 +149,7 @@ If you encounter a problem there, you can also:
 which should give you output that looks something like this:
 
     CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                                                                 NAMES
-    6c256c50a6cf        unidata/tds:latest   "/entrypoint.sh catal"   6 minutes ago       Up 6 minutes        0.0.0.0:8443->8443/tcp, 0.0.0.0:80->8080/tcp, 0.0.0.0:443->8443/tcp   threddsdocker_thredds-quickstart_1
+    6c256c50a6cf        unidata/thredds-docker:latest   "/entrypoint.sh catal"   6 minutes ago       Up 6 minutes        0.0.0.0:8443->8443/tcp, 0.0.0.0:80->8080/tcp, 0.0.0.0:443->8443/tcp   threddsdocker_thredds-quickstart_1
 
 to obtain the ID of the running TDS container. Now you can enter the container with:
 
