@@ -27,7 +27,7 @@ However, `docker-compose` use is not mandatory. For example, this container can 
 
     docker run -d -p 80:8080 unidata/thredds-docker
 
-There is an example [docker-compose.yml](docker-compose.yml) in this repository.
+There is an example [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) in this repository.
 
 ## Production
 
