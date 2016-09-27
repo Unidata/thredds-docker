@@ -4,7 +4,7 @@
 
 [![Travis Status](https://travis-ci.org/Unidata/thredds-docker.svg?branch=master)](https://travis-ci.org/Unidata/thredds-docker)
 
-A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) containing a full-featured Tomcat (SSL over APR, etc.). This project was initially developed by [Axiom Data Science](http://www.axiomdatascience.com/) and now lives at Unidata.
+A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) built on top a [security hardened Tomcat container maintained by Unidata](https://github.com/Unidata/tomcat-docker). This project was initially developed by [Axiom Data Science](http://www.axiomdatascience.com/) and now lives at Unidata.
 
 Available major versions:
 
@@ -50,7 +50,7 @@ There is an example [docker-compose.yml](docker-compose.yml) in this repository.
 
 ### Configuration
 
-First, define directory and file paths for log files, SSL, Tomcat, THREDDS, and data in [docker-compose.yml](docker-compose.yml) for the `thredds-production` image. Then:
+First, define directory and file paths for log files, Tomcat, THREDDS, and data in [docker-compose.yml](docker-compose.yml) for the `thredds-production` image. Then:
 
 ### Memory
 
@@ -90,7 +90,7 @@ To mount your own `content/thredds` directory with `docker-compose.yml`:
 
 ```
   volumes:
-    - /path/to/your/thredds/directory:/opt/tomcat/content/thredds
+    - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
 ```
 
 If you just want to change a few files, you can mount them individually. Please
@@ -99,12 +99,10 @@ to mount individual files, you should also mount a cache directory.
 
 ```
   volumes:
-    - /path/to/your/tomcat/logs/:/opt/tomcat/logs/
-    - /path/to/your/thredds/logs/:/opt/tomcat/content/thredds/logs/
-    - /path/to/your/ssl.crt:/opt/tomcat/conf/ssl.crt
-    - /path/to/your/ssl.key:/opt/tomcat/conf/ssl.key
-    - /path/to/your/tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml
-    - /path/to/your/thredds/directory:/opt/tomcat/content/thredds
+    - /path/to/your/tomcat/logs/:/usr/local/tomcat/logs/
+    - /path/to/your/thredds/logs/:/usr/local/tomcat/content/thredds/logs/
+    - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+    - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
     - /path/to/your/data/directory1:/path/to/your/data/directory1 
     - /path/to/your/data/directory2:/path/to/your/data/directory2
 ```
@@ -123,11 +121,9 @@ By default, Tomcat will start with [two user accounts](https://github.com/Unidat
 ### Use Case
 
  Let's say you want to upgrade to the Docker THREDDS Container, and you already have a TDS configured with
- * Directory containing TDS configuration files (e.g. `threddsConfig.xml`, `wmsConfig.xml` and THREDDS catalog `.xml` files) in `/opt/tomcat/content/thredds`
+ * Directory containing TDS configuration files (e.g. `threddsConfig.xml`, `wmsConfig.xml` and THREDDS catalog `.xml` files) in `/usr/local/tomcat/content/thredds`
  * Folders containing NetCDF and other data files read by the TDS in `/data1` and `/data2`
- * Tomcat users configured in `/opt/tomcat/conf/tomcat-users.xml`
- * SSL certificate at `/opt/tomcat/ssl.crt` and SSL key at `/opt/tomcat/ssl.key`
- * Running on ports 8090 and 8453 (ssl)
+ * Tomcat users configured in `/usr/local/tomcat/conf/tomcat-users.xml`
  
 Then you could issue this command to fire up the new Docker TDS container (remember to stop the old TDS first):
 
@@ -224,7 +220,7 @@ To build the TDM Docker container:
 
 Until `5.0`, the TDM lacks configurability with respect to the location of log files and the TDM simply logs locally to where the TDM is invoked. In the meantime, to capture TDM log files outside the container, do the usual volume mounting outside the container:
 
-    /path/to/your/tdm/logs:/opt/tomcat/content/tdm/
+    /path/to/your/tdm/logs:/usr/local/tomcat/content/tdm/
 
 *and* put the `tdm.jar` and `tdm.sh` run script in `/path/to/your/tdm/logs`.
 
