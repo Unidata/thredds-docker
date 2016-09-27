@@ -22,10 +22,6 @@ RUN apt-get install -y curl
 
 ENV CATALINA_HOME /usr/local/tomcat
 
-RUN groupadd -r tomcat -g 1000 && \
-    useradd -u 1000 -r -g tomcat -d ${CATALINA_HOME} -s /bin/bash -c \
-    "User tomcat for Docker image" tomcat
-
 ENV TDM_HOME ${CATALINA_HOME}/content/tdm
 
 RUN mkdir -p $TDM_HOME
