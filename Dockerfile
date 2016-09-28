@@ -22,8 +22,6 @@ RUN \
 # Grab and unzip the TDS
 ###
 
-USER tomcat
-
 ENV TDS_VERSION 4.6.6
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/${TDS_VERSION}/tds-${TDS_VERSION}.war
 
@@ -73,6 +71,18 @@ ENV JAVA_OPTS -server -d64 -Xms4G -Xmx4G \
    -Dtds.content.root.path=${CATALINA_HOME}/content \
    -Djava.util.prefs.systemRoot=${CATALINA_HOME}/javaUtilPrefs \
    -Djava.util.prefs.userRoot=${CATALINA_HOME}/javaUtilPrefs
+
+###
+# Reasserting ownership and permissions from parent container
+# https://github.com/docker/docker/issues/6119
+# https://github.com/docker/docker/issues/7390
+###
+
+RUN chown -R tomcat:tomcat ${CATALINA_HOME} && \
+    chmod 400 ${CATALINA_HOME}/conf/* && \
+    chmod 300 ${CATALINA_HOME}/logs/.
+
+USER tomcat
 
 ###
 # Start container
