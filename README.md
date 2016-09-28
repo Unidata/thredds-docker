@@ -33,11 +33,11 @@ There is an example [docker-compose.yml](https://github.com/Unidata/thredds-dock
 
 ### Configuration
 
-First, define directory and file paths for log files, Tomcat, THREDDS, and data in [docker-compose.yml](docker-compose.yml) for the `thredds-production` image. Then:
+First, define directory and file paths for log files, Tomcat, THREDDS, and data in [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) for the `thredds-production` image. Then:
 
 ### Memory
 
-Tomcat web applications and the TDS can require large amounts of memory to run. This container is setup to run Tomcat with a [4 gigabyte memory allocation](files/javaopts.sh). When running this container, ensure your VM or hardware can accommodate this memory requirement.
+Tomcat web applications and the TDS can require large amounts of memory to run. This container is setup to run Tomcat with a [4 gigabyte memory allocation](https://github.com/Unidata/thredds-docker/blob/master/Dockerfile). When running this container, ensure your VM or hardware can accommodate this memory requirement.
 
 
 ### Running the TDS
