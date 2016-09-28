@@ -65,7 +65,7 @@ To clean the slate and remove the container (not the image, the container):
 ## More on Configuration
 ### Tomcat
 
-See [these instructions](https://github.com/axiom-data-science/docker-tomcat) for configuring Tomcat
+THREDDS container is based off of the [canonical Tomcat container (tomcat:jre8)](https://hub.docker.com/_/tomcat/) with [some additional security hardening measures](https://hub.docker.com/r/unidata/tomcat-docker/). Tomcat configurability can be done by mounting over the appropriate directories in `CATALINA_HOME` (`/usr/local/tomcat`).
 
 ### THREDDS
 
@@ -185,7 +185,7 @@ The TDM is an application that works in conjunction with the TDS. It creates ind
 
 ### Configuration
 
-When the TDM informs TDS concerning data changes, it will communicate via the `tdm` tomcat user. Edit the `docker-compose.yml` file and change the `TDM_PW` to [TDM password](https://github.com/axiom-data-science/docker-tomcat#users). Also ensure `TDS_HOST` is pointing to the correct THREDDS host.
+When the TDM informs TDS concerning data changes, it will communicate via the `tdm` tomcat user. Edit the `docker-compose.yml` file and change the `TDM_PW` to [TDM password](https://github.com/Unidata/thredds-docker/blob/master/files/tomcat-users.xml). Also ensure `TDS_HOST` is pointing to the correct THREDDS host.
 
 ### Running the TDM
 
