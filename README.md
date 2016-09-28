@@ -181,7 +181,7 @@ The TDM is an application that works in conjunction with the TDS. It creates ind
 
 ### Versions
 
-* `unidata/tdm-docker:4.6`
+* `unidata/thredds-docker:tdm-4.6`
 
 ### Configuration
 
