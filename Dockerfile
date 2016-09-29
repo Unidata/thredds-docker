@@ -50,27 +50,20 @@ COPY files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
 COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
 
 ###
+# Tomcat Java Options
+###
+
+COPY files/setenv.sh $CATALINA_HOME/bin/setenv.sh
+
+COPY files/javaopts.sh $CATALINA_HOME/bin/javaopts.sh
+
+RUN chmod 755 $CATALINA_HOME/bin/*.sh
+
+###
 # Expose ports
 ###
 
 EXPOSE 8080 8443
-
-###
-# Java options
-###
-
-# http://www.unidata.ucar.edu/software/thredds/current/tds/faq.html#javaUtilPrefs
-# Choosing a JAVA_PREFS_SYSTEM_ROOT directory location that will likely live
-# inside the container.
-
-RUN mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
-
-ENV JAVA_OPTS -server -d64 -Xms4G -Xmx4G \
-   -XX:+HeapDumpOnOutOfMemoryError \
-   -Djava.awt.headless=true \
-   -Dtds.content.root.path=${CATALINA_HOME}/content \
-   -Djava.util.prefs.systemRoot=${CATALINA_HOME}/javaUtilPrefs \
-   -Djava.util.prefs.userRoot=${CATALINA_HOME}/javaUtilPrefs
 
 ###
 # Reasserting ownership and permissions from parent container
