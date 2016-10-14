@@ -94,6 +94,10 @@ to mount individual files, you should also mount a cache directory.
 * `wmsConfig.xml` - the ncWMS configuration file
 * `catalog.xml` - the root catalog THREDDS loads
 
+### HTTP Over SSL
+
+Please see Tomcat [parent container repository](https://github.com/Unidata/tomcat-docker#http-over-ssl) for HTTP over SSL instructions.
+
 ### Users
 
 By default, Tomcat will start with [two user accounts](https://github.com/Unidata/thredds-docker/blob/master/files/tomcat-users.xml). The passwords are equal to the user name.
