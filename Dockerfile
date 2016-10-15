@@ -75,7 +75,11 @@ RUN chown -R tomcat:tomcat ${CATALINA_HOME} && \
     chmod 400 ${CATALINA_HOME}/conf/* && \
     chmod 300 ${CATALINA_HOME}/logs/.
 
-USER tomcat
+###
+# Inherited from parent container
+###
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 ###
 # Start container
