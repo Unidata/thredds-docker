@@ -54,13 +54,13 @@ The output of such command should be something like:
 
 To stop this container:
 
-    docker-compose stop
+    docker-compose stop thredds-production
 
 ### Delete TDS Container
 
 To clean the slate and remove the container (not the image, the container):
 
-    docker-compose rm -f
+    docker-compose rm -f thredds-production
 
 ## More on Configuration
 ### Tomcat
