@@ -44,7 +44,7 @@ ENV TDM_VERSION 4.6.6
 
 RUN curl -SL \
     https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tdmFat/${TDM_VERSION}/tdmFat-${TDM_VERSION}.jar \
-    -o tdm-${TDM_VERSION}.jar
+    -o tdm.jar
 
 ###
 # Copy the TDM executable inside the container
