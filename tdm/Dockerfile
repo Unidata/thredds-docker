@@ -36,14 +36,15 @@ RUN groupadd -r tomcat && \
 
 WORKDIR $TDM_HOME
 
-ENV TDM_VERSION 4.6.6
+ENV TDM_VERSION 5.0.0
+ENV TDM_SNAPSHOT_VERSION ${TDM_VERSION}-20161026.124250-33
 
 ###
 # Grab the TDM
 ###
 
 RUN curl -SL \
-    https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tdmFat/${TDM_VERSION}/tdmFat-${TDM_VERSION}.jar \
+    https://artifacts.unidata.ucar.edu/content/repositories/unidata-snapshots/edu/ucar/tdmFat/${TDM_VERSION}-SNAPSHOT/tdmFat-${TDM_SNAPSHOT_VERSION}.jar \
     -o tdm.jar
 
 ###

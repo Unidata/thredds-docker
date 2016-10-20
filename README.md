@@ -185,6 +185,7 @@ The THREDDS Data Manager or TDM is an application that works in conjunction with
 ### Versions
 
 * `unidata/thredds-docker:tdm-4.6`
+* `unidata/thredds-docker:tdm-5.0-SNAPSHOT`
 
 * `unidata/thredds-docker:tdm-5.0-SNAPSHOT`
 
