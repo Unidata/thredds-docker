@@ -38,7 +38,7 @@ tdm:
     - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
     - /path/to/your/data/directory1:/path/to/your/data/directory1
     # TDM logging non-configurable until 5.0 so you'll need tdm.sh and
-    # tdm-4.6.jar if you want to log outside the container :-(
+    # tdm.jar if you want to log outside the container :-(
     - /path/to/your/tdm/logs:/usr/local/tomcat/content/tdm/
   environment:
     # change the password
