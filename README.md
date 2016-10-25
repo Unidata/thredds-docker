@@ -67,6 +67,12 @@ To clean the slate and remove the container (not the image, the container):
 
 THREDDS container is based off of the [canonical Tomcat container (tomcat:jre8)](https://hub.docker.com/_/tomcat/) with [some additional security hardening measures](https://hub.docker.com/r/unidata/tomcat-docker/). Tomcat configurability can be done by mounting over the appropriate directories in `CATALINA_HOME` (`/usr/local/tomcat`).
 
+### Java Configuration Options
+
+The Java (`JAVA_OPTS`) are configured in `${CATALINA_HOME}/bin/javaopts.sh` (see [javaopts.sh](files/javaopts.sh))
+
+This file can be mounted over with `docker-compose.yml` which can be useful if, for instance, you wish to change the maximum Java heap space available to the TDS or other JVM options.
+
 ### THREDDS
 
 To mount your own `content/thredds` directory with `docker-compose.yml`:
