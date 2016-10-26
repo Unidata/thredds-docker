@@ -9,6 +9,7 @@ A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thred
 ## Versions
 
 * `unidata/thredds-docker:4.6.6`
+* `unidata/thredds-docker:5.0-SNAPSHOT`
 
 ## tl;dr
 
@@ -186,6 +187,8 @@ The TDM is an application that works in conjunction with the TDS. It creates ind
 ### Versions
 
 * `unidata/thredds-docker:tdm-4.6`
+
+* `unidata/thredds-docker:tdm-5.0-SNAPSHOT`
 
 ### Configuration
 
