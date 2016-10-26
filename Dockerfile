@@ -14,15 +14,62 @@ USER root
 
 RUN \
     apt-get update && \
-    apt-get install -y unzip vim && \
+    apt-get install -y unzip vim build-essential m4 libpthread-stubs0-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN mkdir /downloads
+
+WORKDIR /downloads
+
+###
+# Installing netcdf-c library according to:
+# http://www.unidata.ucar.edu/software/thredds/current/netcdf-java/reference/netcdf4Clibrary.html 
+###
+
+ENV LD_LIBRARY_PATH /usr/local/lib:${LD_LIBRARY_PATH}
+
+ENV HDF5_VERSION 1.8.17
+
+ENV ZLIB_VERSION 1.2.8
+
+ENV NETCDF_VERSION 4.4.1
+
+ENV ZDIR /usr/local
+
+ENV H5DIR /usr/local
+
+ENV PDIR /usr
+
+#zlib dependency
+RUN curl ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4/zlib-${ZLIB_VERSION}.tar.gz | tar xz && \
+    cd zlib-${ZLIB_VERSION} && \
+    ./configure --prefix=/usr/local && \
+    make && make install
+
+ENV HDF5_VER hdf5-${HDF5_VERSION}
+ENV HDF5_FILE ${HDF5_VER}.tar.gz
+
+#hdf5 dependency
+RUN curl https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER}/src/${HDF5_FILE} | tar xz && \
+    cd hdf5-${HDF5_VERSION} && \
+    ./configure --with-zlib=${ZDIR} --prefix=${H5DIR} --enable-threadsafe --with-pthread=${PDIR} --enable-unsupported --prefix=/usr/local && \
+    make && make check && make install && make check-install && ldconfig
+
+#netCDF4-c
+RUN export CPPFLAGS=-I/usr/local/include \
+    LDFLAGS=-L/usr/local/lib && \
+    curl ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF_VERSION}.tar.gz | tar xz && \
+    cd netcdf-${NETCDF_VERSION} && \
+    ./configure --prefix=/usr/local && \
+    make check && make install && ldconfig
 
 ###
 # Grab and unzip the TDS
 ###
 
 ENV TDS_VERSION 4.6.6
+
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/${TDS_VERSION}/tds-${TDS_VERSION}.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
@@ -74,6 +121,14 @@ EXPOSE 8080 8443
 RUN chown -R tomcat:tomcat ${CATALINA_HOME} && \
     chmod 400 ${CATALINA_HOME}/conf/* && \
     chmod 300 ${CATALINA_HOME}/logs/.
+
+###
+# Cleanup
+###
+
+WORKDIR ${CATALINA_HOME}
+
+RUN rm -rf /downloads
 
 ###
 # Inherited from parent container
