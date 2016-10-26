@@ -113,16 +113,6 @@ RUN chmod 755 $CATALINA_HOME/bin/*.sh
 EXPOSE 8080 8443
 
 ###
-# Reasserting ownership and permissions from parent container
-# https://github.com/docker/docker/issues/6119
-# https://github.com/docker/docker/issues/7390
-###
-
-RUN chown -R tomcat:tomcat ${CATALINA_HOME} && \
-    chmod 400 ${CATALINA_HOME}/conf/* && \
-    chmod 300 ${CATALINA_HOME}/logs/.
-
-###
 # Cleanup
 ###
 
