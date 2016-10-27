@@ -1,7 +1,5 @@
 # THREDDS Docker
 
-**UNDER CONSTRUCTION**: This repository and project is under construction of the [Fall 2016 Unidata THREDDS Workshop](http://www.unidata.ucar.edu/events/2016TrainingWorkshop/). It is currently a work in progress. Check back in a few weeks.
-
 [![Travis Status](https://travis-ci.org/Unidata/thredds-docker.svg?branch=master)](https://travis-ci.org/Unidata/thredds-docker)
 
 A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) built on top a [security hardened Tomcat container maintained by Unidata](https://github.com/Unidata/tomcat-docker). This project was initially developed by [Axiom Data Science](http://www.axiomdatascience.com/) and now lives at Unidata.
