@@ -107,6 +107,14 @@ COPY files/javaopts.sh $CATALINA_HOME/bin/javaopts.sh
 RUN chmod 755 $CATALINA_HOME/bin/*.sh
 
 ###
+# Creating .systemPrefs directory according to 
+# http://www.unidata.ucar.edu/software/thredds/current/tds/faq.html#javaUtilPrefs
+# and as defined in the files/javaopts.sh file
+###
+
+RUN mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
+
+###
 # Expose ports
 ###
 
