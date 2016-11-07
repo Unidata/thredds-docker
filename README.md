@@ -180,7 +180,7 @@ At this point we are done setting up the TDS with docker. To navigate to this in
 
 ## TDM
 
-The TDM is an application that works in conjunction with the TDS. It creates indexes for GRIB data in a background process, and notifies the TDS via port 8443 when data have been updated or changed. See [here](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) to learn more about the TDM. 
+The THREDDS Data Manager or TDM is an application that works in conjunction with the TDS. It creates indexes for GRIB data in a background process, and notifies the TDS via port `8443` when data have been updated or changed. See [here](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) to learn more about the TDM. 
 
 ### Versions
 
@@ -190,7 +190,21 @@ The TDM is an application that works in conjunction with the TDS. It creates ind
 
 ### Configuration
 
-When the TDM informs TDS concerning data changes, it will communicate via the `tdm` tomcat user. Edit the `docker-compose.yml` file and change the `TDM_PW` to [TDM password](https://github.com/Unidata/thredds-docker/blob/master/files/tomcat-users.xml). Also ensure `TDS_HOST` is pointing to the correct THREDDS host.
+The TDM will notify the TDS of data changes via an HTTPS port `8443` triggering mechanism. It is important the TDM password (`TDM_PW` environment variable) defined in the [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) file corresponds to the SHA **digested** password in the [tomcat-users.xml](https://github.com/Unidata/thredds-docker/blob/master/files/tomcat-users.xml) file. [See the parent container](https://hub.docker.com/r/unidata/tomcat-docker/) for how to create a SHA digested password. Also, because this mechanism works via port `8443`, you will have to get your HTTPS certificates in place. Again [see the parent container](https://hub.docker.com/r/unidata/tomcat-docker/) on how to install certificates, self-signed or otherwise.
+
+Not having the Tomcat `tdm` user password and digested password in sync can be a big source of frustration. One way to diagnose this problem is to look at the TDM logs and `grep` for `trigger`. You will find something like:
+
+```sh
+fc.NAM-CONUS_80km.log:2016-11-02T16:09:54.305 +0000 WARN  - FAIL send trigger to http://unicloud.westus.cloudapp.azure.com/thredds/admin/collection/trigger?trigger=never&collection=NAM-CONUS_80km status = 401
+```
+
+Enter the trigger URL in your browser:
+
+```sh
+http://unicloud.westus.cloudapp.azure.com/thredds/admin/collection/trigger?trigger=never&collection=NAM-CONUS_80km
+```
+
+At this point the browser will prompt you for a `tdm` login and password you defined in the `docker-compose.yml`. If the triggering mechanism is successful, you see a `TRIGGER SENT` message. Otherwise, make sure your HTTPS certificate is present, and ensure the `tdm` password in the `docker-compose.yml`, and digested password in the `tomcat-users.xml` are in sync.
 
 ### Running the TDM
 
