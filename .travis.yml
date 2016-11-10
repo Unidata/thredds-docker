@@ -8,7 +8,7 @@ before_install:
   - docker run --name thredds -v `pwd`/.travis:/travis -d -p 8080:8080 unidata/thredds-docker:latest
   # Give chance for TDS to fire up
   - nc -z -w300 127.0.0.1 8080
-  - for i in {1..5}; do curl -o /dev/null http://127.0.0.1:8080/thredds/ && break || (echo sleeping 15... && sleep 15); done
+  - for i in {1..5}; do curl -o /dev/null http://127.0.0.1:8080/thredds/catalog.html && break || (echo sleeping 15... && sleep 15); done
 
 script:
   - ./.travis/test.sh
