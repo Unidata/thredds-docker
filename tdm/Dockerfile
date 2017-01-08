@@ -36,7 +36,7 @@ RUN groupadd -r tomcat && \
 
 WORKDIR $TDM_HOME
 
-ENV TDM_VERSION 4.6.7
+ENV TDM_VERSION 4.6.8
 
 ###
 # Grab the TDM
