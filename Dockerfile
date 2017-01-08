@@ -68,7 +68,7 @@ RUN export CPPFLAGS=-I/usr/local/include \
 # Grab and unzip the TDS
 ###
 
-ENV TDS_VERSION 4.6.7
+ENV TDS_VERSION 4.6.8
 
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/${TDS_VERSION}/tds-${TDS_VERSION}.war
 
