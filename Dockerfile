@@ -69,7 +69,7 @@ RUN export CPPFLAGS=-I/usr/local/include \
 ###
 
 ENV TDS_VERSION 5.0.0
-ENV TDS_SNAPSHOT_VERSION ${TDS_VERSION}-20161213.124401-60
+ENV TDS_SNAPSHOT_VERSION ${TDS_VERSION}-20170407.130531-310
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-snapshots/edu/ucar/tds/${TDS_VERSION}-SNAPSHOT/tds-${TDS_SNAPSHOT_VERSION}.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
