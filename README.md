@@ -225,3 +225,7 @@ For example, you can get the `tdm.jar`:
     curl -SL  https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tdmFat/4.6.10/tdmFat-4.6.10.jar -o tdm.jar
 
 The `tdm.sh` script can be found within this repository. Make sure the `tdm.sh` script is executable by the container.
+
+## Citation
+
+In order to cite this project, please simply make use of the [Unidata THREDDS Data Server DOI](https://data.datacite.org/10.5065/D6N014KG).
