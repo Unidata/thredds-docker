@@ -128,6 +128,10 @@ WORKDIR ${CATALINA_HOME}
 
 RUN rm -rf /downloads
 
+ENV THREDDS_XMX_SIZE 4g
+ENV THREDDS_XMS_SIZE 4g
+ENV TDM_CONTENT_ROOT_PATH /usr/local/tomcat/content
+
 ###
 # Inherited from parent container
 ###
@@ -139,3 +143,6 @@ ENTRYPOINT ["/entrypoint.sh"]
 ###
 
 CMD ["catalina.sh", "run"]
+
+HEALTHCHECK --interval=60s --timeout=3s \
+	CMD curl --fail 'http://localhost:8080/thredds/catalog.html' || exit 1
