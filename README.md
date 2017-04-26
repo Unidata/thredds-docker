@@ -17,6 +17,61 @@ A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thred
 
     docker run -d -p 80:8080 unidata/thredds-docker
 
+## `docker-machine`
+
+To run the THREDDS Docker container on Docker machine, one special configuration element that is required is to create the initial VM with at least 4G of RAM. In the following example, a VirtualBox Docker machine instance with 6G of RAM is created:
+
+```
+$ docker-machine create --virtualbox-memory "6144" thredds
+Running pre-create checks...
+Creating machine...
+(thredds) Copying ~/.docker/machine/cache/boot2docker.iso to ~/.docker/machine/machines/thredds/boot2docker.iso...
+(thredds) Creating VirtualBox VM...
+(thredds) Creating SSH key...
+(thredds) Starting the VM...
+(thredds) Check network to re-create if needed...
+(thredds) Waiting for an IP...
+Waiting for machine to be running, this may take a few minutes...
+Detecting operating system of created instance...
+Waiting for SSH to be available...
+Detecting the provisioner...
+Provisioning with boot2docker...
+Copying certs to the local machine directory...
+Copying certs to the remote machine...
+Setting Docker configuration on the remote daemon...
+Checking connection to Docker...
+Docker is up and running!
+To see how to connect your Docker Client to the Docker Engine running on this virtual machine, run: docker-machine env thredds
+
+$ eval $(docker-machine env thredds)
+
+$ docker-compose up thredds-production
+Creating volume "threddsdocker_thredds-volume" with default driver
+Creating thredds
+Attaching to thredds
+thredds               | 26-Apr-2017 15:25:18.907 WARNING [main] org.apache.catalina.startup.SetAllPropertiesRule.begin [SetAllPropertiesRule]{Server/Service/Connector} Setting property 'server' to 'Apache' did not find a matching property.
+[...]
+thredds               | 26-Apr-2017 15:25:45.356 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 26113 ms
+```
+
+At this point, the THREDDS Docker container is up and running. You should be able to open another shell and test via curl:
+```
+$ curl http://`docker-machine ip thredds`/thredds/catalog.html
+<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'
+        'http://www.w3.org/TR/html4/loose.dtd'>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>TdsStaticCatalog http://192.168.99.100/thredds/catalog.html</title>
+<link rel='stylesheet' href='/thredds/tdsCat.css' type='text/css' >
+</head>
+[...]
+```
+
+You can also open in a browser. First find out the IP of your Docker machine by issuing `docker-machine ip thredds`
+
+If the IP were 192.168.99.100, you can navigate your browser to http://192.168.99.100/thredds/catalog.html to test
+
+
 ## `docker-compose`
 
 To run the THREDDS Docker container, beyond a basic Docker setup, we recommend installing [docker-compose](https://docs.docker.com/compose/). `docker-compose` serves two purposes:
@@ -93,7 +148,7 @@ to mount individual files, you should also mount a cache directory.
     - /path/to/your/thredds/logs/:/usr/local/tomcat/content/thredds/logs/
     - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
     - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
-    - /path/to/your/data/directory1:/path/to/your/data/directory1 
+    - /path/to/your/data/directory1:/path/to/your/data/directory1
     - /path/to/your/data/directory2:/path/to/your/data/directory2
 ```
 
@@ -118,7 +173,7 @@ By default, Tomcat will start with [two user accounts](https://github.com/Unidat
  * Directory containing TDS configuration files (e.g. `threddsConfig.xml`, `wmsConfig.xml` and THREDDS catalog `.xml` files) in `/usr/local/tomcat/content/thredds`
  * Folders containing NetCDF and other data files read by the TDS in `/data1` and `/data2`
  * Tomcat users configured in `/usr/local/tomcat/conf/tomcat-users.xml`
- 
+
 Then you could issue this command to fire up the new Docker TDS container (remember to stop the old TDS first):
 
     docker-compose stop thredds-production
@@ -182,7 +237,7 @@ At this point we are done setting up the TDS with docker. To navigate to this in
 
 ## TDM
 
-The THREDDS Data Manager or TDM is an application that works in conjunction with the TDS. It creates indexes for GRIB data in a background process, and notifies the TDS via port `8443` when data have been updated or changed. See [here](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) to learn more about the TDM. 
+The THREDDS Data Manager or TDM is an application that works in conjunction with the TDS. It creates indexes for GRIB data in a background process, and notifies the TDS via port `8443` when data have been updated or changed. See [here](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) to learn more about the TDM.
 
 ### Versions
 
