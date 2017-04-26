@@ -1,6 +1,9 @@
 ---
 version: '3'
 
+volumes:
+  thredds-volume:
+
 services:
   ###
   # THREDDS Quickstart
@@ -20,16 +23,15 @@ services:
     image: unidata/thredds-docker:4.6.10
     ports:
       - "80:8080"
+      - "8080:8080"
       - "443:8443"
       - "8443:8443"
     container_name: thredds
     volumes:
-      - /path/to/your/tomcat/logs/:/usr/local/tomcat/logs/
-      - /path/to/your/thredds/logs/:/usr/local/tomcat/content/thredds/logs/
-      - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
-      - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
-      - /path/to/your/data/directory1:/path/to/your/data/directory1
-      - /path/to/your/data/directory2:/path/to/your/data/directory2
+      - thredds-volume:/usr/local/tomcat/logs/
+      - thredds-volume:/usr/local/tomcat/content/thredds/logs/
+      - thredds-volume:/usr/local/tomcat/content/thredds
+      # - /path/to/your/local/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
 
   ###
   # TDM
