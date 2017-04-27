@@ -1,47 +1,37 @@
-###
-# THREDDS Quickstart
-###
-thredds-quickstart:
-  image: unidata/thredds-docker:4.6.10
-  ports:
-    - "80:8080"
-    - "443:8443"
-    - "8443:8443"
+---
+version: '3'
 
-###
-# THREDDS Production
-###
+services:
+  thredds-production:
+    image: unidata/thredds-docker:4.6.10
+    ports:
+      - "80:8080"
+      - "443:8443"
+      - "8443:8443"
+    container_name: thredds
+    volumes:
+      - /path/to/your/tomcat/logs/:/usr/local/tomcat/logs/
+      - /path/to/your/thredds/logs/:/usr/local/tomcat/content/thredds/logs/
+      - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
+      - /path/to/your/data/directory1:/path/to/your/data/directory1
+      - /path/to/your/data/directory2:/path/to/your/data/directory2
 
-thredds-production:
-  image: unidata/thredds-docker:4.6.10
-  ports:
-    - "80:8080"
-    - "443:8443"
-    - "8443:8443"
-  container_name: thredds
-  volumes:
-    - /path/to/your/tomcat/logs/:/usr/local/tomcat/logs/
-    - /path/to/your/thredds/logs/:/usr/local/tomcat/content/thredds/logs/
-    - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
-    - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
-    - /path/to/your/data/directory1:/path/to/your/data/directory1 
-    - /path/to/your/data/directory2:/path/to/your/data/directory2
+  ###
+  # TDM
+  ###
 
-###
-# TDM
-###
-
-tdm:
-  image: unidata/thredds-docker:tdm-4.6
-  container_name: tdm
-  volumes:
-    - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
-    - /path/to/your/data/directory1:/path/to/your/data/directory1
-    # TDM logging non-configurable until 5.0 so you'll need tdm.sh and
-    # tdm.jar if you want to log outside the container :-(
-    - /path/to/your/tdm/logs:/usr/local/tomcat/content/tdm/
-  environment:
-    # change the password
-    - TDM_PW=CHANGEME!
-    # that trailing slash is important
-    - TDS_HOST=http://thredds.yourhost.net/
+  tdm:
+    image: unidata/thredds-docker:tdm-4.6
+    container_name: tdm
+    volumes:
+      - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
+      - /path/to/your/data/directory1:/path/to/your/data/directory1
+      # TDM logging non-configurable until 5.0 so you'll need tdm.sh and
+      # tdm.jar if you want to log outside the container :-(
+      - /path/to/your/tdm/logs:/usr/local/tomcat/content/tdm/
+    environment:
+      # change the password
+      - TDM_PW=CHANGEME!
+      # that trailing slash is important
+      - TDS_HOST=http://thredds.yourhost.net/
