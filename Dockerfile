@@ -107,7 +107,7 @@ COPY files/javaopts.sh $CATALINA_HOME/bin/javaopts.sh
 RUN chmod 755 $CATALINA_HOME/bin/*.sh
 
 ###
-# Creating .systemPrefs directory according to 
+# Creating .systemPrefs directory according to
 # http://www.unidata.ucar.edu/software/thredds/current/tds/faq.html#javaUtilPrefs
 # and as defined in the files/javaopts.sh file
 ###
@@ -127,6 +127,10 @@ EXPOSE 8080 8443
 WORKDIR ${CATALINA_HOME}
 
 RUN rm -rf /downloads
+
+ENV THREDDS_XMX_SIZE 4g
+ENV THREDDS_XMS_SIZE 4g
+ENV TDM_CONTENT_ROOT_PATH /usr/local/tomcat/content
 
 ###
 # Inherited from parent container
