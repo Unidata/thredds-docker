@@ -29,10 +29,12 @@ thredds-production:
 
 ###
 # TDM
+# Not strictly part of this repo, but useful to have around
+# https://github.com/Unidata/tdm-docker
 ###
 
 tdm:
-  image: unidata/thredds-docker:tdm-4.6
+  image: unidata/tdm-docker:4.6
   container_name: tdm
   volumes:
     - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
