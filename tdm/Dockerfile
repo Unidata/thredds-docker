@@ -47,14 +47,6 @@ RUN curl -SL \
     -o tdm.jar
 
 ###
-# Copy the TDM executable inside the container
-###
-
-COPY tdm.sh $TDM_HOME
-
-RUN chmod +x tdm.sh
-
-###
 # Change owner of tomcat directory to user and group tomcat
 ###
 
@@ -70,4 +62,12 @@ USER tomcat
 # TDS Command
 ###
 
-CMD $TDM_HOME/tdm.sh
+ENV TDM_XMX_SIZE 6g
+ENV TDM_CONTENT_ROOT_PATH /usr/local/tomcat/content
+ENV TDM_USER tdm
+ENV TDS_HOST http://thredds/
+ENV LOG_LEVEL info
+
+CMD java -jar -d64 -Xmx${TDM_XMX_SIZE} -DbbTdm=1 -Dtds.content.root.path=$TDM_CONTENT_ROOT_PATH \
+      $TDM_HOME/tdm.jar -nthreads 1 -cred $TDM_USER:$TDM_PW -tds "$TDS_HOST" \
+			-log $LOG_LEVEL
