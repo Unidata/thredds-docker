@@ -24,7 +24,7 @@ WORKDIR /downloads
 
 ###
 # Installing netcdf-c library according to:
-# http://www.unidata.ucar.edu/software/thredds/current/netcdf-java/reference/netcdf4Clibrary.html 
+# http://www.unidata.ucar.edu/software/thredds/current/netcdf-java/reference/netcdf4Clibrary.html
 ###
 
 ENV LD_LIBRARY_PATH /usr/local/lib:${LD_LIBRARY_PATH}
@@ -127,6 +127,10 @@ EXPOSE 8080 8443
 WORKDIR ${CATALINA_HOME}
 
 RUN rm -rf /downloads
+
+ENV THREDDS_XMX_SIZE 4g
+ENV THREDDS_XMS_SIZE 4g
+ENV TDM_CONTENT_ROOT_PATH /usr/local/tomcat/content
 
 ###
 # Inherited from parent container
