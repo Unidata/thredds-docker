@@ -17,6 +17,31 @@ A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thred
 
     docker run -d -p 80:8080 unidata/thredds-docker
 
+
+## `docker-machine`
+
+One way to run Docker containers is with [docker-machine](https://docs.docker.com/machine/overview/). This is a common scenario if you are running Docker on your local OS X or Windows development system. You can use `docker-machine` to run the `thredds-docker` container. You will need to allocate at least 4GBs of RAM to the VM that will run this container. For example, here we are creating a VirtualBox Docker machine instance with 6GBs of RAM:
+
+```
+$ docker-machine create --virtualbox-memory "6144" thredds
+Running pre-create checks...
+Creating machine...
+...
+...
+Docker is up and running!
+To see how to connect your Docker Client to the Docker Engine running on this virtual machine, run: docker-machine env thredds
+```
+
+At this point, you can issue the following command to connect to your new `thredds` Docker client.
+
+```
+$ eval $(docker-machine env thredds)
+```
+
+In the next section, we use `docker-compose` to start the `thredds-docker` container.
+
+Note that if you are running the TDS with `docker-machine`, you will have to find the local IP address of that TDS with `docker-machine ip thredds` which may return something like `192.168.99.100`. So connecting to that TDS will entail navigating to `http://192.168.99.100/thredds/catalog.html` in your browser.
+
 ## `docker-compose`
 
 To run the THREDDS Docker container, beyond a basic Docker setup, we recommend installing [docker-compose](https://docs.docker.com/compose/). `docker-compose` serves two purposes:
