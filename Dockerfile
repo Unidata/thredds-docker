@@ -140,4 +140,4 @@ ENTRYPOINT ["/entrypoint.sh"]
 # Start container
 ###
 
-CMD ["catalina.sh", "run"]
+CMD ["start-tomcat.sh"]
