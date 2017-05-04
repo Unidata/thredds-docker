@@ -24,7 +24,7 @@ thredds-production:
     - /path/to/your/thredds/logs/:/usr/local/tomcat/content/thredds/logs/
     - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
     - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
-    - /path/to/your/data/directory1:/path/to/your/data/directory1 
+    - /path/to/your/data/directory1:/path/to/your/data/directory1
     - /path/to/your/data/directory2:/path/to/your/data/directory2
   env_file:
     - "compose${THREDDS_COMPOSE_ENV_LOCAL}.env"
