@@ -57,15 +57,38 @@ However, `docker-compose` use is not mandatory. For example, this container can 
 
 There is an example [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) in this repository.
 
+
+### Configuring `docker-compose` With Environment Variables
+
+This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS. You can presently configure three parameters:
+
+    | Parameter               | Environment Variable  | Default Value             |
+    |-------------------------+-----------------------+---------------------------|
+    | TDS Content Root        | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content |
+    | JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                        |
+    | JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                        |
+
+If you wish to update your configuration, you can either update the `compose.env` file or create your own environments file by copying `compose.env`. If using your own file, you can export the suffix of the file name into an environment variable named `THREDDS_COMPOSE_ENV_LOCAL`.
+
+For example:
+
+```shell
+cp compose.env compose_local.env
+export THREDDS_COMPOSE_ENV_LOCAL=_local
+< edit compose_local.env >
+docker-compose up thredds-production
+```
+
+
 ## Production
-
-### Configuration
-
-First, define directory and file paths for log files, Tomcat, THREDDS, and data in [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) for the `thredds-production` image. Then:
 
 ### Memory
 
-Tomcat web applications and the TDS can require large amounts of memory to run. This container is setup to run Tomcat with a [4 gigabyte memory allocation](files/javaopts.sh). When running this container, ensure your VM or hardware can accommodate this memory requirement.
+Tomcat web applications and the TDS can require large amounts of memory to run. This container is setup to run Tomcat with a default [4 gigabyte memory allocation](files/javaopts.sh). When running this container, ensure your VM or hardware can accommodate this memory requirement.
+
+### Configuration
+
+Define directory and file paths for log files, Tomcat, THREDDS, and data in [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) for the `thredds-production` image.
 
 
 ### Running the TDS
@@ -97,9 +120,8 @@ THREDDS container is based off of the [canonical Tomcat container (tomcat:jre8)]
 
 ### Java Configuration Options
 
-The Java (`JAVA_OPTS`) are configured in `${CATALINA_HOME}/bin/javaopts.sh` (see [javaopts.sh](files/javaopts.sh))
+The Java (`JAVA_OPTS`) are configured in `${CATALINA_HOME}/bin/javaopts.sh` (see [javaopts.sh](files/javaopts.sh)). See the `docker-compose` section above for configuring some of the environment variables of this file.
 
-This file can be mounted over with `docker-compose.yml` which can be useful if, for instance, you wish to change the maximum Java heap space available to the TDS or other JVM options.
 
 ### THREDDS
 
