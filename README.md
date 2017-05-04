@@ -142,7 +142,7 @@ to mount individual files, you should also mount a cache directory.
     - /path/to/your/thredds/logs/:/usr/local/tomcat/content/thredds/logs/
     - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
     - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
-    - /path/to/your/data/directory1:/path/to/your/data/directory1 
+    - /path/to/your/data/directory1:/path/to/your/data/directory1
     - /path/to/your/data/directory2:/path/to/your/data/directory2
 ```
 
@@ -167,7 +167,7 @@ By default, Tomcat will start with [two user accounts](https://github.com/Unidat
  * Directory containing TDS configuration files (e.g. `threddsConfig.xml`, `wmsConfig.xml` and THREDDS catalog `.xml` files) in `/usr/local/tomcat/content/thredds`
  * Folders containing NetCDF and other data files read by the TDS in `/data1` and `/data2`
  * Tomcat users configured in `/usr/local/tomcat/conf/tomcat-users.xml`
- 
+
 Then you could issue this command to fire up the new Docker TDS container (remember to stop the old TDS first):
 
     docker-compose stop thredds-production
