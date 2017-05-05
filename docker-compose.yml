@@ -1,53 +1,44 @@
----
 version: '3'
 
-volumes:
-  thredds-volume:
-  tdm-volume:
-
-networks:
-  thredds-network:
-
 services:
-  thredds-production:
+  thredds-quickstart:
     image: unidata/thredds-docker:4.6.10
-    container_name: thredds
     ports:
       - "80:8080"
-      - "8080:8080"
       - "443:8443"
       - "8443:8443"
-    networks:
-      thredds-network:
-        aliases:
-          - thredds
+
+  thredds-production:
+    image: unidata/thredds-docker:4.6.10
+    ports:
+      - "80:8080"
+      - "443:8443"
+      - "8443:8443"
+    container_name: thredds
     volumes:
-      - thredds-volume:/usr/local/tomcat/content
-      # - thredds-volume:/usr/local/tomcat/content/thredds/logs/
-      # - thredds-volume:/usr/local/tomcat/content/thredds
-      # - /path/to/your/local/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - /path/to/your/tomcat/logs/:/usr/local/tomcat/logs/
+      - /path/to/your/thredds/logs/:/usr/local/tomcat/content/thredds/logs/
+      - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
+      - /path/to/your/data/directory1:/path/to/your/data/directory1
+      - /path/to/your/data/directory2:/path/to/your/data/directory2
     env_file:
-      # Set an env var on the host for THREDDS_COMPOSE_ENV_LOCAL if you want to use
-      # your own env file. For example, if you have a compose_local.env file,
-      # set THREDDS_COMPOSE_ENV_LOCAL=_local before running docker-compose
       - "compose${THREDDS_COMPOSE_ENV_LOCAL}.env"
 
+  ###
+  # TDM
+  # Not strictly part of this repo, but useful to have around
+  # https://github.com/Unidata/tdm-docker
+  ###
+
   tdm:
-    image: unidata/thredds-docker:tdm-4.6
+    image: unidata/tdm-docker:4.6
     container_name: tdm
-    networks:
-      thredds-network:
-        aliases:
-          - tdm
     volumes:
-      - tdm-volume:/usr/local/tomcat/content
-      # - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
-      # - /path/to/your/data/directory1:/path/to/your/data/directory1
+      - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
+      - /path/to/your/data/directory1:/path/to/your/data/directory1
       # TDM logging non-configurable until 5.0 so you'll need tdm.sh and
       # tdm.jar if you want to log outside the container :-(
-      # - /path/to/your/tdm/logs:/usr/local/tomcat/content/tdm/
+      - /path/to/your/tdm/logs:/usr/local/tomcat/content/tdm/
     env_file:
-      # Set an env var on the host for THREDDS_COMPOSE_ENV_LOCAL if you want to use
-      # your own env file. For example, if you have a compose_local.env file,
-      # set THREDDS_COMPOSE_ENV_LOCAL=_local before running docker-compose
       - "compose${THREDDS_COMPOSE_ENV_LOCAL}.env"

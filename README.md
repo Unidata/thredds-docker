@@ -4,6 +4,8 @@
 
 A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) built on top a [security hardened Tomcat container maintained by Unidata](https://github.com/Unidata/tomcat-docker). This project was initially developed by [Axiom Data Science](http://www.axiomdatascience.com/) and now lives at Unidata.
 
+**TDM Update**: If you are looking for the TDM Docker container, it has [moved into its own repository](https://github.com/Unidata/tdm-docker).
+
 ## Versions
 
 * `unidata/thredds-docker:4.6.10`
@@ -55,15 +57,38 @@ However, `docker-compose` use is not mandatory. For example, this container can 
 
 There is an example [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) in this repository.
 
+
+### Configuring `docker-compose` With Environment Variables
+
+This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS. You can presently configure three parameters:
+
+    | Parameter               | Environment Variable  | Default Value             |
+    |-------------------------+-----------------------+---------------------------|
+    | TDS Content Root        | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content |
+    | JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                        |
+    | JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                        |
+
+If you wish to update your configuration, you can either update the `compose.env` file or create your own environments file by copying `compose.env`. If using your own file, you can export the suffix of the file name into an environment variable named `THREDDS_COMPOSE_ENV_LOCAL`.
+
+For example:
+
+```shell
+cp compose.env compose_local.env
+export THREDDS_COMPOSE_ENV_LOCAL=_local
+< edit compose_local.env >
+docker-compose up thredds-production
+```
+
+
 ## Production
-
-### Configuration
-
-First, define directory and file paths for log files, Tomcat, THREDDS, and data in [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) for the `thredds-production` image. Then:
 
 ### Memory
 
-Tomcat web applications and the TDS can require large amounts of memory to run. This container is setup to run Tomcat with a [4 gigabyte memory allocation](files/javaopts.sh). When running this container, ensure your VM or hardware can accommodate this memory requirement.
+Tomcat web applications and the TDS can require large amounts of memory to run. This container is setup to run Tomcat with a default [4 gigabyte memory allocation](files/javaopts.sh). When running this container, ensure your VM or hardware can accommodate this memory requirement.
+
+### Configuration
+
+Define directory and file paths for log files, Tomcat, THREDDS, and data in [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) for the `thredds-production` image.
 
 
 ### Running the TDS
@@ -95,9 +120,8 @@ THREDDS container is based off of the [canonical Tomcat container (tomcat:jre8)]
 
 ### Java Configuration Options
 
-The Java (`JAVA_OPTS`) are configured in `${CATALINA_HOME}/bin/javaopts.sh` (see [javaopts.sh](files/javaopts.sh))
+The Java (`JAVA_OPTS`) are configured in `${CATALINA_HOME}/bin/javaopts.sh` (see [javaopts.sh](files/javaopts.sh)). See the `docker-compose` section above for configuring some of the environment variables of this file.
 
-This file can be mounted over with `docker-compose.yml` which can be useful if, for instance, you wish to change the maximum Java heap space available to the TDS or other JVM options.
 
 ### THREDDS
 
@@ -207,49 +231,7 @@ At this point we are done setting up the TDS with docker. To navigate to this in
 
 ## TDM
 
-The THREDDS Data Manager or TDM is an application that works in conjunction with the TDS. It creates indexes for GRIB data in a background process, and notifies the TDS via port `8443` when data have been updated or changed. See [here](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) to learn more about the TDM.
-
-### Versions
-
-* `unidata/thredds-docker:tdm-4.6`
-
-* `unidata/thredds-docker:tdm-5.0-SNAPSHOT`
-
-### Configuration
-
-The TDM will notify the TDS of data changes via an HTTPS port `8443` triggering mechanism. It is important the TDM password (`TDM_PW` environment variable) defined in the [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) file corresponds to the SHA **digested** password in the [tomcat-users.xml](https://github.com/Unidata/thredds-docker/blob/master/files/tomcat-users.xml) file. [See the parent container](https://hub.docker.com/r/unidata/tomcat-docker/) for how to create a SHA digested password. Also, because this mechanism works via port `8443`, you will have to get your HTTPS certificates in place. Again [see the parent container](https://hub.docker.com/r/unidata/tomcat-docker/) on how to install certificates, self-signed or otherwise.
-
-Not having the Tomcat `tdm` user password and digested password in sync can be a big source of frustration. One way to diagnose this problem is to look at the TDM logs and `grep` for `trigger`. You will find something like:
-
-```sh
-fc.NAM-CONUS_80km.log:2016-11-02T16:09:54.305 +0000 WARN  - FAIL send trigger to http://unicloud.westus.cloudapp.azure.com/thredds/admin/collection/trigger?trigger=never&collection=NAM-CONUS_80km status = 401
-```
-
-Enter the trigger URL in your browser:
-
-```sh
-http://unicloud.westus.cloudapp.azure.com/thredds/admin/collection/trigger?trigger=never&collection=NAM-CONUS_80km
-```
-
-At this point the browser will prompt you for a `tdm` login and password you defined in the `docker-compose.yml`. If the triggering mechanism is successful, you see a `TRIGGER SENT` message. Otherwise, make sure your HTTPS certificate is present, and ensure the `tdm` password in the `docker-compose.yml`, and digested password in the `tomcat-users.xml` are in sync.
-
-### Running the TDM
-
-    docker-compose up -d tdm
-
-### Capturing TDM Log Files Outside the Container
-
-Until `5.0`, the TDM lacks configurability with respect to the location of log files and the TDM simply logs locally to where the TDM is invoked. In the meantime, to capture TDM log files outside the container, do the usual volume mounting outside the container:
-
-    /path/to/your/tdm/logs:/usr/local/tomcat/content/tdm/
-
-*and* put the `tdm.jar` and `tdm.sh` run script in `/path/to/your/tdm/logs`.
-
-For example, you can get the `tdm.jar`:
-
-    curl -SL  https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tdmFat/4.6.10/tdmFat-4.6.10.jar -o tdm.jar
-
-The `tdm.sh` script can be found within this repository. Make sure the `tdm.sh` script is executable by the container.
+The [THREDDS Data Manager](http://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) or TDM is an application that works in close conjunction with the TDS and is referenced in the [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) in this repository. The TDM Docker container [is now its own repository ](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
 
 ## Citation
 

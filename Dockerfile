@@ -70,6 +70,14 @@ RUN export CPPFLAGS=-I/usr/local/include \
 
 ENV TDS_VERSION 4.6.10
 
+ENV TDS_CONTENT_ROOT_PATH /usr/local/tomcat/content
+
+# The amount of Xmx and Xms memory Java args to allocate to THREDDS
+
+ENV THREDDS_XMX_SIZE 4G
+
+ENV THREDDS_XMS_SIZE 4G
+
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/${TDS_VERSION}/tds-${TDS_VERSION}.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
@@ -80,7 +88,9 @@ RUN unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/
 # Install ncSOS
 ###
 
-COPY files/ncsos.jar ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/ncsos.jar
+ENV NCSOS_VERSION 1.3
+
+RUN curl -o ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/ncsos.jar https://github.com/asascience-open/ncSOS/releases/download/v${NCSOS_VERSION}/ncsos-${NCSOS_VERSION}.jar -L
 
 ###
 # Default thredds config
