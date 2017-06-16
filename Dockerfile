@@ -24,7 +24,7 @@ WORKDIR /downloads
 
 ###
 # Installing netcdf-c library according to:
-# http://www.unidata.ucar.edu/software/thredds/current/netcdf-java/reference/netcdf4Clibrary.html 
+# http://www.unidata.ucar.edu/software/thredds/current/netcdf-java/reference/netcdf4Clibrary.html
 ###
 
 ENV LD_LIBRARY_PATH /usr/local/lib:${LD_LIBRARY_PATH}
@@ -69,7 +69,9 @@ RUN export CPPFLAGS=-I/usr/local/include \
 ###
 
 ENV TDS_VERSION 5.0.0
-ENV TDS_SNAPSHOT_VERSION ${TDS_VERSION}-20161213.124401-60
+
+ENV TDS_SNAPSHOT_VERSION ${TDS_VERSION}-20170608.124648-360
+
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-snapshots/edu/ucar/tds/${TDS_VERSION}-SNAPSHOT/tds-${TDS_SNAPSHOT_VERSION}.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
@@ -80,7 +82,9 @@ RUN unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/
 # Install ncSOS
 ###
 
-COPY files/ncsos.jar ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/ncsos.jar
+ENV NCSOS_VERSION 1.3
+
+RUN curl -o ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/ncsos.jar https://github.com/asascience-open/ncSOS/releases/download/v${NCSOS_VERSION}/ncsos-${NCSOS_VERSION}.jar -L
 
 ###
 # Default thredds config
@@ -107,7 +111,7 @@ COPY files/javaopts.sh $CATALINA_HOME/bin/javaopts.sh
 RUN chmod 755 $CATALINA_HOME/bin/*.sh
 
 ###
-# Creating .systemPrefs directory according to 
+# Creating .systemPrefs directory according to
 # http://www.unidata.ucar.edu/software/thredds/current/tds/faq.html#javaUtilPrefs
 # and as defined in the files/javaopts.sh file
 ###
