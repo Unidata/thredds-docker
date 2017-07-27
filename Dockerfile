@@ -51,7 +51,7 @@ ENV HDF5_VER hdf5-${HDF5_VERSION}
 ENV HDF5_FILE ${HDF5_VER}.tar.gz
 
 #hdf5 dependency
-RUN curl https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER}/src/${HDF5_FILE} | tar xz && \
+RUN curl https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER%.*}/${HDF5_VER}/src/${HDF5_FILE} | tar xz && \
     cd hdf5-${HDF5_VERSION} && \
     ./configure --with-zlib=${ZDIR} --prefix=${H5DIR} --enable-threadsafe --with-pthread=${PDIR} --enable-unsupported --prefix=/usr/local && \
     make && make check && make install && make check-install && ldconfig
