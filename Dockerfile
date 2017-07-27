@@ -138,10 +138,6 @@ WORKDIR ${CATALINA_HOME}
 
 RUN rm -rf /downloads
 
-ENV THREDDS_XMX_SIZE 4g
-ENV THREDDS_XMS_SIZE 4g
-ENV TDM_CONTENT_ROOT_PATH /usr/local/tomcat/content
-
 ###
 # Inherited from parent container
 ###
