@@ -1,0 +1,39 @@
+---
+version: '3.3'
+
+configs:
+  thredds_tomcat_users:
+    file: ./files/tomcat-users.xml
+
+networks:
+  thredds_network:
+
+volumes:
+  thredds_volume:
+    labels:
+      - "gov.usgs.wma.docker.description=THREDDS Docker Volume"
+      - "gov.usgs.wma.docker.name=volume.thredds"
+
+services:
+  thredds:
+    image: unidata/thredds-docker:4.6.10
+    networks:
+        thredds_network:
+          aliases:
+            - thredds
+    volumes:
+      - "thredds_volume:/usr/local/tomcat/logs/"
+      - "thredds_volume:/usr/local/tomcat/content/thredds/logs/"
+      - "thredds_volume:/usr/local/tomcat/conf/Catalina/localhost"
+      - "thredds_volume:/usr/local/tomcat/work/Catalina/localhost"
+    ports:
+      - "80:8080"
+      - "443:8443"
+      - "8443:8443"
+    env_file:
+      - "compose${THREDDS_COMPOSE_ENV_LOCAL}.env"
+    configs:
+      - source: thredds_tomcat_users
+        target: /usr/local/tomcat/conf/tomcat-users.xml
+        uid: '1000'
+        gid: '999'
