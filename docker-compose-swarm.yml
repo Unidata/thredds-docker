@@ -11,8 +11,8 @@ networks:
 volumes:
   thredds_volume:
     labels:
-      - "gov.usgs.wma.docker.description=THREDDS Docker Volume"
-      - "gov.usgs.wma.docker.name=volume.thredds"
+      - "docker.volume.description=THREDDS Docker Volume"
+      - "docker.volume.name=volume.thredds"
 
 services:
   thredds:
@@ -31,7 +31,7 @@ services:
       - "443:8443"
       - "8443:8443"
     env_file:
-      - "compose${THREDDS_COMPOSE_ENV_LOCAL}.env"
+      - "compose.env"
     configs:
       - source: thredds_tomcat_users
         target: /usr/local/tomcat/conf/tomcat-users.xml
