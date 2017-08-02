@@ -57,7 +57,6 @@ However, `docker-compose` use is not mandatory. For example, this container can 
 
 There is an example [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) in this repository.
 
-
 ### Configuring `docker-compose` With Environment Variables
 
 This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS and [TDM](#tdm). You can configure these parameters:
@@ -83,6 +82,9 @@ export THREDDS_COMPOSE_ENV_LOCAL=_local
 docker-compose up thredds-production
 ```
 
+## `docker-swarm`
+
+Configuration information may be found in the [Docker Swarm readme](README_SWARM.md).
 
 ## Production
 
