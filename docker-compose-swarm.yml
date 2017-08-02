@@ -1,6 +1,10 @@
 ---
 version: '3.3'
 
+secrets:
+  thredds_tomcat_users:
+    file: ./files/tomcat-users.xml
+
 configs:
   thredds_tomcat_users:
     file: ./files/tomcat-users.xml
@@ -25,13 +29,14 @@ services:
       - "thredds_volume:/usr/local/tomcat/logs/"
       - "thredds_volume:/usr/local/tomcat/content/thredds/logs/"
       - "thredds_volume:/usr/local/tomcat/conf/Catalina/localhost"
+      - "thredds_volume:/usr/local/tomcat/work/Catalina/localhost/thredds"
     ports:
       - "80:8080"
       - "443:8443"
       - "8443:8443"
     env_file:
       - "compose.env"
-    configs:
+    secrets:
       - source: thredds_tomcat_users
         target: /usr/local/tomcat/conf/tomcat-users.xml
         uid: '1000'
