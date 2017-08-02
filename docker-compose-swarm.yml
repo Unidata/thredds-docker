@@ -25,7 +25,6 @@ services:
       - "thredds_volume:/usr/local/tomcat/logs/"
       - "thredds_volume:/usr/local/tomcat/content/thredds/logs/"
       - "thredds_volume:/usr/local/tomcat/conf/Catalina/localhost"
-      - "thredds_volume:/usr/local/tomcat/work/Catalina/localhost"
     ports:
       - "80:8080"
       - "443:8443"
