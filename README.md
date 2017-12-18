@@ -168,6 +168,10 @@ By default, Tomcat will start with [two user accounts](https://github.com/Unidat
 * `tdm` - used by the THREDDS Data Manager for connecting to THREDDS
 * `admin` - can be used by everything else (has full privileges)
 
+### Remote Management
+
+[TDS Remote Management](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/RemoteManagement.html#RemoteDebugging) is enabled for the `admin` user by default, and can be accessed via `http(s)://<your server>/thredds/admin/debug`.
+
 ### Use Case
 
  Let's say you want to upgrade to the Docker THREDDS Container, and you already have a TDS configured with
