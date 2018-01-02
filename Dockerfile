@@ -85,14 +85,6 @@ RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
 RUN unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/
 
 ###
-# Install ncSOS
-###
-
-ENV NCSOS_VERSION 1.3
-
-RUN curl -o ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/ncsos.jar https://github.com/asascience-open/ncSOS/releases/download/v${NCSOS_VERSION}/ncsos-${NCSOS_VERSION}.jar -L
-
-###
 # Default thredds config
 ###
 
