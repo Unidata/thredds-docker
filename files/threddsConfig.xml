@@ -208,7 +208,7 @@
     <isoAllow>true</isoAllow>
   </NCISO>
 
-  <!--
+  <!-- To enable ncSOS, uncomment and set to true
   <NCSOS>
     <allow>false</allow>
   </NCSOS>
