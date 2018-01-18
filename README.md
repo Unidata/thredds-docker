@@ -258,4 +258,5 @@ The [THREDDS Data Manager](http://www.unidata.ucar.edu/software/thredds/current/
 
 ## Citation
 
-In order to cite this project, please simply make use of the [Unidata THREDDS Data Server DOI](https://data.datacite.org/10.5065/D6N014KG).
+In order to cite this project, please simply make use of the Unidata THREDDS Data Server DOI: doi:10.5065/D6N014KG https://doi.org/10.5065/D6N014KG
+
