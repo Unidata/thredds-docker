@@ -2,7 +2,7 @@
 # Dockerfile for TDS
 ###
 
-FROM unidata/tomcat-docker:8
+FROM unidata/tomcat-docker:8.5
 
 MAINTAINER Unidata
 
@@ -78,7 +78,7 @@ ENV THREDDS_XMX_SIZE 4G
 
 ENV THREDDS_XMS_SIZE 4G
 
-ENV TDS_SNAPSHOT_VERSION ${TDS_VERSION}-20170919.123640-389
+ENV TDS_SNAPSHOT_VERSION ${TDS_VERSION}-20180211.132721-420
 
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-snapshots/edu/ucar/tds/${TDS_VERSION}-SNAPSHOT/tds-${TDS_SNAPSHOT_VERSION}.war
 
