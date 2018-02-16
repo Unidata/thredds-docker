@@ -2,7 +2,7 @@
 # Dockerfile for TDS
 ###
 
-FROM unidata/tomcat-docker:8
+FROM unidata/tomcat-docker:8.5
 
 MAINTAINER Unidata
 
@@ -78,21 +78,13 @@ ENV THREDDS_XMX_SIZE 4G
 
 ENV THREDDS_XMS_SIZE 4G
 
-ENV TDS_SNAPSHOT_VERSION ${TDS_VERSION}-20170919.123640-389
+ENV TDS_SNAPSHOT_VERSION ${TDS_VERSION}-20180211.132721-420
 
 ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-snapshots/edu/ucar/tds/${TDS_VERSION}-SNAPSHOT/tds-${TDS_SNAPSHOT_VERSION}.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
 
 RUN unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/
-
-###
-# Install ncSOS
-###
-
-ENV NCSOS_VERSION 1.3
-
-RUN curl -o ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/ncsos.jar https://github.com/asascience-open/ncSOS/releases/download/v${NCSOS_VERSION}/ncsos-${NCSOS_VERSION}.jar -L
 
 ###
 # Default thredds config
