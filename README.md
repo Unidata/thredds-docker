@@ -266,3 +266,8 @@ The [THREDDS Data Manager](http://www.unidata.ucar.edu/software/thredds/current/
 
 In order to cite this project, please simply make use of the Unidata THREDDS Data Server DOI: doi:10.5065/D6N014KG https://doi.org/10.5065/D6N014KG
 
+## Support
+
+If you have a question or would like support for this THREDDS Docker container, consider [submitting a GitHub issue](https://github.com/Unidata/thredds-docker/issues). Alternatively, you may wish to start a discussion on the THREDDS Community mailing list: <thredds@unidata.ucar.edu>.
+
+For general TDS questions, please see the [THREDDS support page](https://www.unidata.ucar.edu/software/thredds/current/tds/#help).
