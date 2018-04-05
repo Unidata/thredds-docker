@@ -14,7 +14,8 @@ USER root
 
 RUN \
     apt-get update && \
-    apt-get install -y unzip vim build-essential m4 libpthread-stubs0-dev && \
+    apt-get install -y unzip vim build-essential m4 \
+    libpthread-stubs0-dev libcurl4-openssl-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -29,11 +30,11 @@ WORKDIR /downloads
 
 ENV LD_LIBRARY_PATH /usr/local/lib:${LD_LIBRARY_PATH}
 
-ENV HDF5_VERSION 1.8.17
+ENV HDF5_VERSION 1.8.20
 
 ENV ZLIB_VERSION 1.2.8
 
-ENV NETCDF_VERSION 4.4.1
+ENV NETCDF_VERSION 4.6.0
 
 ENV ZDIR /usr/local
 
