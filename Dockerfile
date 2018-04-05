@@ -69,7 +69,7 @@ RUN export CPPFLAGS=-I/usr/local/include \
 # Grab and unzip the TDS
 ###
 
-ENV TDS_VERSION 5.0.0
+ENV TDS_VERSION 5.0.0-beta2
 
 ENV TDS_CONTENT_ROOT_PATH /usr/local/tomcat/content
 
@@ -79,9 +79,7 @@ ENV THREDDS_XMX_SIZE 4G
 
 ENV THREDDS_XMS_SIZE 4G
 
-ENV TDS_SNAPSHOT_VERSION ${TDS_VERSION}-20180408.011112-438
-
-ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/repository/unidata-all/edu/ucar/tds/${TDS_VERSION}-SNAPSHOT/tds-${TDS_SNAPSHOT_VERSION}.war
+ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/repository/unidata-releases/edu/ucar/tds/${TDS_VERSION}/tds-${TDS_VERSION}.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
 

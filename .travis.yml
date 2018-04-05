@@ -4,8 +4,8 @@ services:
   - docker
 
 before_install:
-  - docker build --no-cache -t unidata/thredds-docker:5.0-SNAPSHOT .
-  - docker run --name thredds -v `pwd`/.travis:/travis -d -p 8080:8080 unidata/thredds-docker:5.0-SNAPSHOT
+  - docker build --no-cache -t unidata/thredds-docker:5.0-beta2 .
+  - docker run --name thredds -v `pwd`/.travis:/travis -d -p 8080:8080 unidata/thredds-docker:5.0-beta2
   # Give chance for TDS to fire up
   - nc -z -w300 127.0.0.1 8080
   - for i in {1..5}; do curl -o /dev/null http://127.0.0.1:8080/thredds/catalog.html && break || (echo sleeping 15... && sleep 15); done
