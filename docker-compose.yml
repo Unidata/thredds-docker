@@ -2,14 +2,14 @@ version: '3'
 
 services:
   thredds-quickstart:
-    image: unidata/thredds-docker:5.0-SNAPSHOT
+    image: unidata/thredds-docker:5.0-beta5
     ports:
       - "80:8080"
       - "443:8443"
       - "8443:8443"
 
   thredds-production:
-    image: unidata/thredds-docker:5.0-SNAPSHOT
+    image: unidata/thredds-docker:5.0-beta5
     ports:
       - "80:8080"
       - "443:8443"
@@ -32,7 +32,7 @@ services:
   ###
 
   tdm:
-    image: unidata/tdm-docker:5.0-SNAPSHOT
+    image: unidata/tdm-docker:5.0-beta5
     container_name: tdm
     volumes:
       - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
