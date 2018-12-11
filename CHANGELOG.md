@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.6.12 - 2018-12-12
+### Added
+- 4.6.12 release of the Unidata TDS wrapped in a Docker container
+- Minor readme improvements
+- Updated netCDF and related packages
+- ncsos no longer needs a separate
+- Use /dev/urandom for random numbers
+- Updated to unidata/tomcat-docker:8.5
+- Instructions for parameterizing uid/gid
+
 ## 4.6.11 - 2017-12-07
 ### Added
 - 4.6.11 release of the Unidata TDS wrapped in a Docker container
@@ -26,5 +36,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - 4.6.10 release of the Unidata TDS wrapped in a Docker container
 
-[Unreleased]: https://github.com/Unidata/thredds-docker/compare/v4.6.11...HEAD
+[Unreleased]: https://github.com/Unidata/thredds-docker/compare/v4.6.12...HEAD
+[4.6.12]: https://github.com/Unidata/thredds-docker/compare/v4.6.11...v4.6.12
 [4.6.11]: https://github.com/Unidata/thredds-docker/compare/v4.6.10...v4.6.11
