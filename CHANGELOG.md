@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Updated
+- Docker compose to 3.7 version
+
+### Removed
+- Configs section in swarm compose
+
 ## 4.6.12 - 2018-12-12
 ### Added
 - 4.6.12 release of the Unidata TDS wrapped in a Docker container
