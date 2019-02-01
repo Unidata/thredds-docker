@@ -8,10 +8,15 @@ A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thred
 
 ## Versions
 
+* `unidata/thredds-docker:latest`
+* `unidata/thredds-docker:4.6.12`
+* `unidata/thredds-docker:4.6.11`
 * `unidata/thredds-docker:4.6.10`
 * `unidata/thredds-docker:4.6.8`
 * `unidata/thredds-docker:4.6.6`
 * `unidata/thredds-docker:5.0-SNAPSHOT`
+* `unidata/thredds-docker:5.0-beta5`
+
 
 ## tl;dr
 
@@ -129,6 +134,10 @@ THREDDS container is based off of the [canonical Tomcat container (tomcat:jre8)]
 The Java (`JAVA_OPTS`) are configured in `${CATALINA_HOME}/bin/javaopts.sh` (see [javaopts.sh](files/javaopts.sh)). See the `docker-compose` section above for configuring some of the environment variables of this file.
 
 
+### Configurable Tomcat UID and GID
+
+[See parent container](https://github.com/Unidata/tomcat-docker#configurable-tomcat-uid-and-gid).
+
 ### THREDDS
 
 To mount your own `content/thredds` directory with `docker-compose.yml`:
@@ -166,6 +175,22 @@ By default, Tomcat will start with [two user accounts](https://github.com/Unidat
 
 * `tdm` - used by the THREDDS Data Manager for connecting to THREDDS
 * `admin` - can be used by everything else (has full privileges)
+
+### Remote Management
+
+[TDS Remote Management](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/RemoteManagement.html#RemoteDebugging) is enabled for the `admin` user by default, and can be accessed via `http(s)://<your server>/thredds/admin/debug`.
+
+### ncSOS
+
+To enable to ncSOS
+
+```xml
+  <NCSOS>
+    <allow>false</allow>
+  </NCSOS>
+```
+
+to `true` in `threddsConfig.xml`.
 
 ### Use Case
 
@@ -241,4 +266,10 @@ The [THREDDS Data Manager](http://www.unidata.ucar.edu/software/thredds/current/
 
 ## Citation
 
-In order to cite this project, please simply make use of the [Unidata THREDDS Data Server DOI](https://data.datacite.org/10.5065/D6N014KG).
+In order to cite this project, please simply make use of the Unidata THREDDS Data Server DOI: doi:10.5065/D6N014KG https://doi.org/10.5065/D6N014KG
+
+## Support
+
+If you have a question or would like support for this THREDDS Docker container, consider [submitting a GitHub issue](https://github.com/Unidata/thredds-docker/issues). Alternatively, you may wish to start a discussion on the THREDDS Community mailing list: <thredds@unidata.ucar.edu>.
+
+For general TDS questions, please see the [THREDDS support page](https://www.unidata.ucar.edu/software/thredds/current/tds/#help).

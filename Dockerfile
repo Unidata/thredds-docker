@@ -2,7 +2,7 @@
 # Dockerfile for TDS
 ###
 
-FROM unidata/tomcat-docker:8
+FROM unidata/tomcat-docker:8.5
 
 MAINTAINER Unidata
 
@@ -14,7 +14,8 @@ USER root
 
 RUN \
     apt-get update && \
-    apt-get install -y unzip vim build-essential m4 libpthread-stubs0-dev && \
+    apt-get install -y unzip vim build-essential m4 \
+    libpthread-stubs0-dev libcurl4-openssl-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -29,11 +30,11 @@ WORKDIR /downloads
 
 ENV LD_LIBRARY_PATH /usr/local/lib:${LD_LIBRARY_PATH}
 
-ENV HDF5_VERSION 1.8.17
+ENV HDF5_VERSION 1.10.3
 
 ENV ZLIB_VERSION 1.2.8
 
-ENV NETCDF_VERSION 4.4.1
+ENV NETCDF_VERSION 4.6.2
 
 ENV ZDIR /usr/local
 
@@ -59,8 +60,8 @@ RUN curl https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER%.*}/${HDF5_VE
 #netCDF4-c
 RUN export CPPFLAGS=-I/usr/local/include \
     LDFLAGS=-L/usr/local/lib && \
-    curl ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF_VERSION}.tar.gz | tar xz && \
-    cd netcdf-${NETCDF_VERSION} && \
+    curl ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-${NETCDF_VERSION}.tar.gz | tar xz && \
+    cd netcdf-c-${NETCDF_VERSION} && \
     ./configure --prefix=/usr/local && \
     make check && make install && ldconfig
 
@@ -68,7 +69,7 @@ RUN export CPPFLAGS=-I/usr/local/include \
 # Grab and unzip the TDS
 ###
 
-ENV TDS_VERSION 4.6.10
+ENV TDS_VERSION 4.6.12
 
 ENV TDS_CONTENT_ROOT_PATH /usr/local/tomcat/content
 
@@ -78,19 +79,11 @@ ENV THREDDS_XMX_SIZE 4G
 
 ENV THREDDS_XMS_SIZE 4G
 
-ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/edu/ucar/tds/${TDS_VERSION}/tds-${TDS_VERSION}.war
+ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/repository/unidata-releases/edu/ucar/tds/${TDS_VERSION}/tds-${TDS_VERSION}.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
 
 RUN unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/
-
-###
-# Install ncSOS
-###
-
-ENV NCSOS_VERSION 1.3
-
-RUN curl -o ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/ncsos.jar https://github.com/asascience-open/ncSOS/releases/download/v${NCSOS_VERSION}/ncsos-${NCSOS_VERSION}.jar -L
 
 ###
 # Default thredds config
