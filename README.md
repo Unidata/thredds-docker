@@ -4,8 +4,6 @@
 
 A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) built on top a [security hardened Tomcat container maintained by Unidata](https://github.com/Unidata/tomcat-docker). This project was initially developed by [Axiom Data Science](http://www.axiomdatascience.com/) and now lives at Unidata.
 
-**TDM Update**: If you are looking for the TDM Docker container, it has [moved into its own repository](https://github.com/Unidata/tdm-docker).
-
 ## Versions
 
 * `unidata/thredds-docker:latest`
@@ -65,17 +63,17 @@ There is an example [docker-compose.yml](https://github.com/Unidata/thredds-dock
 
 ### Configuring `docker-compose` With Environment Variables
 
-This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS and [TDM](#tdm). You can configure these parameters:
+This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS and optionally the [TDM](#tdm). You can configure these parameters:
 
-    | Parameter                   | Environment Variable  | Default Value                |
-    |-----------------------------+-----------------------+------------------------------|
-    | TDS Content Root            | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content    |
-    | TDS JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                           |
-    | TDS JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                           |
-    | TDM Password                | TDM_PW                | CHANGEME!                    |
-    | TDS HOST                    | TDS_HOST              | http://thredds.yourhost.net/ |
-    | TDM JVM Max Heap Size (xmx) | TDM_XMX_SIZE          | 6G                           |
-    | TDM JVM Min Heap Size (xms) | TDM_XMS_SIZE          | 1G                           |
+    | Parameter                   | Environment Variable  | Default Value                | Docker Container |
+    |-----------------------------+-----------------------+------------------------------+------------------|
+    | TDS Content Root            | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content    | tds              |
+    | TDS JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                           | tds              |
+    | TDS JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                           | tds              |
+    | TDM Password                | TDM_PW                | CHANGEME!                    | tdm              |
+    | TDS HOST                    | TDS_HOST              | http://thredds.yourhost.net/ | tdm              |
+    | TDM JVM Max Heap Size (xmx) | TDM_XMX_SIZE          | 6G                           | tdm              |
+    | TDM JVM Min Heap Size (xms) | TDM_XMS_SIZE          | 1G                           | tdm              |
 
 If you wish to update your configuration, you can either update the `compose.env` file or create your own environments file by copying `compose.env`. If using your own file, you can export the suffix of the file name into an environment variable named `THREDDS_COMPOSE_ENV_LOCAL`.
 
