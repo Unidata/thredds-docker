@@ -69,7 +69,7 @@ RUN export CPPFLAGS=-I/usr/local/include \
 # Grab and unzip the TDS
 ###
 
-ENV TDS_VERSION 5.0.0-beta5
+ENV TDS_VERSION 5.0.0-beta7
 
 ENV TDS_CONTENT_ROOT_PATH /usr/local/tomcat/content
 
