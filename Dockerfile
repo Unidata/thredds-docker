@@ -30,11 +30,11 @@ WORKDIR /downloads
 
 ENV LD_LIBRARY_PATH /usr/local/lib:${LD_LIBRARY_PATH}
 
-ENV HDF5_VERSION 1.8.20
+ENV HDF5_VERSION 1.10.5
 
 ENV ZLIB_VERSION 1.2.8
 
-ENV NETCDF_VERSION 4.6.0
+ENV NETCDF_VERSION 4.7.2
 
 ENV ZDIR /usr/local
 
@@ -60,8 +60,8 @@ RUN curl https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER%.*}/${HDF5_VE
 #netCDF4-c
 RUN export CPPFLAGS=-I/usr/local/include \
     LDFLAGS=-L/usr/local/lib && \
-    curl ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${NETCDF_VERSION}.tar.gz | tar xz && \
-    cd netcdf-${NETCDF_VERSION} && \
+    curl ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-${NETCDF_VERSION}.tar.gz | tar xz && \
+    cd netcdf-c-${NETCDF_VERSION} && \
     ./configure --prefix=/usr/local && \
     make check && make install && ldconfig
 
