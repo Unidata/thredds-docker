@@ -62,7 +62,7 @@ RUN export CPPFLAGS=-I/usr/local/include \
     LDFLAGS=-L/usr/local/lib && \
     curl ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-${NETCDF_VERSION}.tar.gz | tar xz && \
     cd netcdf-c-${NETCDF_VERSION} && \
-    ./configure --prefix=/usr/local && \
+    ./configure --disable-dap-remote-tests --prefix=/usr/local && \
     make check && make install && ldconfig
 
 ###
