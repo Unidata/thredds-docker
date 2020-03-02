@@ -14,7 +14,7 @@ USER root
 
 RUN \
     apt-get update && \
-    apt-get install -y unzip vim build-essential m4 \
+    apt-get install -y fontconfig unzip vim build-essential m4 \
     libpthread-stubs0-dev libcurl4-openssl-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
