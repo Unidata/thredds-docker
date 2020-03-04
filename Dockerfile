@@ -32,7 +32,7 @@ ENV LD_LIBRARY_PATH /usr/local/lib:${LD_LIBRARY_PATH}
 
 ENV HDF5_VERSION 1.10.5
 
-ENV ZLIB_VERSION 1.2.8
+ENV ZLIB_VERSION 1.2.9
 
 ENV NETCDF_VERSION 4.7.2
 
@@ -43,7 +43,7 @@ ENV H5DIR /usr/local
 ENV PDIR /usr
 
 #zlib dependency
-RUN curl ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4/zlib-${ZLIB_VERSION}.tar.gz | tar xz && \
+RUN curl https://zlib.net/fossils/zlib-${ZLIB_VERSION}.tar.gz | tar xz && \
     cd zlib-${ZLIB_VERSION} && \
     ./configure --prefix=/usr/local && \
     make && make install
