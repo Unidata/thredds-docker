@@ -79,6 +79,7 @@ This project contains a `docker-compose` [environment file](https://docs.docker.
     | TDS HOST                    | TDS_HOST              | http://thredds.yourhost.net/ |
     | TDM JVM Max Heap Size (xmx) | TDM_XMX_SIZE          | 6G                           |
     | TDM JVM Min Heap Size (xms) | TDM_XMS_SIZE          | 1G                           |
+    | AWS Region code             | AWS_REGION            | Not set                      |
 
 If you wish to update your configuration, you can either update the `compose.env` file or create your own environments file by copying `compose.env`. If using your own file, you can export the suffix of the file name into an environment variable named `THREDDS_COMPOSE_ENV_LOCAL`.
 
@@ -90,6 +91,8 @@ export THREDDS_COMPOSE_ENV_LOCAL=_local
 < edit compose_local.env >
 docker-compose up thredds-production
 ```
+
+The AWS Region code needs to be set if you are running in AWS and using an IAM policy attached to an EC2 instance to manage access to other AWS resources, such as datasets stored in S3. For possible code values, please see the [AWS service endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html) documentation.
 
 ## `docker-swarm`
 
