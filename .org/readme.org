@@ -44,6 +44,7 @@ A containerized [[http://www.unidata.ucar.edu/software/thredds/current/tds/][THR
    :END:
 
 - =unidata/thredds-docker:latest=
+- =unidata/thredds-docker:4.6.16-SNAPSHOT=
 - =unidata/thredds-docker:4.6.14=
 - =unidata/thredds-docker:4.6.13=
 - =unidata/thredds-docker:4.6.12=
