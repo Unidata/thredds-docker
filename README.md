@@ -44,6 +44,7 @@ A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thred
 ## Versions
 
 -   `unidata/thredds-docker:latest`
+-   `unidata/thredds-docker:4.6.16`
 -   `unidata/thredds-docker:4.6.15`
 -   `unidata/thredds-docker:4.6.14`
 -   `unidata/thredds-docker:4.6.13`
