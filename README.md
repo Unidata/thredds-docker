@@ -134,7 +134,7 @@ To clean the slate and remove the container (not the image, the container):
 ## More on Configuration
 ### Tomcat
 
-THREDDS container is based off of the [canonical Tomcat container (tomcat:jre8)](https://hub.docker.com/_/tomcat/) with [some additional security hardening measures](https://hub.docker.com/r/unidata/tomcat-docker/). Tomcat configurability can be done by mounting over the appropriate directories in `CATALINA_HOME` (`/usr/local/tomcat`).
+THREDDS container is based off of the [canonical Tomcat container (tomcat:8.5-jdk11-openjdk)](https://hub.docker.com/_/tomcat/) with [some additional security hardening measures](https://hub.docker.com/r/unidata/tomcat-docker/). Tomcat configurability can be done by mounting over the appropriate directories in `CATALINA_HOME` (`/usr/local/tomcat`).
 
 ### Java Configuration Options
 
