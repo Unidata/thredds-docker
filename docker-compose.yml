@@ -3,14 +3,14 @@ version: '3.7'
 
 services:
   thredds-quickstart:
-    image: unidata/thredds-docker:4.6.16.1
+    image: unidata/thredds-docker:4.6.17
     ports:
       - "80:8080"
       - "443:8443"
       - "8443:8443"
 
   thredds-production:
-    image: unidata/thredds-docker:4.6.16.1
+    image: unidata/thredds-docker:4.6.17
     ports:
       - "80:8080"
       - "443:8443"
