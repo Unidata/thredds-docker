@@ -32,10 +32,6 @@
             :publishing-function org-gfm-publish-to-gfm)))
 #+END_SRC
 
-#+BEGIN_EXPORT markdown
-[![Travis Status](https://travis-ci.org/Unidata/thredds-docker.svg?branch=master)](https://travis-ci.org/Unidata/thredds-docker)
-#+END_EXPORT
-
 A containerized [[http://www.unidata.ucar.edu/software/thredds/current/tds/][THREDDS Data Server]] built on top a [[https://github.com/Unidata/tomcat-docker][security hardened Tomcat container maintained by Unidata]].
  
 ** Versions
