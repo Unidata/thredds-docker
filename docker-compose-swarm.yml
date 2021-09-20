@@ -1,7 +1,11 @@
 ---
-version: '3.7'
+version: '3.3'
 
 secrets:
+  thredds_tomcat_users:
+    file: ./files/tomcat-users.xml
+
+configs:
   thredds_tomcat_users:
     file: ./files/tomcat-users.xml
 
@@ -16,7 +20,7 @@ volumes:
 
 services:
   thredds:
-    image: unidata/thredds-docker:4.6.17
+    image: unidata/thredds-docker:5.0
     networks:
         thredds_network:
           aliases:

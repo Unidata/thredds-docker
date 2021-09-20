@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0] - 2021-09-20
+### Updated
+- 5.0 release of the Unidata TDS wrapped in a Docker container
+- Based on JDK 11 - OpenJDK
+- Dumped Travis (will have to find an alternative)
+
 ## [4.6.17] - 2021-09-10
 ### Updated
 - 4.6.17 release of the Unidata TDS wrapped in a Docker container
