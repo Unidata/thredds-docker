@@ -33,13 +33,17 @@
 #+END_SRC
 
 A containerized [[http://www.unidata.ucar.edu/software/thredds/current/tds/][THREDDS Data Server]] built on top a [[https://github.com/Unidata/tomcat-docker][security hardened Tomcat container maintained by Unidata]].
- 
+
 ** Versions
-   :PROPERTIES:   
+   :PROPERTIES:
    :CUSTOM_ID: h8766A6B1
    :END:
 
 - =unidata/thredds-docker:latest=
+- =unidata/thredds-docker:5.0=
+- =unidata/thredds-docker:4.6.17=
+- =unidata/thredds-docker:4.6.16.1=
+- =unidata/thredds-docker:4.6.15=
 - =unidata/thredds-docker:4.6.14=
 - =unidata/thredds-docker:4.6.13=
 - =unidata/thredds-docker:4.6.12=
@@ -133,7 +137,7 @@ Tomcat web applications and the TDS can require large amounts of memory to run. 
     :CUSTOM_ID: h00614C28
     :END:
 
-Define directory and file paths for log files, Tomcat, THREDDS, and data in [[https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml][docker-compose.yml]] for the =thredds-production= image. 
+Define directory and file paths for log files, Tomcat, THREDDS, and data in [[https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml][docker-compose.yml]] for the =thredds-production= image.
 
 *** Running the TDS
     :PROPERTIES:
@@ -252,7 +256,7 @@ See the [[https://github.com/Unidata/tomcat-docker#digested-passwords][parent To
     :CUSTOM_ID: hE56DF4AE
     :END:
 
-[[https://www.unidata.ucar.edu/software/thredds/current/tds/reference/RemoteManagement.html#RemoteDebugging][TDS Remote Management]] is enabled for the =admin= user by default, and can be accessed via =http(s)://<your server>/thredds/admin/debug=. 
+[[https://www.unidata.ucar.edu/software/thredds/current/tds/reference/RemoteManagement.html#RemoteDebugging][TDS Remote Management]] is enabled for the =admin= user by default, and can be accessed via =http(s)://<your server>/thredds/admin/debug=.
 
 *** ncSOS
     :PROPERTIES:
@@ -275,7 +279,7 @@ to =true= in =threddsConfig.xml=.
     :END:
 
 Upgrading to a newer version of the container is easy. Simply stop the container via ~docker~ or ~docker-compose~, followed by
-    
+
 #+BEGIN_SRC sh
   docker pull unidata/thredds-docker:<version>
 #+END_SRC
@@ -368,7 +372,7 @@ At this point, we are done setting up the TDS with docker. To navigate to this i
    :PROPERTIES:
    :CUSTOM_ID: h46102A0D
    :END:
-   
+
 The [[http://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html][THREDDS Data Manager]] or TDM is an application that works in close conjunction with the TDS and is referenced in the [[file:docker-compose.yml][docker-compose.yml]] in this repository. The TDM Docker container [[https://github.com/Unidata/tdm-docker][is in its own repository]] where you can find instructions on how to run it.
 
 ** Citation
