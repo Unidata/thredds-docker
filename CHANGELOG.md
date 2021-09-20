@@ -71,7 +71,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - 4.6.10 release of the Unidata TDS wrapped in a Docker container
 
-[Unreleased]: https://github.com/Unidata/thredds-docker/compare/v4.6.17...HEAD
+[Unreleased]: https://github.com/Unidata/thredds-docker/compare/v5.0...HEAD
+[5.0]: https://github.com/Unidata/thredds-docker/compare/v4.6.17...v5.0
 [4.6.17]: https://github.com/Unidata/thredds-docker/compare/v4.6.16.1...v4.6.17
 [4.6.16.1]: https://github.com/Unidata/thredds-docker/compare/v4.6.15...v4.6.16.1
 [4.6.15]: https://github.com/Unidata/thredds-docker/compare/v4.6.14...v4.6.15
