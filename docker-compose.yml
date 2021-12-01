@@ -2,14 +2,14 @@ version: '3'
 
 services:
   thredds-quickstart:
-    image: unidata/thredds-docker:5.0
+    image: unidata/thredds-docker:5.1
     ports:
       - "80:8080"
       - "443:8443"
       - "8443:8443"
 
   thredds-production:
-    image: unidata/thredds-docker:5.0
+    image: unidata/thredds-docker:5.1
     ports:
       - "80:8080"
       - "443:8443"
@@ -37,8 +37,5 @@ services:
     volumes:
       - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
       - /path/to/your/data/directory1:/path/to/your/data/directory1
-      # TDM logging non-configurable until 5.0 so you'll need tdm.sh and
-      # tdm.jar if you want to log outside the container :-(
-      - /path/to/your/tdm/logs:/usr/local/tomcat/content/tdm/
     env_file:
       - "compose${THREDDS_COMPOSE_ENV_LOCAL}.env"
