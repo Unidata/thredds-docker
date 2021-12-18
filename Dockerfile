@@ -69,8 +69,6 @@ RUN export CPPFLAGS=-I/usr/local/include \
 # Grab and unzip the TDS
 ###
 
-ENV TDS_VERSION 4.6.18
-
 ENV TDS_CONTENT_ROOT_PATH /usr/local/tomcat/content
 
 # The amount of Xmx and Xms memory Java args to allocate to THREDDS
@@ -79,7 +77,7 @@ ENV THREDDS_XMX_SIZE 4G
 
 ENV THREDDS_XMS_SIZE 4G
 
-ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/repository/unidata-releases/edu/ucar/tds/${TDS_VERSION}/tds-${TDS_VERSION}.war
+ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/repository/unidata-snapshots/edu/ucar/tds/4.6.19-SNAPSHOT/tds-4.6.19-20211218.154246-4.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
 
