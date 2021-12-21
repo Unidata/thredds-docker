@@ -44,6 +44,11 @@ A containerized [[http://www.unidata.ucar.edu/software/thredds/current/tds/][THR
    :END:
 
 - =unidata/thredds-docker:latest=
+- =unidata/thredds-docker:4.6.19=
+- =unidata/thredds-docker:4.6.18=
+- =unidata/thredds-docker:4.6.17=
+- =unidata/thredds-docker:4.6.16.1=
+- =unidata/thredds-docker:4.6.15=
 - =unidata/thredds-docker:4.6.14=
 - =unidata/thredds-docker:4.6.13=
 - =unidata/thredds-docker:4.6.12=
@@ -51,9 +56,6 @@ A containerized [[http://www.unidata.ucar.edu/software/thredds/current/tds/][THR
 - =unidata/thredds-docker:4.6.10=
 - =unidata/thredds-docker:4.6.8=
 - =unidata/thredds-docker:4.6.6=
-- =unidata/thredds-docker:5.0-SNAPSHOT=
-- =unidata/thredds-docker:5.0-beta5=
-- =unidata/thredds-docker:5.0-beta7=
 
 ** Quickstart
    :PROPERTIES:
