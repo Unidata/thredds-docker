@@ -77,7 +77,7 @@ ENV THREDDS_XMX_SIZE 4G
 
 ENV THREDDS_XMS_SIZE 4G
 
-ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/repository/unidata-snapshots/edu/ucar/tds/4.6.19-SNAPSHOT/tds-4.6.19-20211218.154246-4.war
+ENV THREDDS_WAR_URL https://artifacts.unidata.ucar.edu/repository/unidata-snapshots/edu/ucar/tds/4.6.20-SNAPSHOT/tds-4.6.20-20220119.120642-7.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
 
