@@ -1,36 +1,54 @@
+################################################
+# NECESSARY GITHUB SECRETS TO SET              #
+################################################
+# secrets.imagename : e.g "<org>/<image>"
+# secrets.registryuser
+# secrets.registrypwd
+# secrets.server : (not currently implemented)
+################################################
+
 name: Docker Image CI
 
-# on:
-#   push:
-#     branches: [ master ]
-#   pull_request:
-#     branches: [ master ]
-#
-
 # Leave out specific branches so this same workflow can be used on any branch
-on: [ push, pull_request ]
-
+on:
+  workflow_dispatch:
+  pull_request_target:
+    types: [ opened, reopened, edited, synchronize, closed]
+  
 jobs:
 
   buildAndTest:
     runs-on: ubuntu-latest
     steps:
-      # Checkout the commit that triggered the workflow
+
+    - name: Set environment variables
+      run: |
+        tag=${{ github.ref }} && tag=${tag##*/}
+        echo "tag=${tag}" >> $GITHUB_ENV
+
+    # Checkout the commit that triggered the workflow
     - uses: actions/checkout@v2
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag unidata/thredds-docker:latest
+      run: docker build --no-cache -t ${{ secrets.imagename }}:${{ env.tag }} .
+
+
     - name: Run the container
       run: |
-        docker run --name thredds \
+        docker run \
         -v $(pwd)/.github/testScripts:/testScripts \
         -d \
         -p 8080:8080 \
-        unidata/thredds-docker:latest
-    # Give chance for TDS to fire up
-    - name: Wait and listen for TDS to fire up
-      run: nc -z -w300 127.0.0.1 8080
-    - run: |
-        for i in {1..5}; do curl -o /dev/null http://127.0.0.1:8080/thredds/catalog.html && break || \
-        (echo sleeping 15... && sleep 15); done
+        ${{ secrets.imagename }}:${{ env.tag }}
+
     - name: Run test script
       run: ./.github/testScripts/test.sh
+
+    - name: Push to Dockerhub
+      if: ${{ github.event_name == 'workflow_dispatch' || github.event.pull_request_target.merged == true}}
+      run: |
+        echo "Event that triggered workflow: ${{ github.event_name }}"
+        docker logout
+        echo ${{ secrets.registrypwd }} | docker login -u ${{ secrets.registryuser }} --password-stdin
+        docker push ${{ secrets.imagename }}:${{ env.tag }}
+        docker logout && echo Successfully pushed to and logged out of Docker registry
