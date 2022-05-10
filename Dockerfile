@@ -19,10 +19,6 @@ RUN \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN mkdir /downloads
-
-WORKDIR /downloads
-
 ###
 # Installing netcdf-c library according to:
 # http://www.unidata.ucar.edu/software/thredds/current/netcdf-java/reference/netcdf4Clibrary.html
@@ -46,7 +42,8 @@ ENV PDIR /usr
 RUN curl https://zlib.net/fossils/zlib-${ZLIB_VERSION}.tar.gz | tar xz && \
     cd zlib-${ZLIB_VERSION} && \
     ./configure --prefix=/usr/local && \
-    make && make install
+    make && make install && \
+    cd .. && rm -rf zlib-${ZLIB_VERSION}
 
 ENV HDF5_VER hdf5-${HDF5_VERSION}
 ENV HDF5_FILE ${HDF5_VER}.tar.gz
@@ -55,7 +52,8 @@ ENV HDF5_FILE ${HDF5_VER}.tar.gz
 RUN curl https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER%.*}/${HDF5_VER}/src/${HDF5_FILE} | tar xz && \
     cd hdf5-${HDF5_VERSION} && \
     ./configure --with-zlib=${ZDIR} --prefix=${H5DIR} --enable-threadsafe --with-pthread=${PDIR} --enable-unsupported --prefix=/usr/local && \
-    make && make check && make install && make check-install && ldconfig
+    make && make check && make install && make check-install && ldconfig && \
+    cd .. && rm -rf hdf5-${HDF5_VERSION}
 
 #netCDF4-c
 RUN export CPPFLAGS=-I/usr/local/include \
@@ -63,7 +61,8 @@ RUN export CPPFLAGS=-I/usr/local/include \
     curl ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-${NETCDF_VERSION}.tar.gz | tar xz && \
     cd netcdf-c-${NETCDF_VERSION} && \
     ./configure --disable-dap-remote-tests --prefix=/usr/local && \
-    make check && make install && ldconfig
+    make check && make install && ldconfig && \
+    cd .. && rm -rf netcdf-c-${NETCDF_VERSION}
 
 ###
 # Grab and unzip the TDS
@@ -79,9 +78,9 @@ ENV THREDDS_XMS_SIZE 4G
 
 ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.3/thredds%2523%25235.3.war
 
-RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war
-
-RUN unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/
+RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war && \
+    unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/ && \
+    rm -f thredds.war
 
 ###
 # Default thredds config
@@ -122,12 +121,10 @@ RUN mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
 EXPOSE 8080 8443
 
 ###
-# Cleanup
+# Set working directory
 ###
 
 WORKDIR ${CATALINA_HOME}
-
-RUN rm -rf /downloads
 
 ###
 # Inherited from parent container
