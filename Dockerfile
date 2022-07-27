@@ -76,7 +76,7 @@ ENV THREDDS_XMX_SIZE 4G
 
 ENV THREDDS_XMS_SIZE 4G
 
-ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.3/thredds%2523%25235.3.war
+ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.4/thredds-5.4.war
 
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war && \
     unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/ && \
