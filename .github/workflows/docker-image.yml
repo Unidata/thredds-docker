@@ -74,7 +74,7 @@ jobs:
     - name: Modify Dockerfile on upstreamTDS
       if: ${{ github.event.action == 'upstreamTDS' }}
       run: |
-        sed -e "s|ENV THREDDS_WAR_URL*|ENV THREDDS_WAR_URL ${{ env.threddsWarURL }}|g"
+        sed -e "s|ENV THREDDS_WAR_URL.*|ENV THREDDS_WAR_URL ${{ env.threddsWarURL }}|g" ./Dockerfile -i
 
     - name: Build the Docker image
       run: docker build --no-cache -t ${{ secrets.imagename }}:${{ env.tag }} .
