@@ -34,7 +34,7 @@
 
 # THREDDS Docker
 
-A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thredds/current/tds/) built on top a [security hardened Tomcat container maintained by Unidata](https://github.com/Unidata/tomcat-docker).
+A containerized [THREDDS Data Server](https://www.unidata.ucar.edu/software/tds/) built on top a [security hardened Tomcat container maintained by Unidata](https://github.com/Unidata/tomcat-docker).
 
 
 <a id="h8766A6B1"></a>
@@ -42,6 +42,7 @@ A containerized [THREDDS Data Server](http://www.unidata.ucar.edu/software/thred
 ## Versions
 
 See tags listed [on dockerhub](https://hub.docker.com/r/unidata/thredds-docker/tags).
+
 
 <a id="h887A6923"></a>
 
@@ -77,15 +78,17 @@ There is an example [docker-compose.yml](https://github.com/Unidata/thredds-dock
 
 This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS and [TDM](#h46102A0D). You can configure these parameters:
 
-    | Parameter                   | Environment Variable  | Default Value                |
-    |-----------------------------+-----------------------+------------------------------|
-    | TDS Content Root            | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content    |
-    | TDS JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                           |
-    | TDS JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                           |
-    | TDM Password                | TDM_PW                | CHANGEME!                    |
-    | TDS HOST                    | TDS_HOST              | http://thredds.yourhost.net/ |
-    | TDM JVM Max Heap Size (xmx) | TDM_XMX_SIZE          | 6G                           |
-    | TDM JVM Min Heap Size (xms) | TDM_XMS_SIZE          | 1G                           |
+```
+| Parameter                   | Environment Variable  | Default Value                |
+|-----------------------------+-----------------------+------------------------------|
+| TDS Content Root            | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content    |
+| TDS JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                           |
+| TDS JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                           |
+| TDM Password                | TDM_PW                | CHANGEME!                    |
+| TDS HOST                    | TDS_HOST              | http://thredds.yourhost.net/ |
+| TDM JVM Max Heap Size (xmx) | TDM_XMX_SIZE          | 6G                           |
+| TDM JVM Min Heap Size (xms) | TDM_XMS_SIZE          | 1G                           |
+```
 
 If you wish to update your configuration, you can either update the `compose.env` file or create your own environments file by copying `compose.env`. If using your own file, you can export the suffix of the file name into an environment variable named `THREDDS_COMPOSE_ENV_LOCAL`.
 
@@ -137,7 +140,9 @@ docker-compose up -d thredds-production
 
 The output of such command should be something like:
 
-    Creating thredds
+```
+Creating thredds
+```
 
 
 <a id="h90131459"></a>
@@ -239,7 +244,7 @@ See the [parent Tomcat container](https://github.com/Unidata/tomcat-docker#diges
 
 ### Remote Management
 
-[TDS Remote Management](https://www.unidata.ucar.edu/software/thredds/current/tds/reference/RemoteManagement.html#RemoteDebugging) is enabled for the `admin` user by default, and can be accessed via `http(s)://<your server>/thredds/admin/debug`.
+[TDS Remote Management](https://docs.unidata.ucar.edu/tds/current/userguide/remote_management_ref.html#tds-remote-debugging) is enabled for the `admin` user by default, and can be accessed via `http(s)://<your server>/thredds/admin/debug`.
 
 
 <a id="h859BE8DF"></a>
@@ -288,15 +293,17 @@ curl localhost:80/thredds/catalog.html
 
 and get back a response that looks something like
 
-    <!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'
-            'http://www.w3.org/TR/html4/loose.dtd'>
-    <html>
-    <head>
-    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>TdsStaticCatalog http://localhost/thredds/catalog.html</title>
-    <link rel='stylesheet' href='/thredds/tdsCat.css' type='text/css' >
-    </head>
-    ...
-    </html>
+```
+<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'
+        'http://www.w3.org/TR/html4/loose.dtd'>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>TdsStaticCatalog http://localhost/thredds/catalog.html</title>
+<link rel='stylesheet' href='/thredds/tdsCat.css' type='text/css' >
+</head>
+...
+</html>
+```
 
 
 <a id="hAC68440F"></a>
@@ -311,8 +318,10 @@ docker ps
 
 which should give you output that looks something like this:
 
-    CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                                                                 NAMES
-    6c256c50a6cf        unidata/thredds-docker:latest   "/entrypoint.sh catal"   6 minutes ago       Up 6 minutes        0.0.0.0:8443->8443/tcp, 0.0.0.0:80->8080/tcp, 0.0.0.0:443->8443/tcp   threddsdocker_thredds-quickstart_1
+```
+CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                                                                 NAMES
+6c256c50a6cf        unidata/thredds-docker:latest   "/entrypoint.sh catal"   6 minutes ago       Up 6 minutes        0.0.0.0:8443->8443/tcp, 0.0.0.0:80->8080/tcp, 0.0.0.0:443->8443/tcp   threddsdocker_thredds-quickstart_1
+```
 
 to obtain the ID of the running TDS container. Now you can enter the container with:
 
@@ -328,15 +337,17 @@ curl localhost:8080/thredds/catalog.html
 
 you should get a response that looks something like:
 
-    <!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'
-            'http://www.w3.org/TR/html4/loose.dtd'>
-    <html>
-    <head>
-    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>TdsStaticCatalog http://localhost/thredds/catalog.html</title>
-    <link rel='stylesheet' href='/thredds/tdsCat.css' type='text/css' >
-    </head>
-    ...
-    </html>
+```
+<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'
+        'http://www.w3.org/TR/html4/loose.dtd'>
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>TdsStaticCatalog http://localhost/thredds/catalog.html</title>
+<link rel='stylesheet' href='/thredds/tdsCat.css' type='text/css' >
+</head>
+...
+</html>
+```
 
 
 <a id="hDF2E084D"></a>
@@ -350,14 +361,14 @@ At this point, we are done setting up the TDS with docker. To navigate to this i
 
 ## TDM
 
-The [THREDDS Data Manager](http://www.unidata.ucar.edu/software/thredds/current/tds/reference/collections/TDM.html) or TDM is an application that works in close conjunction with the TDS and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
+The [THREDDS Data Manager](https://docs.unidata.ucar.edu/tds/5.2/userguide/tdm_ref.html) or TDM is an application that works in close conjunction with the TDS and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
 
 
 <a id="h760FDE8A"></a>
 
 ## Citation
 
-In order to cite this project, please simply make use of the Unidata THREDDS Data Server DOI: <10.5065/D6N014KG> <https://doi.org/10.5065/D6N014KG>
+In order to cite this project, please simply make use of the Unidata THREDDS Data Server DOI: https://doi.org/10.5065/D6N014KG <https://doi.org/10.5065/D6N014KG>
 
 
 <a id="h5CC30EC0"></a>
@@ -366,4 +377,4 @@ In order to cite this project, please simply make use of the Unidata THREDDS Dat
 
 If you have a question or would like support for this THREDDS Docker container, consider [submitting a GitHub issue](https://github.com/Unidata/thredds-docker/issues). Alternatively, you may wish to start a discussion on the THREDDS Community mailing list: [thredds@unidata.ucar.edu](mailto:thredds@unidata.ucar.edu).
 
-For general TDS questions, please see the [THREDDS support page](https://www.unidata.ucar.edu/software/thredds/current/tds/#help).
+For general TDS questions, please see the [THREDDS support page](https://www.unidata.ucar.edu/software/tds/#help).
