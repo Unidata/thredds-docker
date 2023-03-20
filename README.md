@@ -361,7 +361,7 @@ At this point, we are done setting up the TDS with docker. To navigate to this i
 
 ## TDM
 
-The [THREDDS Data Manager](https://docs.unidata.ucar.edu/tds/5.2/userguide/tdm_ref.html) or TDM is an application that works in close conjunction with the TDS and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
+The [THREDDS Data Manager](https://docs.unidata.ucar.edu/tds/5.2/userguide/tdm_ref.html) (TDM) creates indexes for GRIB featureCollections, in a process separate from the TDS. It is a specialized utility typically employed in scenarios where the TDS is serving real-time data from the Unidata IDD (e.g., GFS Quarter Degree Analysis) and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. In most scenarios, you can comment out the TDM section. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
 
 
 <a id="h760FDE8A"></a>
