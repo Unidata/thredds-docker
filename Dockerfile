@@ -2,7 +2,7 @@
 # Dockerfile for TDS
 ###
 
-FROM unidata/tomcat-docker:8.5-jdk11-openjdk
+FROM unidata/tomcat-docker:8.5-jdk11
 
 MAINTAINER Unidata
 
