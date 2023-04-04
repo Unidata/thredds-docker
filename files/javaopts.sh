@@ -8,7 +8,7 @@
 # Choosing a JAVA_PREFS_SYSTEM_ROOT directory location that will likely live
 # inside the container.
 
-NORMAL="-server -d64 -Xms${THREDDS_XMS_SIZE} -Xmx${THREDDS_XMX_SIZE}"
+NORMAL="-server -Xms${THREDDS_XMS_SIZE} -Xmx${THREDDS_XMX_SIZE}"
 HEAP_DUMP="-XX:+HeapDumpOnOutOfMemoryError"
 HEADLESS="-Djava.awt.headless=true"
 CONTENT_ROOT="-Dtds.content.root.path=${TDS_CONTENT_ROOT_PATH}"
