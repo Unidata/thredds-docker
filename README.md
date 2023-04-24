@@ -1,136 +1,120 @@
-- [THREDDS Docker](#h92CD77E8)
-  - [Versions](#h8766A6B1)
-  - [Quickstart](#h887A6923)
-  - [`docker-compose`](#h5ECB1ADD)
-    - [Configuring `docker-compose` With Environment Variables](#h57D41CDA)
-  - [`docker-swarm`](#hCF2A92DF)
-  - [Production](#h961818A2)
-    - [Memory](#h2EE86560)
-    - [Configuration](#h00614C28)
-    - [Running the TDS](#h9E9FAD1E)
-    - [Stopping the TDS](#h90131459)
-    - [Delete TDS Container](#hA16AECDD)
-  - [More on Configuration](#h61DD5309)
-    - [Tomcat](#hA4455141)
-    - [Java Configuration Options](#h88D23DC0)
-    - [Configurable Tomcat UID and GID](#hDC6A774F)
-    - [THREDDS](#hCDB6BE94)
-    - [HTTP Over SSL](#h2BBFF30F)
-    - [Users](#h20B33C74)
-    - [Remote Management](#hE56DF4AE)
-    - [ncSOS](#h859BE8DF)
-  - [Upgrading](#h22FC6827)
-  - [Check What is Running](#h72D06CCC)
-    - [curl](#h92EFC0CB)
-    - [docker ps](#hAC68440F)
-  - [Connecting to TDS with a Web Browser](#hDF2E084D)
-  - [TDM](#h46102A0D)
-  - [Citation](#h760FDE8A)
-  - [Support](#h5CC30EC0)
+- [Unidata THREDDS Docker](#h-D1C45A11)
+  - [Introduction](#h-F96AB5F8)
+    - [Quickstart](#h-C733CD96)
+  - [Versions](#h-AF015058)
+  - [Prerequisites](#h-1EB18866)
+  - [Installation](#h-A767C942)
+  - [Usage](#h-58EC333B)
+    - [Memory](#h-069B9D1E)
+    - [Docker compose](#h-1C0CB7E8)
+      - [Running the TDS](#h-E18F7CAE)
+      - [Stopping the TDS](#h-82936877)
+      - [Delete TDS Container](#h-63682079)
+    - [Upgrading](#h-73D8E285)
+    - [Check What is Running](#h-E74AFAFF)
+      - [curl](#h-B9BDE649)
+      - [docker ps](#h-F9E31E12)
+  - [Configuration](#h-817EB413)
+    - [Docker compose](#h-F95DCC06)
+      - [Basic](#h-0351DF56)
+      - [Environment Variables](#h-D856FFF9)
+    - [Tomcat](#h-A82C8590)
+    - [Java Configuration Options](#h-609AFE2D)
+    - [Configurable Tomcat UID and GID](#h-350BEF91)
+    - [THREDDS](#h-D046D64C)
+    - [HTTP Over SSL](#h-5A4BABB7)
+    - [Users](#h-E20C4A41)
+    - [Remote Management](#h-0E28D2EE)
+    - [ncSOS](#h-F2383FF5)
+  - [TDM](#h-A8309C14)
+  - [Maintainers](#h-1559ED59)
+  - [Citation](#h-0BAA13E6)
+  - [Support](#h-7D1176D3)
 
 
 
-<a id="h92CD77E8"></a>
+<a id="h-D1C45A11"></a>
 
-# THREDDS Docker
+# Unidata THREDDS Docker
 
-A containerized [THREDDS Data Server](https://www.unidata.ucar.edu/software/tds/) built on top a [security hardened Tomcat container maintained by Unidata](https://github.com/Unidata/tomcat-docker).
+Dockerized [THREDDS](https://www.unidata.ucar.edu/software/tds/).
 
 
-<a id="h8766A6B1"></a>
+<a id="h-F96AB5F8"></a>
+
+## Introduction
+
+This repository contains files necessary to build and run a THREDDS Docker container. The Unidata THREDDS Docker images associated with this repository are [available on DockerHub](https://hub.docker.com/r/unidata/thredds-docker/).
+
+
+<a id="h-C733CD96"></a>
+
+### Quickstart
+
+```sh
+docker run -d -p 80:8080 unidata/thredds-docker:<version>
+```
+
+
+<a id="h-AF015058"></a>
 
 ## Versions
 
 See tags listed [on dockerhub](https://hub.docker.com/r/unidata/thredds-docker/tags).
 
 
-<a id="h887A6923"></a>
+<a id="h-1EB18866"></a>
 
-## Quickstart
+## Prerequisites
 
-```sh
-docker run -d -p 80:8080 unidata/thredds-docker
-```
+Before you begin using this Docker container project, make sure your system has Docker installed. Docker Compose is optional but recommended.
 
 
-<a id="h5ECB1ADD"></a>
+<a id="h-A767C942"></a>
 
-## `docker-compose`
+## Installation
 
-To run the THREDDS Docker container, beyond a basic Docker setup, we recommend installing [docker-compose](https://docs.docker.com/compose/). `docker-compose` serves two purposes:
-
-1.  Reduce headaches involving unwieldy `docker` command lines where you are running `docker` with multiple volume mountings and port forwards. In situations like these, `docker` commands become difficult to issue and read. Instead, the lengthy `docker` command is captured in a `docker-compose.yml` that is easy to read, maintain, and can be committed to version control.
-
-2.  Coordinate the running of two or more containers to, for example, orchestrate the TDS and TDM. This can be useful for taking into account the same volume mountings, for example.
-
-However, `docker-compose` use is not mandatory. For example, this container can be started with
+You can either pull the image from DockerHub with:
 
 ```sh
-docker run -d -p 80:8080 unidata/thredds-docker
+docker pull unidata/thredds-docker:<version>
 ```
 
-There is an example [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) in this repository.
+Or you can build it yourself with:
+
+1.  ****Clone the repository****: `git clone https://github.com/Unidata/thredds-docker.git`
+2.  ****Navigate to the project directory****: `cd thredds-docker`
+3.  ****Build the Docker image****: `docker build -t thredds-docker:<version>` .
 
 
-<a id="h57D41CDA"></a>
+<a id="h-58EC333B"></a>
 
-### Configuring `docker-compose` With Environment Variables
-
-This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS and [TDM](#h46102A0D). You can configure these parameters:
-
-```
-| Parameter                   | Environment Variable  | Default Value                |
-|-----------------------------+-----------------------+------------------------------|
-| TDS Content Root            | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content    |
-| TDS JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                           |
-| TDS JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                           |
-| TDM Password                | TDM_PW                | CHANGEME!                    |
-| TDS HOST                    | TDS_HOST              | http://thredds.yourhost.net/ |
-| TDM JVM Max Heap Size (xmx) | TDM_XMX_SIZE          | 6G                           |
-| TDM JVM Min Heap Size (xms) | TDM_XMS_SIZE          | 1G                           |
-```
-
-If you wish to update your configuration, you can either update the `compose.env` file or create your own environments file by copying `compose.env`. If using your own file, you can export the suffix of the file name into an environment variable named `THREDDS_COMPOSE_ENV_LOCAL`.
-
-For example:
-
-```sh
-cp compose.env compose_local.env
-export THREDDS_COMPOSE_ENV_LOCAL=_local
-< edit compose_local.env >
-docker-compose up thredds-production
-```
+## Usage
 
 
-<a id="hCF2A92DF"></a>
-
-## `docker-swarm`
-
-Configuration information may be found in the [Docker Swarm readme](README_SWARM.md).
-
-
-<a id="h961818A2"></a>
-
-## Production
-
-
-<a id="h2EE86560"></a>
+<a id="h-069B9D1E"></a>
 
 ### Memory
 
 Tomcat web applications and the TDS can require large amounts of memory to run. This container is setup to run Tomcat with a default [4 gigabyte memory allocation](files/javaopts.sh). When running this container, ensure your VM or hardware can accommodate this memory requirement.
 
 
-<a id="h00614C28"></a>
+<a id="h-1C0CB7E8"></a>
 
-### Configuration
+### Docker compose
 
-Define directory and file paths for log files, Tomcat, THREDDS, and data in [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) for the `thredds-production` image.
+To run the THREDDS Docker container, beyond a basic Docker setup, we recommend installing [docker-compose](https://docs.docker.com/compose/). `docker-compose` serves two purposes:
+
+1.  Reduce headaches involving unwieldy `docker` command lines where you are running `docker` with multiple volume mounts and port forwards. In situations like these, `docker` commands become difficult to issue and read. Instead, the lengthy `docker` command is captured in a `docker-compose.yml` that is easy to read, maintain, and can be committed to version control.
+
+2.  Coordinate the running of two or more containers to, for example, orchestrate the TDS and TDM. This can be useful for taking into account the same volume mountings, for example.
+
+However, `docker-compose` use is not mandatory. There is an example [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) in this repository.
 
 
-<a id="h9E9FAD1E"></a>
+<a id="h-E18F7CAE"></a>
 
-### Running the TDS
+#### Running the TDS
 
 Once you have completed your setup you can run the container with:
 
@@ -145,9 +129,9 @@ Creating thredds
 ```
 
 
-<a id="h90131459"></a>
+<a id="h-82936877"></a>
 
-### Stopping the TDS
+#### Stopping the TDS
 
 To stop this container:
 
@@ -156,9 +140,9 @@ docker-compose stop thredds-production
 ```
 
 
-<a id="hA16AECDD"></a>
+<a id="h-63682079"></a>
 
-### Delete TDS Container
+#### Delete TDS Container
 
 To clean the slate and remove the container (not the image, the container):
 
@@ -167,33 +151,183 @@ docker-compose rm -f thredds-production
 ```
 
 
-<a id="h61DD5309"></a>
+<a id="h-73D8E285"></a>
 
-## More on Configuration
+### Upgrading
+
+Upgrading to a newer version of the container is easy. Simply stop the container via `docker` or `docker-compose`, followed by
+
+```sh
+docker pull unidata/thredds-docker:<version>
+```
+
+and restart the container. Refer to the new version from the command line or in the `docker-compose.yml`.
 
 
-<a id="hA4455141"></a>
+<a id="h-E74AFAFF"></a>
+
+### Check What is Running
+
+
+<a id="h-B9BDE649"></a>
+
+#### curl
+
+At this point you should be able to do:
+
+```sh
+curl localhost:80/thredds/catalog/catalog.html
+# or whatever port you mapped to outside the container in the docker-compose.yml
+```
+
+and get back a response that looks something like
+
+```
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>TDS Catalog</title>
+  <!-- Common metadata and styles. -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <!-- if webcrawler finds this page (say, from sitemap.xml), tell it to not follow the links -->
+  <meta name="robots" content="nofollow" />
+
+  <link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tdsCat.css" type="text/css">
+
+  <script type="text/javascript">
+  document.getElementById("header-buffer").style.height = document.getElementById("header").clientHeight + "px";
+  document.getElementById("footer-buffer").style.height = document.getElementById("footer").clientHeight + "px";
+</script>
+</head>
+...
+</html>
+```
+
+
+<a id="h-F9E31E12"></a>
+
+#### docker ps
+
+If you encounter a problem there, you can also:
+
+```sh
+docker ps
+```
+
+which should give you output that looks something like this:
+
+```
+CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                                                                 NAMES
+6c256c50a6cf        unidata/thredds-docker:<version>  "/entrypoint.sh catal"   6 minutes ago       Up 6 minutes        0.0.0.0:8443->8443/tcp, 0.0.0.0:80->8080/tcp, 0.0.0.0:443->8443/tcp   threddsdocker_thredds-quickstart_1
+```
+
+to obtain the ID of the running TDS container. You can enter the container with:
+
+```sh
+docker exec -it <ID> bash
+```
+
+Use `curl` **inside** the container to verify the TDS is running:
+
+```sh
+curl localhost:8080/thredds/catalog/catalog.html
+```
+
+you should get a response that looks something like:
+
+```
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>TDS Catalog</title>
+  <!-- Common metadata and styles. -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <!-- if webcrawler finds this page (say, from sitemap.xml), tell it to not follow the links -->
+  <meta name="robots" content="nofollow" />
+
+  <link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tdsCat.css" type="text/css">
+
+  <script type="text/javascript">
+  document.getElementById("header-buffer").style.height = document.getElementById("header").clientHeight + "px";
+  document.getElementById("footer-buffer").style.height = document.getElementById("footer").clientHeight + "px";
+</script>
+</head>
+...
+</html>
+```
+
+
+<a id="h-817EB413"></a>
+
+## Configuration
+
+
+<a id="h-F95DCC06"></a>
+
+### Docker compose
+
+
+<a id="h-0351DF56"></a>
+
+#### Basic
+
+Define directory and file paths for log files, Tomcat, THREDDS, and data in [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) for the `thredds-production` image.
+
+
+<a id="h-D856FFF9"></a>
+
+#### Environment Variables
+
+This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS and [TDM](#h-A8309C14). You can configure these parameters:
+
+```
+| Parameter                   | Environment Variable  | Default Value                |
+|-----------------------------+-----------------------+------------------------------|
+| TDS Content Root            | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content    |
+| TDS JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                           |
+| TDS JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                           |
+| TDM Password                | TDM_PW                | CHANGEME!                    |
+| TDS HOST                    | TDS_HOST              | http://thredds.yourhost.net/ |
+| TDM JVM Max Heap Size (xmx) | TDM_XMX_SIZE          | 6G                           |
+| TDM JVM Min Heap Size (xms) | TDM_XMS_SIZE          | 1G                           |
+| Tomcat User ID              | TOMCAT_USER_ID        | 1000                         |
+| Tomcat Group ID             | TOMCAT_GROUP_ID       | 1000                         |
+```
+
+If you wish to update your configuration, you can either update the `compose.env` file or create your own environments file by copying `compose.env`. If using your own file, you can export the suffix of the file name into an environment variable named `THREDDS_COMPOSE_ENV_LOCAL`. Also see the `env_file` key in [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml).
+
+For example:
+
+```sh
+cp compose.env compose_local.env
+export THREDDS_COMPOSE_ENV_LOCAL=_local
+< edit compose_local.env >
+docker-compose up thredds-production
+```
+
+
+<a id="h-A82C8590"></a>
 
 ### Tomcat
 
-THREDDS container is based off of the [canonical Tomcat container (tomcat:jre8)](https://hub.docker.com/_/tomcat/) with [some additional security hardening measures](https://hub.docker.com/r/unidata/tomcat-docker/). Tomcat configuration can be done by mounting over the appropriate directories in `CATALINA_HOME` (`/usr/local/tomcat`).
+THREDDS container is based off of the [canonical Tomcat container](https://hub.docker.com/_/tomcat/) with [some additional security hardening measures](https://hub.docker.com/r/unidata/tomcat-docker/). Tomcat configuration can be done by mounting over the appropriate directories in `CATALINA_HOME` (`/usr/local/tomcat`).
 
 
-<a id="h88D23DC0"></a>
+<a id="h-609AFE2D"></a>
 
 ### Java Configuration Options
 
-The Java (`JAVA_OPTS`) are configured in `${CATALINA_HOME}/bin/javaopts.sh` (see [javaopts.sh](files/javaopts.sh)) inside the container. See the `docker-compose` section above for configuring some of the environment variables of this file.
+The Java configuration options (`JAVA_OPTS`) are configured in `${CATALINA_HOME}/bin/javaopts.sh` (see [javaopts.sh](files/javaopts.sh)) inside the container. Note this file is copied inside the container during the Docker build. See the `docker-compose` section above for configuring some of the environment variables of this file.
 
 
-<a id="hDC6A774F"></a>
+<a id="h-350BEF91"></a>
 
 ### Configurable Tomcat UID and GID
 
 [See parent container](https://github.com/Unidata/tomcat-docker#configurable-tomcat-uid-and-gid).
 
 
-<a id="hCDB6BE94"></a>
+<a id="h-D046D64C"></a>
 
 ### THREDDS
 
@@ -214,21 +348,20 @@ volumes:
   - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
   - /path/to/your/data/directory1:/path/to/your/data/directory1
   - /path/to/your/data/directory2:/path/to/your/data/directory2
+  - /path/to/your/server.xml:/usr/local/tomcat/conf/server.xml
+  - /path/to/your/web.xml:/usr/local/tomcat/conf/web.xml
+  - /path/to/your/keystore.jks:/usr/local/tomcat/conf/keystore.jks
 ```
 
--   `threddsConfig.xml` - the THREDDS configuration file (comments are in-line in the file)
--   `wmsConfig.xml` - the ncWMS configuration file
--   `catalog.xml` - the root catalog THREDDS loads
 
-
-<a id="h2BBFF30F"></a>
+<a id="h-5A4BABB7"></a>
 
 ### HTTP Over SSL
 
 Please see Tomcat [parent container repository](https://github.com/Unidata/tomcat-docker#http-over-ssl) for HTTP over SSL instructions.
 
 
-<a id="h20B33C74"></a>
+<a id="h-E20C4A41"></a>
 
 ### Users
 
@@ -240,14 +373,14 @@ By default, Tomcat will start with [two user accounts](https://github.com/Unidat
 See the [parent Tomcat container](https://github.com/Unidata/tomcat-docker#digested-passwords) for information about creating passwords for these users.
 
 
-<a id="hE56DF4AE"></a>
+<a id="h-0E28D2EE"></a>
 
 ### Remote Management
 
 [TDS Remote Management](https://docs.unidata.ucar.edu/tds/current/userguide/remote_management_ref.html#tds-remote-debugging) is enabled for the `admin` user by default, and can be accessed via `http(s)://<your server>/thredds/admin/debug`.
 
 
-<a id="h859BE8DF"></a>
+<a id="h-F2383FF5"></a>
 
 ### ncSOS
 
@@ -262,116 +395,43 @@ To enable to ncSOS, change
 to `true` in `threddsConfig.xml`.
 
 
-<a id="h22FC6827"></a>
-
-## Upgrading
-
-Upgrading to a newer version of the container is easy. Simply stop the container via `docker` or `docker-compose`, followed by
-
-```sh
-docker pull unidata/thredds-docker:<version>
-```
-
-and restart the container.
-
-
-<a id="h72D06CCC"></a>
-
-## Check What is Running
-
-
-<a id="h92EFC0CB"></a>
-
-### curl
-
-At this point you should be able to do:
-
-```sh
-curl localhost:80/thredds/catalog.html
-# or whatever port you mapped to outside the container in the docker-compose.yml
-```
-
-and get back a response that looks something like
-
-```
-<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'
-        'http://www.w3.org/TR/html4/loose.dtd'>
-<html>
-<head>
-<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>TdsStaticCatalog http://localhost/thredds/catalog.html</title>
-<link rel='stylesheet' href='/thredds/tdsCat.css' type='text/css' >
-</head>
-...
-</html>
-```
-
-
-<a id="hAC68440F"></a>
-
-### docker ps
-
-If you encounter a problem there, you can also:
-
-```sh
-docker ps
-```
-
-which should give you output that looks something like this:
-
-```
-CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                                                                 NAMES
-6c256c50a6cf        unidata/thredds-docker:latest   "/entrypoint.sh catal"   6 minutes ago       Up 6 minutes        0.0.0.0:8443->8443/tcp, 0.0.0.0:80->8080/tcp, 0.0.0.0:443->8443/tcp   threddsdocker_thredds-quickstart_1
-```
-
-to obtain the ID of the running TDS container. Now you can enter the container with:
-
-```sh
-docker exec -it <ID> bash
-```
-
-Now use `curl` **inside** the container to verify the TDS is running:
-
-```sh
-curl localhost:8080/thredds/catalog.html
-```
-
-you should get a response that looks something like:
-
-```
-<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'
-        'http://www.w3.org/TR/html4/loose.dtd'>
-<html>
-<head>
-<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>TdsStaticCatalog http://localhost/thredds/catalog.html</title>
-<link rel='stylesheet' href='/thredds/tdsCat.css' type='text/css' >
-</head>
-...
-</html>
-```
-
-
-<a id="hDF2E084D"></a>
-
-## Connecting to TDS with a Web Browser
-
-At this point, we are done setting up the TDS with docker. To navigate to this instance of the TDS from the web, you will have to ensure your docker host (e.g., a cloud VM at Amazon or Microsoft Azure) allows Internet traffic through port `80` at whatever IP or domain name your docker host is located.
-
-
-<a id="h46102A0D"></a>
+<a id="h-A8309C14"></a>
 
 ## TDM
 
-The [THREDDS Data Manager](https://docs.unidata.ucar.edu/tds/5.2/userguide/tdm_ref.html) (TDM) creates indexes for GRIB featureCollections, in a process separate from the TDS. It is a specialized utility typically employed in scenarios where the TDS is serving real-time data from the Unidata IDD (e.g., GFS Quarter Degree Analysis) and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. In most scenarios, you can comment out the TDM section. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
+The [THREDDS Data Manager](https://docs.unidata.ucar.edu/tds/5.4/userguide/tdm_ref.html) (TDM) creates indexes for GRIB featureCollections, in a process separate from the TDS. It is a specialized utility typically employed in scenarios where the TDS is serving real-time data from the Unidata IDD (e.g., GFS Quarter Degree Analysis) and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. In most scenarios, you can comment out the TDM section. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
 
 
-<a id="h760FDE8A"></a>
+<a id="h-1559ED59"></a>
+
+## Maintainers
+
+What to Do When a Version of the THREDDS Data Server Is Released?
+
+-   Update the `Dockerfile` with the `war` file corresponding to the new version of the TDS. E.g.,
+
+```shell
+ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.4/thredds-5.4.war
+```
+
+-   Check with the netCDF group if versions of HDF5, zlib, and netCDF referenced in the `Dockerfile` need to be updated.
+-   Update the `CHANGELOG.md`.
+-   Create a new git branch corresponding to this version of the TDS (e.g., `5.4`).
+-   Push the new branch out to the `Unidata/thredds-docker` GitHub repository. This branch will remain frozen in time going forward. Any subsequent updates to this project should happen on the the `latest` branch. The only exception to this convention is if there is a critical (e.g., security related) update that needs to be applied to the `Dockerfile` and associated files and eventually to the image (see below)
+-   Build a docker image corresponding to the new version of the TDS on the Jetstream and push it out to
+-   Note that this image **does not** remain frozen in time for two reasons.
+    1.  It can get rebuilt time and again as upstream image updates need to be incorporated into this THREDDS image. It may be confusing for a versioned image to evolve, but it is the convention in Dockerland.
+    2.  It can get rebuilt in the rare case the Dockerfile or associated files are updated on the branch as mentioned earlier.
+
+
+<a id="h-0BAA13E6"></a>
 
 ## Citation
 
 In order to cite this project, please simply make use of the Unidata THREDDS Data Server DOI: https://doi.org/10.5065/D6N014KG <https://doi.org/10.5065/D6N014KG>
 
 
-<a id="h5CC30EC0"></a>
+<a id="h-7D1176D3"></a>
 
 ## Support
 
