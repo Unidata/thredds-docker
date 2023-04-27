@@ -22,8 +22,8 @@ ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.4/thredds-5.4.war
 
 COPY files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
 COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
-COPY files/setenv.sh $CATALINA_HOME/bin/setenv.sh
-COPY files/javaopts.sh $CATALINA_HOME/bin/javaopts.sh
+COPY files/setenv.sh ${CATALINA_HOME}/bin/setenv.sh
+COPY files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
 
 # Install necessary packages
 RUN apt-get update && \
@@ -56,7 +56,7 @@ RUN apt-get update && \
     unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/ && \
     rm -f thredds.war && \
     mkdir -p ${CATALINA_HOME}/content/thredds && \
-    chmod 755 $CATALINA_HOME/bin/*.sh && \
+    chmod 755 ${CATALINA_HOME}/bin/*.sh && \
     mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
 
 EXPOSE 8080 8443
