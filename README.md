@@ -27,6 +27,7 @@
     - [Remote Management](#h-0E28D2EE)
     - [ncSOS](#h-F2383FF5)
   - [TDM](#h-A8309C14)
+  - [netCDF](#h-90623D0B)
   - [Maintainers](#h-1559ED59)
   - [Citation](#h-0BAA13E6)
   - [Support](#h-7D1176D3)
@@ -60,7 +61,7 @@ docker run -d -p 80:8080 unidata/thredds-docker:<version>
 
 ## Versions
 
-See tags listed [on dockerhub](https://hub.docker.com/r/unidata/thredds-docker/tags).
+See tags listed [on dockerhub](https://hub.docker.com/r/unidata/thredds-docker/tags). Our security protocols have become stricter, and any image linked to a CVE must be taken down immediately from DockerHub. We strive to maintain the security of this project's DockerHub images by updating them with the latest upstream improvements. If you have any concerns in this area, please email us at [security@unidata.ucar.edu](mailto:security@unidata.ucar.edu) to bring them to our attention.
 
 
 <a id="h-1EB18866"></a>
@@ -400,6 +401,13 @@ to `true` in `threddsConfig.xml`.
 ## TDM
 
 The [THREDDS Data Manager](https://docs.unidata.ucar.edu/tds/5.4/userguide/tdm_ref.html) (TDM) creates indexes for GRIB featureCollections, in a process separate from the TDS. It is a specialized utility typically employed in scenarios where the TDS is serving real-time data from the Unidata IDD (e.g., GFS Quarter Degree Analysis) and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. In most scenarios, you can comment out the TDM section. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
+
+
+<a id="h-90623D0B"></a>
+
+## netCDF
+
+This Docker project includes the installation of the netCDF-c project to allow for the downloading of netCDF files using the [NetCDF Subset Service](https://docs.unidata.ucar.edu/tds/current/userguide/netcdf_subset_service_ref.html).
 
 
 <a id="h-1559ED59"></a>
