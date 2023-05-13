@@ -13,7 +13,7 @@
 #+exclude_tags: noexport
 #+creator: Emacs 28.2 (Org mode 9.7-pre)
 
-#+PROPERTY: :eval no :results none
+#+PROPERTY: header-args :eval no :results none
 
 #+STARTUP: overview
 
