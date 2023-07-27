@@ -85,7 +85,7 @@ Or you can build it yourself with:
 
 1.  ****Clone the repository****: `git clone https://github.com/Unidata/thredds-docker.git`
 2.  ****Navigate to the project directory****: `cd thredds-docker`
-3.  ****Build the Docker image****: `docker build -t thredds-docker:<version>` .
+3.  ****Build the Docker image****: `docker build -t thredds-docker:<version> .`
 
 
 <a id="h-58EC333B"></a>
