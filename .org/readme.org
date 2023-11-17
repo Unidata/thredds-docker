@@ -70,7 +70,7 @@ This repository contains files necessary to build and run a THREDDS Docker conta
    :CUSTOM_ID: h-AF015058
    :END:
 
-See tags listed [[https://hub.docker.com/r/unidata/thredds-docker/tags][on dockerhub]]. Our security protocols have become stricter, and any image linked to a CVE must be taken down immediately from DockerHub. We strive to maintain the security of this project's DockerHub images by updating them with the latest upstream improvements. If you have any concerns in this area, please email us at [[mailto:security@unidata.ucar.edu][security@unidata.ucar.edu]] to bring them to our attention.
+See tags listed [[https://hub.docker.com/r/unidata/thredds-docker/tags][on dockerhub]]. Our security protocols have become stricter, and older images must be removed due to potential links with high profile CVEs. We strive to maintain the security of this project's DockerHub images by updating them with the latest upstream improvements. If you have any concerns in this area, please email us at [[mailto:security@unidata.ucar.edu][security@unidata.ucar.edu]] to bring them to our attention.
 
 ** Prerequisites
 :PROPERTIES:
