@@ -1,4 +1,4 @@
-FROM unidata/tomcat-docker:8.5-jdk11
+FROM unidata/tomcat-docker:9.0-jdk11
 
 MAINTAINER Unidata
 
