@@ -60,6 +60,7 @@ RUN apt-get update && \
     chmod 755 ${CATALINA_HOME}/bin/*.sh && \
     mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs && \
     # threddsIso
+    mkdir -p ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/ && \
     curl -fsL "${THREDDS_ISO_JAR_URL}" -o ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/tds-plugin-jar-with-dependencies.jar
 
 EXPOSE 8080 8443
