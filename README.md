@@ -400,7 +400,7 @@ to `true` in `threddsConfig.xml`.
 
 ## TDM
 
-The [THREDDS Data Manager](https://docs.unidata.ucar.edu/tds/5.5/userguide/tdm_ref.html) (TDM) creates indexes for GRIB featureCollections, in a process separate from the TDS. It is a specialized utility typically employed in scenarios where the TDS is serving real-time data from the Unidata IDD (e.g., GFS Quarter Degree Analysis) and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. In most scenarios, you can comment out the TDM section. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
+The [THREDDS Data Manager](https://docs.unidata.ucar.edu/tds/5.4/userguide/tdm_ref.html) (TDM) creates indexes for GRIB featureCollections, in a process separate from the TDS. It is a specialized utility typically employed in scenarios where the TDS is serving real-time data from the Unidata IDD (e.g., GFS Quarter Degree Analysis) and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. In most scenarios, you can comment out the TDM section. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
 
 
 <a id="h-90623D0B"></a>
@@ -419,17 +419,17 @@ What to do when a version of the THREDDS data server is released?
 -   Update the `Dockerfile` with the `war` file corresponding to the new version of the TDS. E.g.,
 
 ```shell
-ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.5/thredds-5.5.war
+ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.6/thredds-5.6.war
 ```
 
 -   Check with the netCDF group if versions of HDF5, zlib, and netCDF referenced in the `Dockerfile` need to be updated.
 -   Update TDS versions in `docker-compose.yml` and `docker-compose-swarm.yml`.
 -   Update the `CHANGELOG.md` documenting updates to this project (not the TDS) since the last release.
--   Create a new git branch corresponding to this version of the TDS (e.g., `5.5`).
+-   Create a new git branch corresponding to this version of the TDS (e.g., `5.6`).
 -   Push the new branch out to the `Unidata/thredds-docker` GitHub repository. This branch will remain frozen in time going forward. Any subsequent updates to this project should happen on the the `latest` branch. The only exception to this convention is if there is a critical (e.g., security related) update that needs to be applied to the `Dockerfile` and associated files and eventually to the image (see below)
--   Build a docker image corresponding to the new version of the TDS (e.g., on the Docker build machine on Jetstream). E.g., `docker build -t unidata/thredds-docker:5.5`.
+-   Build a docker image corresponding to the new version of the TDS (e.g., on the Docker build machine on Jetstream). E.g., `docker build -t unidata/thredds-docker:5.6`.
 -   Test to ensure the image works.
--   Push it out DockerHub e.g., `docker push unidata/thredds-docker:5.5`.
+-   Push it out DockerHub e.g., `docker push unidata/thredds-docker:5.6`.
 -   Note that this image **does not** remain frozen in time for two reasons.
     1.  It can get rebuilt time and again as upstream image updates need to be incorporated into this THREDDS image. It may be confusing for a versioned image to evolve, but it is the convention in Dockerland.
     2.  It can get rebuilt in the rare case the Dockerfile or associated files are updated on the branch as mentioned earlier.

@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.4] - 2023-05-01
+## [5.6] - 2025-01-28
+### Updated
+- 5.6 release of the Unidata TDS wrapped in a Docker container
+- switched Docker base image to `unidata/tomcat-docker:9-jdk17` (from JDK 11)
+- updated `docker-compose.yml` and `docker-compose-swarm.yml`
+- add thredds iso services to `WEB_INF/lib` directory
+- updated Java options (javaopts.sh) to include chronicle cache
+- revised TDM reference link.
+
+## [5.5] - 2023-05-01
 ### Updated
 - 5.5 release of the Unidata TDS wrapped in a Docker container
 - Updated `docker-compose.yml` and `docker-compose-swarm.yml`

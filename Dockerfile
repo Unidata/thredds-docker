@@ -1,4 +1,4 @@
-FROM unidata/tomcat-docker:9.0-jdk11
+FROM unidata/tomcat-docker:9-jdk17
 
 MAINTAINER Unidata
 
@@ -18,8 +18,8 @@ ENV HDF5_FILE ${HDF5_VER}.tar.gz
 ENV TDS_CONTENT_ROOT_PATH /usr/local/tomcat/content
 ENV THREDDS_XMX_SIZE 4G
 ENV THREDDS_XMS_SIZE 4G
-ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.5/thredds-5.5.war
-ENV THREDDS_ISO_JAR_URL https://downloads.unidata.ucar.edu/tds/5.5/tds-plugin-2.4.6-jar-with-dependencies.jar
+ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.6/thredds-5.6.war
+ENV THREDDS_ISO_JAR_URL https://downloads.unidata.ucar.edu/tds/5.6/tds-plugin-2.4.7-jar-with-dependencies.jar
 
 COPY files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
 COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml

@@ -423,17 +423,17 @@ What to do when a version of the THREDDS data server is released?
 - Update the ~Dockerfile~ with the ~war~ file corresponding to the new version of the TDS. E.g.,
 
 #+begin_src shell
-  ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.4/thredds-5.4.war
+  ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.6/thredds-5.6.war
 #+end_src
 
 - Check with the netCDF group if versions of HDF5, zlib, and netCDF referenced in the ~Dockerfile~ need to be updated.
 - Update TDS versions in ~docker-compose.yml~ and ~docker-compose-swarm.yml~.
 - Update the ~CHANGELOG.md~ documenting updates to this project (not the TDS) since the last release.
-- Create a new git branch corresponding to this version of the TDS (e.g., ~5.4~).
+- Create a new git branch corresponding to this version of the TDS (e.g., ~5.6~).
 - Push the new branch out to the ~Unidata/thredds-docker~ GitHub repository. This branch will remain frozen in time going forward. Any subsequent updates to this project should happen on the the ~latest~ branch. The only exception to this convention is if there is a critical (e.g., security related) update that needs to be applied to the ~Dockerfile~ and associated files and eventually to the image (see below)
-- Build a docker image corresponding to the new version of the TDS (e.g., on the Docker build machine on Jetstream). E.g., ~docker build -t unidata/thredds-docker:5.4~.
+- Build a docker image corresponding to the new version of the TDS (e.g., on the Docker build machine on Jetstream). E.g., ~docker build -t unidata/thredds-docker:5.6~.
 - Test to ensure the image works.
-- Push it out DockerHub e.g., ~docker push unidata/thredds-docker:5.4~.
+- Push it out DockerHub e.g., ~docker push unidata/thredds-docker:5.6~.
 - Note that this image *does not* remain frozen in time for two reasons.
   1. It can get rebuilt time and again as upstream image updates need to be incorporated into this THREDDS image. It may be confusing for a versioned image to evolve, but it is the convention in Dockerland.
   2. It can get rebuilt in the rare case the Dockerfile or associated files are updated on the branch as mentioned earlier.
