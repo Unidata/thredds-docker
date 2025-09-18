@@ -16,8 +16,7 @@ ENV HDF5_FILE=${HDF5_VER}.tar.gz
 ENV TDS_CONTENT_ROOT_PATH=/usr/local/tomcat/content
 ENV THREDDS_XMX_SIZE=4G
 ENV THREDDS_XMS_SIZE=4G
-ENV THREDDS_WAR_URL=https://downloads.unidata.ucar.edu/tds/5.6/thredds-5.6.war
-ENV THREDDS_ISO_JAR_URL=https://downloads.unidata.ucar.edu/tds/5.6/tds-plugin-2.4.7-jar-with-dependencies.jar
+ENV THREDDS_WAR_URL=https://downloads.unidata.ucar.edu/tds/5.7/thredds-5.7.war
 
 COPY files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
 COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
@@ -56,9 +55,7 @@ RUN apt-get update && \
     rm -f thredds.war && \
     mkdir -p ${CATALINA_HOME}/content/thredds && \
     chmod 755 ${CATALINA_HOME}/bin/*.sh && \
-    mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs && \
-    # threddsIso
-    curl -fsL "${THREDDS_ISO_JAR_URL}" -o ${CATALINA_HOME}/webapps/thredds/WEB-INF/lib/tds-plugin-jar-with-dependencies.jar
+    mkdir -p ${CATALINA_HOME}/javaUtilPrefs/.systemPrefs
 
 EXPOSE 8080 8443
 

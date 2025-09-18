@@ -20,7 +20,7 @@ volumes:
 
 services:
   thredds:
-    image: unidata/thredds-docker:5.6
+    image: unidata/thredds-docker:5.7
     networks:
         thredds_network:
           aliases:
