@@ -1,7 +1,5 @@
 FROM unidata/tomcat-docker:10-jdk17
 
-MAINTAINER Unidata
-
 USER root
 
 # netcdf envs
