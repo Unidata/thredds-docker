@@ -16,7 +16,7 @@ ENV HDF5_FILE=${HDF5_VER}.tar.gz
 ENV TDS_CONTENT_ROOT_PATH=/usr/local/tomcat/content
 ENV THREDDS_XMX_SIZE=4G
 ENV THREDDS_XMS_SIZE=4G
-ENV THREDDS_WAR_URL=https://downloads.unidata.ucar.edu/tds/5.8/thredds-5.8.war
+ENV THREDDS_WAR_URL=https://downloads.unidata.ucar.edu/tds/5.9/thredds-5.9-SNAPSHOT.war
 
 COPY files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
 COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
