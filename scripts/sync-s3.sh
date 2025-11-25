@@ -1,17 +1,17 @@
 #!/bin/bash
-# Sync latest 3 days of files from public S3 to local directory
-# and clean up files older than 3 days
+# Sync latest 31 days of files from public S3 to local directory
+# and clean up files older than 31 days
 
 S3_BUCKET="s3://imos-data/IMOS/SRS/AusTemp/ssta"
 LOCAL_PATH="/usr/local/tomcat/content/thredds/public/austemp"
-DAYS_TO_KEEP=10
+DAYS_TO_KEEP=31
 
 # Create directory if it doesn't exist
 mkdir -p "$LOCAL_PATH"
 
 echo "$(date): Starting S3 sync for last $DAYS_TO_KEEP days"
 
-# Calculate the last 3 days (including today)
+# Calculate the last 31 days (including today)
 for i in $(seq 0 $((DAYS_TO_KEEP - 1))); do
     TARGET_DATE=$(date -d "$i days ago" +%Y%m%d)
     TARGET_YEAR=$(date -d "$i days ago" +%Y)
