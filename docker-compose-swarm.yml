@@ -35,9 +35,9 @@ services:
       - "443:8443"
       - "8443:8443"
     env_file:
-      - "compose.env"
+      - "compose_local.env"
     secrets:
       - source: thredds_tomcat_users
         target: /usr/local/tomcat/conf/tomcat-users.xml
         uid: '1000'
-        gid: '999'
+        gid: '1000'
