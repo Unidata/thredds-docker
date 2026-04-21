@@ -412,6 +412,22 @@
   </datasetScan>
 
 
+  <!-- Marine-Heatwave pixel drill: joins daily files along time for NCSS point queries.
+       New daily files are picked up automatically via recheckEvery.
+       Add a new year <scan> entry when extending the range across a year boundary. -->
+  <!-- NCSS endpoint: /thredds/ncss/grid/AusTemp/marine-heatwave-agg?var=sst&latitude=LAT&longitude=LON&time_start=START&time_end=END&accept=csv -->
+  <dataset name="AusTemp Marine-Heatwave Aggregation" ID="austemp-mhw-agg" urlPath="AusTemp/marine-heatwave-agg">
+    <metadata inherited="true">
+      <serviceName>regGriddedServices</serviceName>
+      <dataType>Grid</dataType>
+    </metadata>
+    <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
+      <aggregation dimName="time" type="joinExisting" recheckEvery="1 hour">
+        <scan location="cdms3:imos-data?IMOS/SRS/AusTemp/Marine-Heatwave/2026/" suffix=".nc" />
+      </aggregation>
+    </netcdf>
+  </dataset>
+
   <!-- AGGREGATION EXAMPLE -->
   <dataset name="WAVE-BUOY Time Aggregation" ID="WAVE-BUOY-agg" urlPath="WAVE-BUOY/aggregation">
     <metadata inherited="true">
