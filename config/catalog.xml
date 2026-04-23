@@ -428,16 +428,4 @@
     </netcdf>
   </dataset>
 
-  <!-- AGGREGATION EXAMPLE -->
-  <dataset name="WAVE-BUOY Time Aggregation" ID="WAVE-BUOY-agg" urlPath="WAVE-BUOY/aggregation">
-    <metadata inherited="true">
-      <serviceName>regGriddedServices</serviceName>
-      <dataType>Grid</dataType>
-    </metadata>
-    <netcdf xmlns="http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2">
-      <aggregation dimName="TIME" type="joinExisting" recheckEvery="15 min">
-        <scan location="cdms3:imos-data?IMOS/OceanCurrent/GSLA/NRT/2025/" suffix=".nc" />
-      </aggregation>
-    </netcdf>
-  </dataset>
 </catalog>

@@ -3,11 +3,13 @@ version: '3'
 services:
 
   thredds-imos:
+    build: .
     image: imos-thredds-docker:latest
     ports:
       - "7070:8080"
 
   thredds-imos-prod:
+    build: .
     image: imos-thredds-docker:latest
     ports:
       - "80:8080"
