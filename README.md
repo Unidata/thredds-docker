@@ -46,6 +46,7 @@ Dockerized [THREDDS](https://www.unidata.ucar.edu/software/tds/).
 ## Introduction
 
 This repository contains files necessary to build and run a THREDDS Docker container. The Unidata THREDDS Docker images associated with this repository are [available on DockerHub](https://hub.docker.com/r/unidata/thredds-docker/).
+The current target for this branch and image is TDS `5.10-SNAPSHOT` on Tomcat 11 and JDK 17.
 
 
 <a id="h-C733CD96"></a>
@@ -385,15 +386,7 @@ See the [parent Tomcat container](https://github.com/Unidata/tomcat-docker#diges
 
 ### ncSOS
 
-To enable to ncSOS, change
-
-```xml
-<NCSOS>
-  <allow>false</allow>
-</NCSOS>
-```
-
-to `true` in `threddsConfig.xml`.
+To enable ncSOS in `threddsConfig.xml`, uncomment the `NCSOS` block and set its `allow` value to `true`.
 
 
 <a id="h-A8309C14"></a>
@@ -419,17 +412,17 @@ What to do when a version of the THREDDS data server is released?
 -   Update the `Dockerfile` with the `war` file corresponding to the new version of the TDS. E.g.,
 
 ```shell
-ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.9/thredds-5.9.war
+ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.10/thredds-5.10-SNAPSHOT.war
 ```
 
 -   Check with the netCDF group if versions of HDF5, zlib, and netCDF referenced in the `Dockerfile` need to be updated.
 -   Update TDS versions in `docker-compose.yml` and `docker-compose-swarm.yml`.
 -   Update the `CHANGELOG.md` documenting updates to this project (not the TDS) since the last release.
--   Create a new git branch corresponding to this version of the TDS (e.g., `5.9`).
+-   Create a new git branch corresponding to this version of the TDS (e.g., `5.10-SNAPSHOT`).
 -   Push the new branch out to the `Unidata/thredds-docker` GitHub repository. This branch will remain frozen in time going forward. Any subsequent updates to this project should happen on the the `latest` branch. The only exception to this convention is if there is a critical (e.g., security related) update that needs to be applied to the `Dockerfile` and associated files and eventually to the image (see below)
--   Build a docker image corresponding to the new version of the TDS (e.g., on the Docker build machine on Jetstream). E.g., `docker build -t unidata/thredds-docker:5.9`.
+-   Build a docker image corresponding to the new version of the TDS (e.g., on the Docker build machine on Jetstream). E.g., `docker build -t unidata/thredds-docker:5.10-SNAPSHOT`.
 -   Test to ensure the image works.
--   Push it out DockerHub e.g., `docker push unidata/thredds-docker:5.9`.
+-   Push it out DockerHub e.g., `docker push unidata/thredds-docker:5.10-SNAPSHOT`.
 -   Note that this image **does not** remain frozen in time for two reasons.
     1.  It can get rebuilt time and again as upstream image updates need to be incorporated into this THREDDS image. It may be confusing for a versioned image to evolve, but it is the convention in Dockerland.
     2.  It can get rebuilt in the rare case the Dockerfile or associated files are updated on the branch as mentioned earlier.
