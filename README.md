@@ -413,7 +413,7 @@ ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.10/thredds-5.10-SNA
 ```
 
 -   Check with the netCDF group if versions of HDF5, zlib, and netCDF referenced in the `Dockerfile` need to be updated.
--   Update TDS versions in `docker-compose.yml` and `docker-compose-swarm.yml`.
+-   Update the TDS version in `docker-compose.yml`.
 -   Update the `CHANGELOG.md` documenting updates to this project (not the TDS) since the last release.
 -   Create a new git branch corresponding to this version of the TDS (e.g., `5.10-SNAPSHOT`).
 -   Push the new branch out to the `Unidata/thredds-docker` GitHub repository. This branch will remain frozen in time going forward. Any subsequent updates to this project should happen on the the `latest` branch. The only exception to this convention is if there is a critical (e.g., security related) update that needs to be applied to the `Dockerfile` and associated files and eventually to the image (see below)
