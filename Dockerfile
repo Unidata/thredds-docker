@@ -17,39 +17,44 @@ ENV THREDDS_XMX_SIZE=4G
 ENV THREDDS_XMS_SIZE=4G
 ENV THREDDS_WAR_URL=https://downloads.unidata.ucar.edu/tds/5.10/thredds-5.10-SNAPSHOT.war
 
-COPY files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
-COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
-COPY files/setenv.sh ${CATALINA_HOME}/bin/setenv.sh
-COPY files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
-
 # Install necessary packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends  vim build-essential m4 \
         libpthread-stubs0-dev libcurl4-openssl-dev zip unzip && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    # zlib
-    curl https://zlib.net/fossils/zlib-${ZLIB_VERSION}.tar.gz | tar xz && \
-    cd zlib-${ZLIB_VERSION} && \
-    ./configure --prefix=/usr/local && \
-    make && make install && \
-    cd .. && rm -rf zlib-${ZLIB_VERSION} && \
-    # hdf
-    curl https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER%.*}/${HDF5_VER}/src/${HDF5_FILE} | tar xz && \
-    cd hdf5-${HDF5_VERSION} && \
-    ./configure --with-zlib=${ZDIR} --prefix=${H5DIR} --enable-threadsafe --with-pthread=${PDIR} --enable-unsupported --prefix=/usr/local && \
-    make && make check && make install && make check-install && ldconfig && \
-    cd .. && rm -rf hdf5-${HDF5_VERSION} && \
-    # netcdf
-    export CPPFLAGS=-I/usr/local/include \
-    LDFLAGS=-L/usr/local/lib && \
-    curl https://downloads.unidata.ucar.edu/netcdf-c/${NETCDF_VERSION}/netcdf-c-${NETCDF_VERSION}.tar.gz | tar xz && \
-    cd netcdf-c-${NETCDF_VERSION} && \
-    ./configure --disable-dap-remote-tests --disable-libxml2 --prefix=/usr/local && \
-    make check && make install && ldconfig && \
-    cd .. && rm -rf netcdf-c-${NETCDF_VERSION} && \
-    # thredds
-    curl -fSL "${THREDDS_WAR_URL}" -o thredds.war && \
+    rm -rf /var/lib/apt/lists/*
+
+# Native libraries
+ARG SKIP_NATIVE_BUILD=false
+RUN if [ "${SKIP_NATIVE_BUILD}" = "true" ]; then \
+        echo "WARNING: native libraries skipped for development build"; \
+    else \
+        curl https://zlib.net/fossils/zlib-${ZLIB_VERSION}.tar.gz | tar xz && \
+        cd zlib-${ZLIB_VERSION} && \
+        ./configure --prefix=/usr/local && \
+        make && make install && \
+        cd .. && rm -rf zlib-${ZLIB_VERSION} && \
+        curl https://support.hdfgroup.org/ftp/HDF5/releases/${HDF5_VER%.*}/${HDF5_VER}/src/${HDF5_FILE} | tar xz && \
+        cd hdf5-${HDF5_VERSION} && \
+        ./configure --with-zlib=${ZDIR} --prefix=${H5DIR} --enable-threadsafe --with-pthread=${PDIR} --enable-unsupported --prefix=/usr/local && \
+        make && make check && make install && make check-install && ldconfig && \
+        cd .. && rm -rf hdf5-${HDF5_VERSION} && \
+        export CPPFLAGS=-I/usr/local/include \
+        LDFLAGS=-L/usr/local/lib && \
+        curl https://downloads.unidata.ucar.edu/netcdf-c/${NETCDF_VERSION}/netcdf-c-${NETCDF_VERSION}.tar.gz | tar xz && \
+        cd netcdf-c-${NETCDF_VERSION} && \
+        ./configure --disable-dap-remote-tests --disable-libxml2 --prefix=/usr/local && \
+        make check && make install && ldconfig && \
+        cd .. && rm -rf netcdf-c-${NETCDF_VERSION}; \
+    fi
+
+COPY files/threddsConfig.xml ${CATALINA_HOME}/content/thredds/threddsConfig.xml
+COPY files/tomcat-users.xml ${CATALINA_HOME}/conf/tomcat-users.xml
+COPY files/setenv.sh ${CATALINA_HOME}/bin/setenv.sh
+COPY files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
+
+# Install TDS
+RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war && \
     unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/ && \
     rm -f thredds.war && \
     mkdir -p ${CATALINA_HOME}/content/thredds && \
