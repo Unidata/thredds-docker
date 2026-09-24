@@ -17,7 +17,7 @@ NORMAL="-Xms${THREDDS_XMS_SIZE} -Xmx${THREDDS_XMX_SIZE}"
 HEAP_DUMP="-XX:+HeapDumpOnOutOfMemoryError"
 HEADLESS="-Djava.awt.headless=true"
 CONTENT_ROOT="-Dtds.content.root.path=${TDS_CONTENT_ROOT_PATH}"
-JAVA_PREFS_SYSTEM_ROOT="-Djava.util.prefs.systemRoot=$CATALINA_HOME/javaUtilPrefs -Djava.util.prefs.userRoot=$CATALINA_HOME/javaUtilPrefs"
+JAVA_PREFS_SYSTEM_ROOT="-Djava.util.prefs.systemRoot=${TDS_CONTENT_ROOT_PATH}/thredds/javaUtilPrefs -Djava.util.prefs.userRoot=${TDS_CONTENT_ROOT_PATH}/thredds/javaUtilPrefs"
 JNA_DIR="-Djna.tmpdir=/tmp/"
 
 # Propagate optional AWS_REGION environment variable to Java system property
