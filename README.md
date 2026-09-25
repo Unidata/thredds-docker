@@ -26,7 +26,6 @@
     - [Users](#h-E20C4A41)
     - [Remote Management](#h-0E28D2EE)
     - [ncSOS](#h-F2383FF5)
-  - [TDM](#h-A8309C14)
   - [netCDF](#h-90623D0B)
   - [Maintainers](#h-1559ED59)
   - [Citation](#h-0BAA13E6)
@@ -109,7 +108,7 @@ To run the THREDDS Docker container, beyond a basic Docker setup, we recommend i
 
 1.  Reduce headaches involving unwieldy `docker` command lines where you are running `docker` with multiple volume mounts and port forwards. In situations like these, `docker` commands become difficult to issue and read. Instead, the lengthy `docker` command is captured in a `docker-compose.yml` that is easy to read, maintain, and can be committed to version control.
 
-2.  Coordinate the running of two or more containers to, for example, orchestrate the TDS and TDM. This can be useful for taking into account the same volume mountings, for example.
+2.  Capture the ports, volume mounts, and environment settings used by the TDS deployment.
 
 However, `docker-compose` use is not mandatory. There is an example [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml) in this repository.
 
@@ -220,7 +219,7 @@ which should give you output that looks something like this:
 
 ```
 CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                                                                 NAMES
-6c256c50a6cf        unidata/thredds-docker:<version>  "/entrypoint.sh catal"   6 minutes ago       Up 6 minutes        0.0.0.0:8443->8443/tcp, 0.0.0.0:80->8080/tcp, 0.0.0.0:443->8443/tcp   threddsdocker_thredds-quickstart_1
+6c256c50a6cf        unidata/thredds-docker:<version>  "/entrypoint.sh star"    6 minutes ago       Up 6 minutes        0.0.0.0:80->8080/tcp   threddsdocker_thredds-quickstart_1
 ```
 
 to obtain the ID of the running TDS container. You can enter the container with:
@@ -280,7 +279,7 @@ Define directory and file paths for log files, Tomcat, THREDDS, and data in [doc
 
 #### Environment Variables
 
-This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS and [TDM](#h-A8309C14). You can configure these parameters:
+This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS. You can configure these parameters:
 
 ```
 | Parameter                   | Environment Variable  | Default Value                |
@@ -288,10 +287,6 @@ This project contains a `docker-compose` [environment file](https://docs.docker.
 | TDS Content Root            | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content    |
 | TDS JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                           |
 | TDS JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                           |
-| TDM Password                | TDM_PW                | CHANGEME!                    |
-| TDS HOST                    | TDS_HOST              | http://thredds.yourhost.net/ |
-| TDM JVM Max Heap Size (xmx) | TDM_XMX_SIZE          | 6G                           |
-| TDM JVM Min Heap Size (xms) | TDM_XMS_SIZE          | 1G                           |
 | Tomcat User ID              | TOMCAT_USER_ID        | 1000                         |
 | Tomcat Group ID             | TOMCAT_GROUP_ID       | 1000                         |
 ```
@@ -384,13 +379,6 @@ The bundled [tomcat-users.xml](files/tomcat-users.xml) declares the `tdsConfig`,
 ### ncSOS
 
 To enable ncSOS in `threddsConfig.xml`, uncomment the `NCSOS` block and set its `allow` value to `true`.
-
-
-<a id="h-A8309C14"></a>
-
-## TDM
-
-The [THREDDS Data Manager](https://docs.unidata.ucar.edu/tds/5.4/userguide/tdm_ref.html) (TDM) creates indexes for GRIB featureCollections, in a process separate from the TDS. It is a specialized utility typically employed in scenarios where the TDS is serving real-time data from the Unidata IDD (e.g., GFS Quarter Degree Analysis) and is referenced in the [docker-compose.yml](docker-compose.yml) in this repository. In most scenarios, you can comment out the TDM section. The TDM Docker container [is in its own repository](https://github.com/Unidata/tdm-docker) where you can find instructions on how to run it.
 
 
 <a id="h-90623D0B"></a>
