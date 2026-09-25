@@ -312,7 +312,7 @@ docker-compose up thredds-production
 
 ### Tomcat
 
-THREDDS container is based off of the [canonical Tomcat container](https://hub.docker.com/_/tomcat/) with [some additional security hardening measures](https://hub.docker.com/r/unidata/tomcat-docker/). Tomcat configuration can be done by mounting over the appropriate directories in `CATALINA_HOME` (`/usr/local/tomcat`).
+This image derives from [`unidata/tomcat-docker:11-jdk17`](https://github.com/Unidata/tomcat-docker/tree/11-jdk17), which provides Tomcat 11 on JDK 17. Startup, privilege dropping, runtime UID/GID handling, and Tomcat's standard writable directories are inherited from that parent. The Tomcat installation itself, including `conf`, `bin`, `lib`, and `webapps`, remains protected. Supply site-specific replacement configuration as individual read-only file mounts rather than making Tomcat configuration directories writable. See the [parent repository](https://github.com/Unidata/tomcat-docker/tree/11-jdk17) for the complete runtime contract.
 
 
 <a id="h-609AFE2D"></a>
@@ -326,7 +326,7 @@ The Java configuration options (`JAVA_OPTS`) are configured in `${CATALINA_HOME}
 
 ### Configurable Tomcat UID and GID
 
-[See parent container](https://github.com/Unidata/tomcat-docker#configurable-tomcat-uid-and-gid).
+`TOMCAT_USER_ID` and `TOMCAT_GROUP_ID` default to `1000:1000` and may be overridden. [See the parent container](https://github.com/Unidata/tomcat-docker#configurable-tomcat-uid-and-gid) for details.
 
 
 <a id="h-D046D64C"></a>
@@ -340,19 +340,21 @@ volumes:
   - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
 ```
 
+`${CATALINA_HOME}/content` is explicitly designated as an additional writable directory for TDS. At container startup, the parent prepares this tree for `TOMCAT_USER_ID:TOMCAT_GROUP_ID`; bind-mounted content may therefore be recursively re-owned to that UID/GID. Persistent Java Preferences storage is also located beneath this writable content tree.
+
 If you just want to change a few files, you can mount them individually. Please note that the **THREDDS cache is stored in the content directory**. If you choose to mount individual files, you should also mount a cache directory.
 
 ```yaml
 volumes:
   - /path/to/your/tomcat/logs/:/usr/local/tomcat/logs/
   - /path/to/your/thredds/logs/:/usr/local/tomcat/content/thredds/logs/
-  - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+  - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
   - /path/to/your/thredds/directory:/usr/local/tomcat/content/thredds
   - /path/to/your/data/directory1:/path/to/your/data/directory1
   - /path/to/your/data/directory2:/path/to/your/data/directory2
-  - /path/to/your/server.xml:/usr/local/tomcat/conf/server.xml
-  - /path/to/your/web.xml:/usr/local/tomcat/conf/web.xml
-  - /path/to/your/keystore.jks:/usr/local/tomcat/conf/keystore.jks
+  - /path/to/your/server.xml:/usr/local/tomcat/conf/server.xml:ro
+  - /path/to/your/web.xml:/usr/local/tomcat/conf/web.xml:ro
+  - /path/to/your/keystore.jks:/usr/local/tomcat/conf/keystore.jks:ro
 ```
 
 
@@ -360,26 +362,21 @@ volumes:
 
 ### HTTP Over SSL
 
-Please see Tomcat [parent container repository](https://github.com/Unidata/tomcat-docker#http-over-ssl) for HTTP over SSL instructions.
+By default, Tomcat serves HTTP on container port 8080. HTTPS on port 8443 is not active merely because the Dockerfile exposes that port, and the provided Compose configuration does not publish ports 443 or 8443. Direct Tomcat TLS requires deployment-specific connector configuration and certificate material; see the parent container [HTTPS documentation](https://github.com/Unidata/tomcat-docker#https) for details.
 
 
 <a id="h-E20C4A41"></a>
 
 ### Users
 
-By default, Tomcat will start with [two user accounts](https://github.com/Unidata/thredds-docker/blob/master/files/tomcat-users.xml).
-
--   `tdm` - used by the THREDDS Data Manager for connecting to THREDDS
--   `admin` - can be used by everything else (has full privileges)
-
-See the [parent Tomcat container](https://github.com/Unidata/tomcat-docker#digested-passwords) for information about creating passwords for these users.
+The bundled [tomcat-users.xml](files/tomcat-users.xml) declares the `tdsConfig`, `tdsMonitor`, and `tdsTrigger` roles, but the image ships no default privileged users or passwords. Operators who require protected TDS functionality must provide a site-specific `tomcat-users.xml` with credentials compatible with the SHA-512 credential handler configured by the parent image, and mount that file read-only. See the [parent Tomcat container](https://github.com/Unidata/tomcat-docker#digested-passwords) for its credential-generation procedure.
 
 
 <a id="h-0E28D2EE"></a>
 
 ### Remote Management
 
-[TDS Remote Management](https://docs.unidata.ucar.edu/tds/current/userguide/remote_management_ref.html#tds-remote-debugging) is enabled for the `admin` user by default, and can be accessed via `http(s)://<your server>/thredds/admin/debug`.
+[Protected TDS remote-management functionality](https://docs.unidata.ucar.edu/tds/current/userguide/remote_management_ref.html) is not usable with the default configuration. Operators must configure an appropriate user and role as well as secure transport before using these endpoints.
 
 
 <a id="h-F2383FF5"></a>
