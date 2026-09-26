@@ -22,7 +22,7 @@
     - [Java Configuration Options](#h-609AFE2D)
     - [Configurable Tomcat UID and GID](#h-350BEF91)
     - [THREDDS](#h-D046D64C)
-    - [HTTP Over SSL](#h-5A4BABB7)
+    - [HTTPS](#h-5A4BABB7)
     - [Users](#h-E20C4A41)
     - [Remote Management](#h-0E28D2EE)
     - [ncSOS](#h-F2383FF5)
@@ -44,8 +44,7 @@ Dockerized [THREDDS](https://www.unidata.ucar.edu/software/tds/).
 
 ## Introduction
 
-This repository contains files necessary to build and run a THREDDS Docker container. The Unidata THREDDS Docker images associated with this repository are [available on DockerHub](https://hub.docker.com/r/unidata/thredds-docker/).
-The current target for this branch and image is TDS `5.10-SNAPSHOT` on Tomcat 11 and JDK 17.
+This repository contains files necessary to build and run a THREDDS Docker container. The Unidata THREDDS Docker images associated with this repository are [available on DockerHub](https://hub.docker.com/r/unidata/thredds-docker/). The current target for this branch and image is TDS `5.10-SNAPSHOT` on Tomcat 11 and JDK 17.
 
 
 <a id="h-C733CD96"></a>
@@ -125,9 +124,7 @@ docker-compose up -d thredds-production
 
 The output of such command should be something like:
 
-```
-Creating thredds
-```
+    Creating thredds
 
 
 <a id="h-82936877"></a>
@@ -183,26 +180,24 @@ curl localhost:80/thredds/catalog/catalog.html
 
 and get back a response that looks something like
 
-```
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title>TDS Catalog</title>
-  <!-- Common metadata and styles. -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <!-- if webcrawler finds this page (say, from sitemap.xml), tell it to not follow the links -->
-  <meta name="robots" content="nofollow" />
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+      <title>TDS Catalog</title>
+      <!-- Common metadata and styles. -->
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <!-- if webcrawler finds this page (say, from sitemap.xml), tell it to not follow the links -->
+      <meta name="robots" content="nofollow" />
 
-  <link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tdsCat.css" type="text/css">
+      <link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tdsCat.css" type="text/css">
 
-  <script type="text/javascript">
-  document.getElementById("header-buffer").style.height = document.getElementById("header").clientHeight + "px";
-  document.getElementById("footer-buffer").style.height = document.getElementById("footer").clientHeight + "px";
-</script>
-</head>
-...
-</html>
-```
+      <script type="text/javascript">
+      document.getElementById("header-buffer").style.height = document.getElementById("header").clientHeight + "px";
+      document.getElementById("footer-buffer").style.height = document.getElementById("footer").clientHeight + "px";
+    </script>
+    </head>
+    ...
+    </html>
 
 
 <a id="h-F9E31E12"></a>
@@ -217,10 +212,8 @@ docker ps
 
 which should give you output that looks something like this:
 
-```
-CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                                                                 NAMES
-6c256c50a6cf        unidata/thredds-docker:<version>  "/entrypoint.sh star"    6 minutes ago       Up 6 minutes        0.0.0.0:80->8080/tcp   threddsdocker_thredds-quickstart_1
-```
+    CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                                                                 NAMES
+    6c256c50a6cf        unidata/thredds-docker:<version>  "/entrypoint.sh star"    6 minutes ago       Up 6 minutes        0.0.0.0:80->8080/tcp   threddsdocker_thredds-quickstart_1
 
 to obtain the ID of the running TDS container. You can enter the container with:
 
@@ -236,26 +229,24 @@ curl localhost:8080/thredds/catalog/catalog.html
 
 you should get a response that looks something like:
 
-```
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title>TDS Catalog</title>
-  <!-- Common metadata and styles. -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <!-- if webcrawler finds this page (say, from sitemap.xml), tell it to not follow the links -->
-  <meta name="robots" content="nofollow" />
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+      <title>TDS Catalog</title>
+      <!-- Common metadata and styles. -->
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <!-- if webcrawler finds this page (say, from sitemap.xml), tell it to not follow the links -->
+      <meta name="robots" content="nofollow" />
 
-  <link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tdsCat.css" type="text/css">
+      <link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tds.css" type="text/css"><link rel="stylesheet" href="/thredds/tdsCat.css" type="text/css">
 
-  <script type="text/javascript">
-  document.getElementById("header-buffer").style.height = document.getElementById("header").clientHeight + "px";
-  document.getElementById("footer-buffer").style.height = document.getElementById("footer").clientHeight + "px";
-</script>
-</head>
-...
-</html>
-```
+      <script type="text/javascript">
+      document.getElementById("header-buffer").style.height = document.getElementById("header").clientHeight + "px";
+      document.getElementById("footer-buffer").style.height = document.getElementById("footer").clientHeight + "px";
+    </script>
+    </head>
+    ...
+    </html>
 
 
 <a id="h-817EB413"></a>
@@ -281,15 +272,13 @@ Define directory and file paths for log files, Tomcat, THREDDS, and data in [doc
 
 This project contains a `docker-compose` [environment file](https://docs.docker.com/compose/compose-file/#envfile) named `compose.env`. This file contains default values for `docker-compose` to launch the TDS. You can configure these parameters:
 
-```
-| Parameter                   | Environment Variable  | Default Value                |
-|-----------------------------+-----------------------+------------------------------|
-| TDS Content Root            | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content    |
-| TDS JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                           |
-| TDS JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                           |
-| Tomcat User ID              | TOMCAT_USER_ID        | 1000                         |
-| Tomcat Group ID             | TOMCAT_GROUP_ID       | 1000                         |
-```
+    | Parameter                   | Environment Variable  | Default Value                |
+    |-----------------------------+-----------------------+------------------------------|
+    | TDS Content Root            | TDS_CONTENT_ROOT_PATH | /usr/local/tomcat/content    |
+    | TDS JVM Max Heap Size (xmx) | THREDDS_XMX_SIZE      | 4G                           |
+    | TDS JVM Min Heap Size (xms) | THREDDS_XMS_SIZE      | 4G                           |
+    | Tomcat User ID              | TOMCAT_USER_ID        | 1000                         |
+    | Tomcat Group ID             | TOMCAT_GROUP_ID       | 1000                         |
 
 If you wish to update your configuration, you can either update the `compose.env` file or create your own environments file by copying `compose.env`. If using your own file, you can export the suffix of the file name into an environment variable named `THREDDS_COMPOSE_ENV_LOCAL`. Also see the `env_file` key in [docker-compose.yml](https://github.com/Unidata/thredds-docker/blob/master/docker-compose.yml).
 
@@ -349,29 +338,29 @@ volumes:
   - /path/to/your/data/directory2:/path/to/your/data/directory2
   - /path/to/your/server.xml:/usr/local/tomcat/conf/server.xml:ro
   - /path/to/your/web.xml:/usr/local/tomcat/conf/web.xml:ro
-  - /path/to/your/keystore.jks:/usr/local/tomcat/conf/keystore.jks:ro
+  - /path/to/your/keystore.p12:/usr/local/tomcat/conf/keystore.p12:ro
 ```
 
 
 <a id="h-5A4BABB7"></a>
 
-### HTTP Over SSL
+### HTTPS
 
-By default, Tomcat serves HTTP on container port 8080. HTTPS on port 8443 is not active merely because the Dockerfile exposes that port, and the provided Compose configuration does not publish ports 443 or 8443. Direct Tomcat TLS requires deployment-specific connector configuration and certificate material; see the parent container [HTTPS documentation](https://github.com/Unidata/tomcat-docker#https) for details.
+By default, Tomcat serves HTTP on port 8080. To configure Tomcat to serve HTTPS directly, see the parent container's [HTTPS documentation](https://github.com/Unidata/tomcat-docker#https).
 
 
 <a id="h-E20C4A41"></a>
 
 ### Users
 
-The bundled [tomcat-users.xml](files/tomcat-users.xml) declares the `tdsConfig`, `tdsMonitor`, and `tdsTrigger` roles, but the image ships no default privileged users or passwords. Operators who require protected TDS functionality must provide a site-specific `tomcat-users.xml` with credentials compatible with the SHA-512 credential handler configured by the parent image, and mount that file read-only. See the [parent Tomcat container](https://github.com/Unidata/tomcat-docker#digested-passwords) for its credential-generation procedure.
+The bundled [tomcat-users.xml](files/tomcat-users.xml) declares the `tdsConfig`, `tdsMonitor`, and `tdsTrigger` roles. Operators who require protected TDS functionality must provide a site-specific `tomcat-users.xml` with credentials compatible with the SHA-512 credential handler configured by the parent image, and mount that file read-only. See the [parent Tomcat container](https://github.com/Unidata/tomcat-docker#digested-passwords) for its credential-generation procedure.
 
 
 <a id="h-0E28D2EE"></a>
 
 ### Remote Management
 
-[Protected TDS remote-management functionality](https://docs.unidata.ucar.edu/tds/current/userguide/remote_management_ref.html) is not usable with the default configuration. Operators must configure an appropriate user and role as well as secure transport before using these endpoints.
+Protected [TDS remote-management](https://docs.unidata.ucar.edu/tds/current/userguide/remote_management_ref.html) functionality is not usable with the default configuration. Operators must configure an appropriate user and role as well as secure transport before using these endpoints.
 
 
 <a id="h-F2383FF5"></a>
