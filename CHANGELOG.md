@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.10] - 2026-XX-XX
+
+### Updated
+
+- Updated to TDS 5.10, Tomcat 11, and JDK 17.
+- Updated HDF5 to 1.14.6, zlib to 1.3.2, and netCDF-C to 4.10.1.
+- Updated the container runtime and permissions model to use the security and configurable UID/GID support provided by unidata/tomcat-docker.
+- Removed default Tomcat users and credentials; protected TDS functionality now requires site-specific user configuration.
+- Removed the bundled TDM service and configuration. TDM is maintained separately in the tdm-docker repository.
+- Removed legacy Docker Swarm support.
+- Moved Java Preferences storage beneath the persistent TDS content directory.
+- Added an option to skip native-library compilation for development builds.
+
 ## [5.9] - 2025-07-13
 ### Updated
 - 5.9 release of the Unidata TDS wrapped in a Docker container
@@ -121,7 +134,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - 4.6.10 release of the Unidata TDS wrapped in a Docker container
 
-[Unreleased]: https://github.com/Unidata/thredds-docker/compare/v5.4...HEAD
+[Unreleased]: https://github.com/Unidata/thredds-docker/compare/v5.9...HEAD
+[5.9]: https://github.com/Unidata/thredds-docker/compare/v5.8...v5.9
+[5.8]: https://github.com/Unidata/thredds-docker/compare/v5.7...v5.8
+[5.7]: https://github.com/Unidata/thredds-docker/compare/v5.6...v5.7
+[5.6]: https://github.com/Unidata/thredds-docker/compare/v5.5...v5.6
+[5.5]: https://github.com/Unidata/thredds-docker/compare/v5.4...v5.5
 [5.4]: https://github.com/Unidata/thredds-docker/compare/v5.3...v5.4
 [5.3]: https://github.com/Unidata/thredds-docker/compare/v5.2...v5.3
 [5.2]: https://github.com/Unidata/thredds-docker/compare/v5.1...v5.2
