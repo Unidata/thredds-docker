@@ -57,6 +57,27 @@ Dockerized [[https://www.unidata.ucar.edu/software/tds/][THREDDS]].
 This repository contains files necessary to build and run a THREDDS Docker container. The Unidata THREDDS Docker images associated with this repository are [[https://hub.docker.com/r/unidata/thredds-docker/][available on DockerHub]].
 The current target for this branch and image is TDS ~5.10-SNAPSHOT~ on Tomcat 11 and JDK 17.
 
+*** What's New For TDS 5.10
+:PROPERTIES:
+:CUSTOM_ID: h-B6E0F7DE
+:END:
+
+This release modernizes the THREDDS Docker image for TDS 5.10.
+
+- *TDS 5.10, Tomcat 11, and JDK 17:* The image now targets TDS ~5.10-SNAPSHOT~ and is based on ~unidata/tomcat-docker:11-jdk17~.
+
+- *Updated native libraries:* The bundled native dependencies have been updated to HDF5 1.14.6, zlib 1.3.2, and netCDF-C 4.10.1.
+
+- *Hardened Tomcat runtime:* The image inherits the parent container's privilege dropping and configurable runtime UID/GID support. Tomcat installation and configuration files remain protected, while the TDS content tree (=${CATALINA_HOME}/content=) is explicitly writable. Site-specific Tomcat configuration files should be mounted read-only.
+
+- *TDM separated from this image*: The bundled TDM service and configuration have been removed. TDM is maintained separately in the  [[https://github.com/Unidata/tdm-docker][tdm-docker]] repository.
+  
+- *Docker Swarm support removed:* The legacy Swarm configuration and documentation have been removed.
+
+- *Persistent Java preferences:* Java Preferences storage now resides beneath the TDS content root so that it follows the same writable and persistent storage model as other TDS content.
+
+- *Faster development builds:* Image builds can optionally skip compilation of the native libraries with ~--build-arg SKIP_NATIVE_BUILD=true~. This option is intended for development and testing, not production images.
+
 *** Quickstart
 :PROPERTIES:
 :CUSTOM_ID: h-C733CD96
