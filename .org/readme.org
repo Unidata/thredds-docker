@@ -368,14 +368,37 @@ By default, Tomcat serves HTTP on port 8080. To configure Tomcat to serve HTTPS 
     :CUSTOM_ID: h-E20C4A41
     :END:
 
-The bundled [[file:files/tomcat-users.xml][tomcat-users.xml]] declares the ~tdsConfig~, ~tdsMonitor~, and ~tdsTrigger~ roles. Operators who require protected TDS functionality must provide a site-specific ~tomcat-users.xml~ with credentials compatible with the SHA-512 credential handler configured by the parent image, and mount that file read-only. See the [[https://github.com/Unidata/tomcat-docker#digested-passwords][parent Tomcat container]] for its credential-generation procedure.
+The bundled [[file:files/tomcat-users.xml][tomcat-users.xml]] declares the ~tdsConfig~, ~tdsMonitor~, and ~tdsTrigger~ roles. To use protected TDS functionality, provide a site-specific ~tomcat-users.xml~ as described below.
 
-*** Remote Management
-    :PROPERTIES:
-    :CUSTOM_ID: h-0E28D2EE
-    :END:
+*** Configuring TDS Roles
+:PROPERTIES:
+:CUSTOM_ID: h-D90F09BB
+:END:
 
-Protected [[https://docs.unidata.ucar.edu/tds/current/userguide/remote_management_ref.html][TDS remote-management]] functionality is not usable with the default configuration. Operators must configure an appropriate user and role as well as secure transport before using these endpoints.
+The TDS uses the Tomcat roles ~tdsConfig~, ~tdsMonitor~, and ~tdsTrigger~ to control access to [[https://docs.unidata.ucar.edu/tds/current/userguide/remote_management_ref.html][protected administrative functionality]]. Assign only the roles a user requires.
+
+For example, create a site-specific ~tomcat-users.xml~ containing a user and the desired roles:
+
+#+begin_src xml
+  <tomcat-users>
+    <role rolename="tdsConfig"/>
+    <role rolename="tdsMonitor"/>
+    <role rolename="tdsTrigger"/>
+
+    <user username="tds-admin"
+          password="DIGESTED_PASSWORD"
+          roles="tdsConfig,tdsMonitor,tdsTrigger"/>
+  </tomcat-users>
+#+end_src
+
+Generate ~DIGESTED_PASSWORD~ using the SHA-512 password procedure described in the [[https://github.com/Unidata/tomcat-docker#digested-passwords][parent Tomcat container documentation]]. Mount the completed file read-only into the container:
+
+#+begin_src yaml
+  volumes:
+    - /path/to/your/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
+#+end_src
+
+Restart the container after changing ~tomcat-users.xml~. Administrative TDS endpoints should be exposed only over HTTPS.
 
 *** ncSOS
     :PROPERTIES:
