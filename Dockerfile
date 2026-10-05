@@ -62,8 +62,7 @@ COPY files/javaopts.sh ${CATALINA_HOME}/bin/javaopts.sh
 RUN curl -fSL "${THREDDS_WAR_URL}" -o thredds.war && \
     unzip thredds.war -d ${CATALINA_HOME}/webapps/thredds/ && \
     rm -f thredds.war && \
-    mkdir -p ${CATALINA_HOME}/content/thredds && \
-    mkdir -p ${TDS_CONTENT_ROOT_PATH}/thredds/javaUtilPrefs/.systemPrefs
+    mkdir -p ${CATALINA_HOME}/content/thredds
 
 EXPOSE 8080 8443
 
