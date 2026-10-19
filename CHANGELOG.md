@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.10] - 2026-XX-XX
+## [5.10] - 2026-10-19
 
 ### Updated
 
@@ -134,7 +134,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - 4.6.10 release of the Unidata TDS wrapped in a Docker container
 
-[Unreleased]: https://github.com/Unidata/thredds-docker/compare/v5.9...HEAD
+[Unreleased]: https://github.com/Unidata/thredds-docker/compare/v5.10...HEAD
+[5.10]: https://github.com/Unidata/thredds-docker/compare/v5.9...v5.10
 [5.9]: https://github.com/Unidata/thredds-docker/compare/v5.8...v5.9
 [5.8]: https://github.com/Unidata/thredds-docker/compare/v5.7...v5.8
 [5.7]: https://github.com/Unidata/thredds-docker/compare/v5.6...v5.7

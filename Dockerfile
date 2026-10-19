@@ -14,7 +14,7 @@ ENV TDS_CONTENT_ROOT_PATH=/usr/local/tomcat/content
 ENV TOMCAT_ADDITIONAL_WRITABLE_DIRS=content
 ENV THREDDS_XMX_SIZE=4G
 ENV THREDDS_XMS_SIZE=4G
-ENV THREDDS_WAR_URL=https://downloads.unidata.ucar.edu/tds/5.10/thredds-5.10-SNAPSHOT.war
+ENV THREDDS_WAR_URL=https://downloads.unidata.ucar.edu/tds/5.10/thredds-5.10.war
 
 # Install necessary packages
 RUN apt-get update && \
