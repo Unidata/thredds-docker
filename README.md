@@ -45,7 +45,7 @@ Dockerized [THREDDS](https://www.unidata.ucar.edu/software/tds/).
 
 ## Introduction
 
-This repository contains files necessary to build and run a THREDDS Docker container. The Unidata THREDDS Docker images associated with this repository are [available on DockerHub](https://hub.docker.com/r/unidata/thredds-docker/). The current target for this branch and image is TDS `5.10` on Tomcat 11 and JDK 17.
+This repository contains files necessary to build and run a THREDDS Docker container. The Unidata THREDDS Docker images associated with this repository are [available on DockerHub](https://hub.docker.com/r/unidata/thredds-docker/). The current target for this branch and image is TDS `5.11` on Tomcat 11 and JDK 17.
 
 
 <a id="h-B6E0F7DE"></a>
@@ -431,7 +431,7 @@ What to do when a version of the THREDDS data server is released?
 -   Update the `Dockerfile` with the `war` file corresponding to the new version of the TDS. E.g.,
 
 ```shell
-ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.10/thredds-5.10.war
+ENV THREDDS_WAR_URL https://downloads.unidata.ucar.edu/tds/5.11/thredds-5.11.war
 ```
 
 -   Check with the netCDF group if versions of HDF5, zlib, and netCDF referenced in the `Dockerfile` need to be updated.

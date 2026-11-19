@@ -2,12 +2,12 @@ version: '3'
 
 services:
   thredds-quickstart:
-    image: unidata/thredds-docker:5.10
+    image: unidata/thredds-docker:5.11
     ports:
       - "80:8080"
 
   thredds-production:
-    image: unidata/thredds-docker:5.10
+    image: unidata/thredds-docker:5.11
     ports:
       - "80:8080"
     container_name: thredds
