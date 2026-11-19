@@ -55,7 +55,7 @@ Dockerized [[https://www.unidata.ucar.edu/software/tds/][THREDDS]].
 :END:
 
 This repository contains files necessary to build and run a THREDDS Docker container. The Unidata THREDDS Docker images associated with this repository are [[https://hub.docker.com/r/unidata/thredds-docker/][available on DockerHub]].
-The current target for this branch and image is TDS ~5.10~ on Tomcat 11 and JDK 17.
+The current target for this branch and image is TDS ~5.11~ on Tomcat 11 and JDK 17.
 
 *** What's New For TDS 5.10
 :PROPERTIES:
